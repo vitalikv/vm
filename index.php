@@ -82,7 +82,6 @@
 	<script src="<?=$path?>meshBSP.js"></script> 	
     <script src="<?=$path?>calculationArea.js?<?=$vrs?>"></script>	
 	<script src="<?=$path?>createGrid.js?<?=$vrs?>"></script>
-	<script src="<?=$path?>scaleBox.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>clickObj.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>clickMoveGizmo.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>clickMovePivot.js?<?=$vrs?>"></script>

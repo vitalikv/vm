@@ -13,15 +13,7 @@
 	
 	<div class="toolbar" data-action ='top_panel_1'>
 		
-		<div class="button1-wrap-2" nameId='top_menu_b1' inf-visible='false' style="display: none;">		
-			<? if($interface['tube_1'] == 1){ ?>
-			<div class="button1-wrap-1">
-				<div data-action ='create_tube_1' class="button1 button_gradient_1">Труба</div>
-			</div>
-			<!--<div class="button1-wrap-1">
-				<div data-action ='create_tube_box_1' class="button1 button_gradient_1">Контур</div>
-			</div>-->			
-			<? } ?>		
+		<div class="button1-wrap-2" nameId='top_menu_b1' inf-visible='false' style="display: none;">			
 		</div>
 		
 		<div class="button1-wrap-2" nameId='top_menu_b2' inf-visible='true'>

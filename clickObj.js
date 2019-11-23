@@ -25,10 +25,7 @@ function moveObjectPop( event )
 	if(!clickO.actMove)
 	{
 		clickO.actMove = true;
-		
-		if(obj.userData.tag == 'boxWF') { hideControlWF(); }
-	}	
-	
+	}		
 	
 	var pos = new THREE.Vector3().addVectors( intersects[ 0 ].point, clickO.offset );	
 	
@@ -43,7 +40,7 @@ function clickMouseUpObject(obj)
 {
 	if(clickO.actMove)
 	{		
-		if(obj.userData.tag == 'boxWF') { showToggleGp(); }
+		
 	}	
 }
 

@@ -181,12 +181,6 @@ function clickRayHit(event)
 		var ray = rayIntersect( event, arr, 'arr' );
 		if(ray.length > 0) { rayhit = ray[0]; return rayhit; }		
 	}
-
-	if(infProject.tools.wf.cube[0].visible)
-	{
-		var ray = rayIntersect( event, infProject.tools.wf.cube, 'arr' );  
-		if(ray.length > 0) { rayhit = ray[0]; }		
-	}	
 	
 	if(!infProject.scene.block.click.tube)
 	{
@@ -273,12 +267,10 @@ function clickMouseActive(cdm)
 		else if( tag == 'window' ) { clickWD( rayhit ); }
 		else if( tag == 'door' ) { clickWD( rayhit ); }
 		else if( tag == 'controll_wd' ) { clickToggleChangeWin( rayhit ); }
-		else if( tag == 'scaleBox_control' && camera == cameraTop ) { clickToggleGp( rayhit ); }
 		else if( tag == 'wf_line' ) {  }
 		else if( tag == 'joinPoint' && camera == cameraTop && rayhit.tag == 'act_1' ) { clickItemCenterObjUI_1({obj: obj}); }
 		else if( tag == 'joinPoint' && camera == cameraTop && rayhit.tag == 'act_2') { clickItemCenterObjUI_2({obj: obj}); }
 		else if( tag == 'obj' && camera == cameraTop ) { clickObject3D( obj, {click_obj: true, menu_1: true, group: true, outline: true} ); }
-		else if( tag == 'boxWF' && camera == cameraTop ) { clickObject2D( obj, rayhit ); }
 		else { flag = false; }
 	}
 	else if(cdm.type == 'up')
@@ -306,7 +298,6 @@ function clickMouseActive(cdm)
 			else if(tag == 'window') { showRulerWD( obj ); showTableWD( obj ); }
 			else if(tag == 'wf_line') { showWF_line_UI( obj ); }
 			else if(tag == 'wf_point') { showWF_point_UI( obj ); }
-			else if(tag == 'boxWF') { showToggleGp(); showBoxWF_UI(); }
 			else if(tag == 'obj') { showObjUI( obj ); }
 			else if(tag == 'pivot') { obj = infProject.tools.pivot.userData.pivot.obj; }
 			else if(tag == 'gizmo') { obj = infProject.tools.gizmo.userData.gizmo.obj; }
@@ -373,11 +364,8 @@ function onDocumentMouseMove( event )
 		else if ( tag == 'controll_wd' ) { moveToggleChangeWin( event, obj ); }
 		else if ( tag == 'point' ) { movePoint( event, obj ); }
 		else if ( tag == 'wf_point' ) { moveWFPoint( event, obj ); }
-		else if ( tag == 'move_control' ) { moveObjectControls( event ); }
-		else if ( tag == 'scaleBox_control' ) { moveToggleGp( event ); }
 		else if ( tag == 'room' ) { cameraMove3D( event ); }		
 		else if ( tag == 'free_dw' ) { dragWD_2( event, obj ); }
-		else if ( tag == 'boxWF' && camera == cameraTop ) { moveObjectPop( event ); }
 		else if ( tag == 'obj' ) { moveObjectPop( event ); }
 	}
 	else 
@@ -419,8 +407,7 @@ function onDocumentMouseUp( event )
 		else if(tag == 'wall') { clickWallMouseUp(obj); }
 		else if(tag == 'window' || obj.userData.tag == 'door') { clickWDMouseUp(obj); }	
 		else if(tag == 'controll_wd') { clickMouseUpToggleWD(obj); } 
-		else if(tag == 'boxWF' || tag == 'obj') { clickMouseUpObject(obj); }
-		else if(tag == 'scaleBox_control') { clickO.last_obj = infProject.tools.wf.plane; }
+		else if(tag == 'obj') { clickMouseUpObject(obj); }
 		
 		if(tag == 'free_dw') {  }
 		else if (tag == 'point') 
@@ -476,7 +463,6 @@ function hideMenuObjUI_2D( o )
 			case 'window': hideSizeWD(o); hideMenuUI(o); break;
 			case 'wf_line': hideMenuUI(o); break;
 			case 'wf_point': hideMenuUI(o); break;
-			case 'boxWF': hideControlWF(); hideMenuUI(o); break;
 			case 'obj': hidePivotGizmo(o); break;
 			case 'joinPoint': hidePivotGizmo(o); break;
 		}
@@ -545,9 +531,6 @@ function hideMenuUI(obj)
 	else if(tag == 'point') { $('[nameId="point_menu_1"]').hide(); }
 	else if(tag == 'window') { $('[nameId="wd_menu_1"]').hide(); }
 	else if(tag == 'door') { $('[nameId="wd_menu_1"]').hide(); }	
-	else if(tag == 'wf_line') { $('[nameId="tube_menu_1"]').hide(); }
-	else if(tag == 'wf_point') { $('[nameId="wf_point_menu_1"]').hide(); }
-	else if(tag == 'boxWF') { hideBoxWF_UI(); } 
 }
 
 

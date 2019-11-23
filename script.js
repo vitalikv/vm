@@ -180,7 +180,6 @@ infProject.geometry.labelWall = createGeometryPlan(0.25 * 2, 0.125 * 2);
 infProject.geometry.labelFloor = createGeometryPlan(1.0 * kof_rd, 0.25 * kof_rd);
 infProject.geometry.wf_point = createGeometryCube(0.1, 0.1, 0.1, {});
 infProject.tools = { pivot: createPivot(), gizmo: createGizmo360(), cutWall: [], point: createToolPoint(), axis: [createLineAxis(), createLineAxis()] }
-infProject.tools.wf = { plane: createPlaneWF(), cube: createControlBoxPop3D() };
 infProject.tools.list_group = {active: true, o1: [], el: []}; 
 infProject.tools.center_obj = {active: false, o1: [], el: []};  
 infProject.tools.merge_obj = {active: false, o1: [], o2: [], el: []}; 
@@ -1157,16 +1156,6 @@ function clickButton( event )
 		{
 			createEmptyFormWD_1({type:'window'});
 		}			
-		else if(clickO.button == 'create_tube_1')
-		{
-			var point = createPointWF({ pos : intersects[0].point, type : 'tool' });
-			clickO.move = point;				
-		}
-		else if(clickO.button == 'create_tube_box_1')
-		{
-			clickO.move = infProject.tools.wf.plane;
-			infProject.tools.wf.plane.visible = true;
-		}
 		else if(clickO.button == 'add_lotid')
 		{
 			loadObjServer({lotid: clickO.options, cursor: true});
@@ -1228,15 +1217,6 @@ function clickInterface(cdm)
 		{
 			clickO.button = 'create_wd_3';
 		}		
-		else if(cdm.button == 'create_tube_1')
-		{
-			clickO.button = 'create_tube_1';
-		}
-		else if(cdm.button == 'create_tube_box_1')
-		{
-			clickO.button = 'create_tube_box_1';
-			infProject.tools.wf.plane.visible = false;
-		}
 		else if(cdm.button == 'add_lotid')
 		{
 			clickO.button = 'add_lotid';

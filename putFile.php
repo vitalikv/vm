@@ -24,12 +24,10 @@ label.js
 clickActiveObj.js    
 saveLoad.js
 script.js
-block/floorWarm.js
 eventClick.js
 clickMovePivot.js
 clickObj.js
 clickMoveGizmo.js
-scaleBox.js
 loadObj.js
 uiInterface.js
 joinElement.js
