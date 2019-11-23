@@ -5,9 +5,7 @@
 
 $list = 'meshBSP.js 	
 calculationArea.js
-block/createWallBlock.js
-block/createWallPlaster.js
-block/createGrid.js
+createGrid.js
 crossWall.js
 addPoint.js
 addWD.js

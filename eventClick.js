@@ -13,7 +13,6 @@ $('[nameId="reset_scene_1"]').mousedown(function () { resetScene(); $('[nameId="
 $('[nameId="button_main_menu_reg_1"]').mousedown(function () { changeMainMenuUI({value: 'button_main_menu_reg_1'}); });
 $('[nameId="button_load_1"]').mousedown(function () { changeMainMenuUI({value: 'button_load_1'}); });
 $('[nameId="button_save_1"]').mousedown(function () { changeMainMenuUI({value: 'button_save_1'}); });
-$('[nameId="button_help"]').mousedown(function () { changeMainMenuUI({value: 'button_help'}); });
 $('[nameId="button_contact"]').mousedown(function () { changeMainMenuUI({value: 'button_contact'}); });
 //$('[nameId="load_pr_1"]').mousedown(function () { loadFile(); $('[nameId="background_main_menu"]').css({"display":"none"}); });
 //$('[nameId="save_pr_1"]').mousedown(function () { saveFile(); $('[nameId="background_main_menu"]').css({"display":"none"}); });
@@ -218,7 +217,6 @@ $('[data-action="estimate"]').mousedown(function ()
 $('[data-action="form_1"]').mousedown(function () 
 { 
 	console.log('form_1');
-	getFormWallR_1();
 	checkClickUINameID('form_1');
 	clickInterface();
 	$('.modal').css({"display":"block"});
@@ -233,8 +231,7 @@ $('[data-action="modal_window"]').mousedown(function (e) { e.stopPropagation(); 
 
 
 $('[data-action="modal"]').mousedown(function () 
-{	
-	checkChangeFormWallR();			
+{			
 	clickInterface(); 
 	$('[data-action="modal"]').css({"display":"none"}); 
 });
@@ -242,7 +239,6 @@ $('[data-action="modal"]').mousedown(function ()
 			
 $('[data-action="modal_window_close"]').mousedown(function () 
 {  
-	checkChangeFormWallR();
 	$('[data-action="modal"]').css({"display":"none"}); 
 });
 

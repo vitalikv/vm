@@ -595,8 +595,7 @@ function clickButtonLoadProjectUI(el)
 								<a href="/" class="window_main_menu_content_1_item">Главная страница</a>
 								<div class="window_main_menu_content_1_item" nameId="reset_scene_1">Пустой проект</div>
 								<div class="window_main_menu_content_1_item" nameId="button_load_1">Загрузить</div>
-								<div class="window_main_menu_content_1_item" nameId="button_save_1">Сохранить</div>
-								<div class="window_main_menu_content_1_item" nameId="button_help">Видеоинструкция</div>
+								<div class="window_main_menu_content_1_item" nameId="button_save_1">Сохранить</div>								
 								<div class="window_main_menu_content_1_item" nameId="button_contact">Контакты</div>
 							</div>
 							<div class="window_main_menu_content_1_column">

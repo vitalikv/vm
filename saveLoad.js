@@ -99,19 +99,12 @@ function resetScene()
 		scene.remove(wall[i].label[0]); 
 		scene.remove(wall[i].label[1]);
 		if(wall[i].userData.wall.outline) { scene.remove(wall[i].userData.wall.outline); }
-		if(wall[i].userData.wall.zone) { disposeNode(wall[i].userData.wall.zone.label); scene.remove(wall[i].userData.wall.zone.label); }
-
-		for(var i2 = wall[i].userData.wall.brick.arr.length - 1; i2 > -1; i2--)
-		{
-			var block = wall[i].userData.wall.brick.arr[i2];
-			scene.remove(block);			
-		}			
+		if(wall[i].userData.wall.zone) { disposeNode(wall[i].userData.wall.zone.label); scene.remove(wall[i].userData.wall.zone.label); }			
 		
 		wall[i].label = [];
 		wall[i].userData.wall.p = [];
 		wall[i].userData.wall.outline = null;
 		wall[i].userData.wall.zone = null;
-		wall[i].userData.wall.brick.arr = [];
 		
 		scene.remove(wall[i]); 
 	}
@@ -1119,20 +1112,6 @@ function loadStartForm(cdm)
 		}			
 	}
 	
-	if(1==2)
-	{
-		var roofB = new THREE.Mesh( new THREE.PlaneGeometry( 10, 10 ), new THREE.MeshLambertMaterial( {color: 0xff0000, transparent: true, opacity: 1, side: THREE.DoubleSide } ) );
-		roofB.rotation.set(-Math.PI/4, 0, 0);
-		roofB.position.set(0, 6, 0);
-		//roofB.userData.tag = 'planeMath';	
-		scene.add( roofB );
-		
-		var roofB = new THREE.Mesh( new THREE.PlaneGeometry( 10, 10 ), new THREE.MeshLambertMaterial( {color: 0xff0000, transparent: true, opacity: 1, side: THREE.DoubleSide } ) );
-		roofB.rotation.set(Math.PI/4, 0, 0);
-		roofB.position.set(0, 6, 0);	
-		scene.add( roofB );			
-	}
-	
 	
 	var wall = infProject.scene.array.wall;
 	var point = infProject.scene.array.point;
@@ -1141,18 +1120,7 @@ function loadStartForm(cdm)
 	if(wall.length > 0) detectRoomZone();
 	if(wall.length > 0) upLabelPlan_1(wall);
 	if(wall.length > 0) createWallZone(wall[0])
-	
-	//width_wall = 0.3;
-	
-	if(form == 'wall_kirpich' || form == 'wall_block') 
-	{ 
-		getFormWallR_1(); 	// получаем параметры стены из input 
-		createFormWallR(); 
-	}  
-	if(form == 'wall_plaster') 
-	{ 
-		createWallPlaster();
-	} 
+
 	
 	if(infProject.settings.camera.zoom != 1) { cameraZoomTop( infProject.settings.camera.zoom ); }
 	

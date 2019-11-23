@@ -286,8 +286,7 @@ function splitWalls( wall, point )
 		wall_1.userData.wall.arrO[wall_1.userData.wall.arrO.length] = obj; 
 		
 		objsBSP = { wall : wall_1, wd : createCloneWD_BSP( obj ) };				
-		MeshBSP( obj, objsBSP ); 
-		cutMeshBlockBSP( obj );		
+		MeshBSP( obj, objsBSP ); 		
 	} 
 	
 	for ( var i = 0; i < wd.wall_2.length; i++ ) 
@@ -298,8 +297,7 @@ function splitWalls( wall, point )
 		wall_2.userData.wall.arrO[wall_2.userData.wall.arrO.length] = obj; 
 		
 		objsBSP = { wall : wall_2, wd : createCloneWD_BSP( obj ) };				
-		MeshBSP( obj, objsBSP ); 
-		cutMeshBlockBSP( obj );		
+		MeshBSP( obj, objsBSP ); 	
 	} 	
 	
 	

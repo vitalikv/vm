@@ -1,5 +1,5 @@
 <?php
-require_once ($_SERVER['DOCUMENT_ROOT']."/gl/include/bd_1.php");
+require_once ($_SERVER['DOCUMENT_ROOT']."/include/bd_1.php");
 
 
 

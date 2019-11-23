@@ -426,25 +426,7 @@ function moveToggleChangeWin( event, controll )
 		
 		// меняем цвет у wd
 		wd.material.depthTest = false;  
-		wd.material.opacity = 1.0; 
-
-		// полностью восстанавливаем кирпичную стену
-		var arrB = wall.userData.wall.brick.arr;
-		for ( var i = 0; i < arrB.length; i++ )
-		{
-			arrB[i].geometry = wall.userData.wall.brick.geometry.clone();
-		}
-
-		cutSideBlockWall({wall:wall});
-		
-		// верзаем в кирпичах wd, кроме того wd которое мы перетаскиваем
-		var arrO = wall.userData.wall.arrO;
-		for ( var i = 0; i < arrO.length; i++ )
-		{
-			if(arrO[i] == wd) continue;
-			
-			cutMeshBlockBSP( arrO[i] );	
-		}		
+		wd.material.opacity = 1.0; 		
 	}	
 	
 	var pos = new THREE.Vector3().addVectors( wd.userData.door.wall.controll.offset, intersects[ 0 ].point );	
@@ -561,8 +543,6 @@ function clickMouseUpToggleWD( controll )
 		wd.material.transparent = true;
 		wd.material.opacity = 0;					
 	}
-
-	cutMeshBlockBSP( wd );
 	
 	clickO.last_obj = wd;
 }

@@ -62,7 +62,7 @@ function onDocumentMouseDown( event )
 {
 	//event.preventDefault();
 
-	if (window.location.hostname == '3d-stroyka' || window.location.hostname == 'xn------6cdcklga3agac0adveeerahel6btn3c.xn--p1ai'){} 
+	if (window.location.hostname == 'vm'){} 
 	else { return; }
  
 	long_click = false;

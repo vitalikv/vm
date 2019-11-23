@@ -905,8 +905,6 @@ function createOneWall3( point1, point2, width, cdm )
 	wall.userData.wall.area = { top : 0 }; 
 	//wall.userData.wall.active = { click: true, hover: true };
 	
-	wall.userData.wall.brick = { arr : [] };
-	wall.userData.wall.plaster = { o : null };
 	wall.userData.wall.room = { side : 0, side2 : [null,null,null] };
 	
 	var v = wall.geometry.vertices;
@@ -945,70 +943,11 @@ function createOneWall3( point1, point2, width, cdm )
 	point1.w[n] = wall;
 	point1.p[n] = point2;
 	point1.start[n] = 0;	
-
 	
 	var n = point2.w.length;		
 	point2.w[n] = wall;
 	point2.p[n] = point1;
-	point2.start[n] = 1;
-		
-	
-	// штукатурная стена
-	if(cdm.plaster)
-	{
-		var index = 1;
-		
-		wall.updateMatrixWorld();
-		
-		var v = wall.userData.wall.v;		
-		
-		if(index == 1) { var x = v[v.length - 6].x - v[0].x; }
-		else if(index == 2) { var x = v[v.length - 2].x - v[4].x; }	
-
-		var width = cdm.plaster.width;
-		
-		var geometry = createGeometryCube(1, height, 1, {material:true});
-		var v = geometry.vertices;
-		v[0].x = v[1].x = v[6].x = v[7].x = 0;
-		v[2].x = v[3].x = v[4].x = v[5].x = x;
-		v[0].z = v[1].z = v[2].z = v[3].z = width;	// index 1
-		v[4].z = v[5].z = v[6].z = v[7].z = 0;			
-		
-		
-		var color = [0x7d7d7d, 0x696969]; 		
-		var material = new THREE.MeshLambertMaterial({ color : 0xc4c4c4, lightMap : lightMap_1 });
-		var material_1 = new THREE.MeshLambertMaterial({ color : color[0], lightMap : lightMap_1 });
-		
-		var materials = [ material.clone(), material_1.clone(), material_1.clone(), new THREE.MeshLambertMaterial( { color: 0xa1a1a1, lightMap : lightMap_1 } ) ];
-	
-		var wall_2 = new THREE.Mesh( geometry, materials );
-		
-		
-		var num = (index == 1) ? 0 : 4;
-
-		var pos = wall.localToWorld( wall.userData.wall.v[ num ].clone() );
-		
-		wall_2.position.copy(pos);
-		wall_2.rotation.copy(wall.rotation);
-		
-		upUvs_1( wall_2 );
-		
-		var texture = [{index:1, img:infProject.load.img[1], repeat:{x:0.6, y:0.6}}, {index:2, img:infProject.load.img[1], repeat:{x:0.6, y:0.6}}];
-		
-		for ( var i = 0; i < texture.length; i++ )
-		{
-			setTexture({obj:wall_2, material:texture[i]});
-		}
-
-		wall_2.userData.wall_2 = {};		
-		wall_2.userData.wall_2.height_1 = Math.round(height * 100) / 100;
-		wall_2.userData.wall_2.width = Math.round(width * 1000) / 1000;
-		
-		scene.add( wall_2 );
-		
-		wall.userData.wall.plaster.o = wall_2;
-	}
-	
+	point2.start[n] = 1;		
 	
 	scene.add( wall );
 		
@@ -1674,10 +1613,6 @@ document.body.addEventListener("keydown", function (e)
 			if(infProject.activeInput == 'input-width') { changeWidthWall( $('[data-action="input-width"]').val() ); }
 			if(infProject.activeInput == 'wall_1') { inputChangeWall_1({}); }	 		
 			if(infProject.activeInput == 'wd_1') { inputWidthHeightWD(clickO.last_obj); }
-			if(infProject.activeInput == 'wall_plaster_width_1') 
-			{ 		
-				inputWidthOneWallPlaster({wall:obj_line[0], width:{value:$('[nameid="wall_plaster_width_1"]').val(), unit:'cm'}, index:1}) 
-			}
 			if(infProject.activeInput == 'size-grid-tube-xy-1')
 			{
 				updateGrid({size : $('[nameid="size-grid-tube-xy-1"]').val()});

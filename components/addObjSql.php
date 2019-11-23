@@ -1,5 +1,5 @@
 <?php
-require_once ($_SERVER['DOCUMENT_ROOT']."/gl/include/bd_1.php");
+require_once ($_SERVER['DOCUMENT_ROOT']."/include/bd_1.php");
 
 
 
@@ -9,7 +9,7 @@ $info["name"] = 'насос';
 $info["size"] = 23;
 $info = json_encode($info);
 
-$fbx = file_get_contents($_SERVER['DOCUMENT_ROOT']."/gl/export/kran2.fbx");
+$fbx = file_get_contents($_SERVER['DOCUMENT_ROOT']."/export/kran2.fbx");
 
 //$fbx = addslashes($fbx);
 //$fbx = null;	

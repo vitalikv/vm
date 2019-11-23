@@ -85,10 +85,6 @@ function inputChangeWall_1(cdm)
 	
 	showRuleCameraWall();	// обновляем размеры стены
 	
-	resetSideBlockWall({wall:wall});	// обновляем кирпичи
-	cutSideBlockWall({wall:wall});		// обрезаем кирпичи по бокам стены	
-	for(var i = 0; i < wall.userData.wall.arrO.length; i++) { cutMeshBlockBSP( wall.userData.wall.arrO[i] ); }	// вырезаем wd в кирпичах 
-	
 	renderCamera();
 }
 
@@ -221,41 +217,6 @@ function inputLengthWall_1(cdm)
 	updateShapeFloor( compileArrPickZone(wall) );  				 			
 	
 	showLengthWallUI(wall);
-	
-	
-	
-	if(wall.userData.wall.plaster.o)
-	{	
-		var wall_2 = wall.userData.wall.plaster.o;
-		
-		var index = 1;
-		
-		wall.updateMatrixWorld();
-		
-		var v = wall.userData.wall.v;		
-		
-		if(index == 1) { var x = v[v.length - 6].x - v[0].x; }
-		else if(index == 2) { var x = v[v.length - 2].x - v[4].x; }			
-		
-		var geometry = createGeometryCube(1, wall.userData.wall.height_1, 1, {material:true});	// обновляем стену до простой стены
-		var v = geometry.vertices;
-		v[0].x = v[1].x = v[6].x = v[7].x = 0;
-		v[2].x = v[3].x = v[4].x = v[5].x = x;
-		v[0].z = v[1].z = v[2].z = v[3].z = wall_2.userData.wall_2.width;	// index 1
-		v[4].z = v[5].z = v[6].z = v[7].z = 0;				
-		
-		wall_2.geometry = geometry;
-		
-		var num = (index == 1) ? 0 : 4;
-		var pos = wall.localToWorld( wall.userData.wall.v[ num ].clone() );		
-		wall_2.position.copy(pos);
-		wall_2.rotation.copy(wall.rotation);		
-		
-		wall_2.userData.wall_2.height_1 = wall.userData.wall.height_1;
-		wall_2.userData.wall_2.width = wall.userData.wall.width;
-		
-		upUvs_1( wall_2 );		
-	}
 
 	clickPointUP_BSP(wallR);
 }

@@ -67,14 +67,7 @@
 				<? require_once("include/bottom_panel_1.php"); ?>	
 				<? require_once("include/modal_window_1.php"); ?>
 				<? require_once("include/modal_window_3.php"); ?>
-					
-				
-				<div class="help">
-					<a href="https://www.youtube.com/watch?v=rqCZYTKqfIE" class="button_youtube button_gradient_1" data-action ='top_panel_1' target="_blank">
-						<img src="<?=$path?>/img/button_youtube.png">
-						<div style="padding-left:10px;">видеоинструкция</div>
-					</a>	
-				</div>
+									
 				</noindex>
 			</div>
 			
@@ -87,12 +80,8 @@
 	
 	
 	<script src="<?=$path?>meshBSP.js"></script> 	
-    <script src="<?=$path?>calculationArea.js?<?=$vrs?>"></script>
-    
-	<script src="<?=$path?>block/createWallBlock.js?<?=$vrs?>"></script>
-	<script src="<?=$path?>block/createWallPlaster.js?<?=$vrs?>"></script>
-	<script src="<?=$path?>block/createGrid.js?<?=$vrs?>"></script>
-	
+    <script src="<?=$path?>calculationArea.js?<?=$vrs?>"></script>	
+	<script src="<?=$path?>createGrid.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>scaleBox.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>clickObj.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>clickMoveGizmo.js?<?=$vrs?>"></script>
