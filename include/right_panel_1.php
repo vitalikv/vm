@@ -86,79 +86,7 @@
 <!--   ------------>
 
 
-	.substrate
-	{
-		z-index: 100;
-		
-		position:fixed; 
-		left:0; 
-		top:70px;
-		width: 200px; 
-		height: auto; 
-		background-color:#ffffff;
-		border:1px solid #e6e4e4;		
-	}
-	
 
-	.input_load_substrate
-	{
-		opacity: 0;
-		visibility: hidden;
-		position: absolute;		
-	}	
-
-	.prew_substrate 
-	{
-		width: 200px; 
-		min-height: 100px;
-		max-height: 150px;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;		
-	}
-	
-	.prew_substrate img
-	{
-		display: block;	
-		width: 200px;
-		min-height: 100px;
-		max-height: 150px;		
-		margin: auto; 
-		-o-object-fit: contain;
-		object-fit: contain;			
-	}
-
-	.substrate input
-	{
-		display: block;
-		margin: 10px auto;
-		width: 90%;
-			
-		font-size: 18px;
-		text-align: center;
-		color: #666;
-		
-		text-decoration: none;
-		line-height: 2em;
-		padding: 0;
-		
-		border: 1px solid #ccc;
-		border-radius: 3px;
-		background-color:#fff;	
-	}
-	
-	.substrate .flex_1 input
-	{
-		width: 100px;
-	}	
-	
-	.substrate .block_1
-	{
-		margin: 10px auto;
-		border-top: 1px solid #ccc;
-		border-bottom: 1px solid #ccc;
-	}
 
 </style>
 
@@ -184,38 +112,7 @@ function showHideCatalogMenuUI(cdm)
 }
 
 
-//  substrate
-$('#load_substrate_1').change(readURL);	
-$('[nameId="assign_size_substrate"]').mousedown(function () { assignSizeSubstrate(); });
 
-
-$('[nameId="input_rotate_substrate_45"]').mousedown(function () { setRotateSubstrate({angle: 45}); });
-$('[nameId="input_rotate_substrate_90"]').mousedown(function () { setRotateSubstrate({angle: 90}); });
-
-
-$('[nameId="input_transparency_substrate"]').on("input", function() { setTransparencySubstrate({value: $(this).val()}); }); 
-
-
-// загрузка img  с компьютера
-function readURL(e) 
-{
-	if (this.files[0]) 
-	{		
-		if (this.files[0].type == "image/png" || this.files[0].type == "image/jpeg")
-		{
-			var reader = new FileReader();
-			reader.onload = function (e) 
-			{
-				$('#upload-img').attr('src', e.target.result);						
-				
-				setImgCompSubstrate({image: e.target.result});					
-			}				
-
-			reader.readAsDataURL(this.files[0]);  					
-		}				
-	}
-}	 
-//  substrate
 
 	
 });	 
@@ -262,66 +159,6 @@ function readURL(e)
 		<div class="flex_column_1" nameId="wrap_plan" style="display: none;">
 			<div class="right_panel_1_1_h">План</div>
 			
-				<div class="right_panel_1_1_list" nameId="rp_plane">
-					
-				</div>
-				
-				<div style="margin-bottom: 20px;">				
-					<div class="button1 button_gradient_1" nameId="button_add_plane">
-						добавить этаж	
-					</div>
-					<div class="button1 button_gradient_1" nameId="button_delete_plane">
-						удалить этаж	
-					</div>					
-				</div>				
-						
-				<div class="substrate" nameId="substrate" style="display: block;">
-
-					<input name="file" type="file" id="load_substrate_1" class="input_load_substrate">
-					<label for="load_substrate_1" class="button1 button_gradient_1" nameId="load_img_1">		
-						загрузить план
-					</label>
-
-					<div class="prew_substrate">
-						<img src="#" id="upload-img" alt=""/>
-					</div>
-					
-					<div >
-						<div class="substrate_block">
-							прозрачность
-						</div>	
-						<input type="range" nameId="input_transparency_substrate" min="1" max="100" value="100">
-					</div>	
-					
-					<div class="block_1">
-						<div class="substrate_block">
-							вращение
-						</div>
-						
-						
-						
-						<div class="flex_1">
-							<input type="text" nameId="input_rotate_substrate" value=0>
-							<div class="button1 button_gradient_1" nameId="input_rotate_substrate_45">
-								45
-							</div>
-
-							<div class="button1 button_gradient_1" nameId="input_rotate_substrate_90">
-								90
-							</div>	
-						</div>
-					</div>	
-					
-					длина
-					<input type="text" nameId="input_size_substrate" value=0>	
-
-					<div class="button1 button_gradient_1" nameId="assign_size_substrate">
-						применить
-					</div>			
-
-									
-				</div>			
-
 		</div>
 		
 		

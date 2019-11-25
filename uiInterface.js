@@ -443,34 +443,3 @@ function clickItemCenterObjUI_2(cdm)
 
 
 
-
-// добавляем этаж в список правой панели UI
-function addPlaneListUI(cdm)
-{
-	if(!cdm) return;				
-	if(!cdm.plane) return;	
-	
-	var plane = cdm.plane;
-	var n = infProject.scene.substrate.floor.length - 1;
-
-	createTextUI_1({obj: plane, nameId: "rp_plane", nameRus: "этаж"+(n+1), uuid: plane.uuid});
-	
-	
-	// снимаем старые выдиления в UI 
-	for(var i = 0; i < infProject.tools.plane.el.length; i++)
-	{
-		infProject.tools.plane.el[i].css('background-color', '#ffffff');
-		infProject.tools.plane.o1[i].userData.substrate.active = false;
-	}	
-	
-	
-	var el = $($('[nameId="rp_plane"]')[0].children[$('[nameId="rp_plane"]')[0].children.length-1]);
-	el.css('background-color', '#00ff00');
-
-	plane.userData.substrate.active = true;
-	
-	renderCamera();
-}
-
-
-

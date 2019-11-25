@@ -167,10 +167,7 @@ var lightMap_1 = new THREE.TextureLoader().load(infProject.path+'/img/lightMap_1
 
 var clickO = resetPop.clickO();
 infProject.project = null;
-infProject.scene.array = resetPop.infProjectSceneArray();
-infProject.scene.substrate = { ruler: [], floor: [], active: false };
-infProject.scene.substrate.ruler = createToolRulerSubstrate();  
-//infProject.scene.substrate.floor[0] = createSubstrate({ pos: {y: 0} });
+infProject.scene.array = resetPop.infProjectSceneArray(); 
 infProject.scene.grid = { obj: createGrid(infProject.settings.grid), active: false, link: false, show: true };
 infProject.scene.block = { key : { scroll : false } };		// блокировка действий/клавишь
 infProject.scene.block.click = {wall: false, point: false, door: false, window: false, room: false, tube: false, controll_wd: false, obj: false};
@@ -194,8 +191,6 @@ infProject.ui = {}
 infProject.ui.list_wf = [];
 infProject.ui.main_menu = [];
 infProject.ui.right_menu = {active: ''};
-
-infProject.scene.substrate.active = true;
 
 console.log(infProject);
 
@@ -1606,14 +1601,6 @@ document.body.addEventListener("keydown", function (e)
 			else if(infProject.activeInput == 'dp_inf_1_proj')
 			{
 				inputLoadProject();
-			}
-			else if(infProject.activeInput == 'input_rotate_substrate')
-			{
-				setRotateSubstrate({angle: $('[nameId="input_rotate_substrate"]').val(), set: true});
-			}
-			else if(infProject.activeInput == 'input_size_substrate')
-			{
-				assignSizeSubstrate();
 			}				
 		}		
 		 
