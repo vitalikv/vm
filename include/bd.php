@@ -97,7 +97,6 @@ $infProject['settings']['grid']['size'] = 0.2;
 $infProject['settings']['grid']['count'] = null;
 $infProject['settings']['grid']['pos'] = [ 'y' => 0.19 ];
 $infProject['settings']['grid']['color'] = 0x009dff;
-$infProject['settings']['interface']['button']['mode_1'] = ['mode' => ['План', 'Монтаж'], 'active' => 'План'];
 $infProject['settings']['interface']['button']['showHideWall_1'] = ['active' => 'Спрятать стены'];
 
 

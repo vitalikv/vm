@@ -159,6 +159,19 @@ function showHideCatalogMenuUI(cdm)
 		<div class="flex_column_1" nameId="wrap_plan" style="display: none;">
 			<div class="right_panel_1_1_h">План</div>
 			
+			
+			<div class="button1-wrap-1">
+				<div data-action ='wall' class="button1 button_gradient_1">Стена</div>
+			</div>				
+			
+			<div class="button1-wrap-1">
+				<div data-action ='create_wd_2' class="button1 button_gradient_1">Дверь</div>
+			</div>			
+			
+			<div class="button1-wrap-1">
+				<div data-action ='create_wd_3' class="button1 button_gradient_1">Окно</div>
+			</div>			
+			
 		</div>
 		
 		
@@ -187,15 +200,7 @@ function showHideCatalogMenuUI(cdm)
 							</div>	
 							<div class="button1 button_gradient_1" nameId="select_gizmo">
 								вращение	
-							</div>
-							
-							
-							
-							<select name="fruit">
-							<option value ="none">Глобально</option>
-							<option value ="guava">Локально</option>
-							</select>
-							
+							</div>							
 						</div>
 
 						<div class="flex_1 input_rotate">

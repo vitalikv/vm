@@ -63,23 +63,9 @@ $('[infcam]').on('mousedown', function(e)
 	var value = $(this).attr('infcam');
 	var txt = (value == '3D') ? '2D' : '3D';
 	$(this).text(txt);
-	$(this).attr({"infcam": txt});
-	
-	if(value == '3D')
-	{
-		$('[nameId="top_menu_b1"]').hide();
-		$('[nameId="top_menu_b2"]').hide();
-		$('[inf_type="mode_1"]').hide();
-	}
-	else
-	{
-		if($('[nameId="top_menu_b1"]').attr('inf-visible') == 'true') { $('[nameId="top_menu_b1"]').show(); }
-		if($('[nameId="top_menu_b2"]').attr('inf-visible') == 'true') { $('[nameId="top_menu_b2"]').show();	}
-		$('[inf_type="mode_1"]').show();
-	}
+	$(this).attr({"infcam": txt});	
 	
 	clickInterface({button: value});
-	return false; 
 }); 
  
 
@@ -95,9 +81,8 @@ $('[nameId="color_tube_1_default"]').on('mousedown', function(e)
   
  
 	
-$('[inf_type="mode_1"]').on('mousedown', function(e) { showHideObjMode_1(); });
-$('[nameId="showHideWall_1"]').on('mousedown', function(e) { showHideWallHeight_1(); });
 
+$('[nameId="showHideWall_1"]').on('mousedown', function(e) { showHideWallHeight_1(); });
 
 	
 $('[nameId="select_pivot"]').mousedown(function () { switchPivotGizmo({mode:'pivot'}); });

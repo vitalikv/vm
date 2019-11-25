@@ -17,11 +17,7 @@ function changeCamera(cam)
 	{					
 		changeDepthColor();			
 		cameraZoomTop( camera.zoom );
-		if(infProject.scene.grid.show) infProject.scene.grid.obj.visible = true;
-		
-		if(infProject.settings.interface.button.mode_1) { showHideObjMode_1({active: infProject.settings.interface.button.mode_1.active}); }
-		
-		if(infProject.settings.interface.button.showHideWall_1) { $('[nameId="showHideWall_1"]').hide(); }
+		if(infProject.scene.grid.show) infProject.scene.grid.obj.visible = true;		
 		
 		changeRightMenuUI_1({current: true});
 	}
@@ -33,8 +29,6 @@ function changeCamera(cam)
 		cameraZoomTop( cameraTop.zoom );
 		changeDepthColor();
 		if(infProject.scene.grid.show) infProject.scene.grid.obj.visible = true;
-
-		if(infProject.settings.interface.button.showHideWall_1) { $('[nameId="showHideWall_1"]').show(); }
 		
 		changeRightMenuUI_1({current: true});
 	}
@@ -183,49 +177,6 @@ function detectZoomScreenWall()
 
 
 
-// прячем/показываем объекты в режиме план/монтаж + блокировка действий 
-function showHideObjMode_1(cdm)
-{ 
-	if(!cdm) cdm = {};
-	
-	if(cdm.active)
-	{
-		var txtButton = (infProject.settings.interface.button.mode_1.active == 'Монтаж')?'План':'Монтаж';
-	}
-	else
-	{
-		var txtButton = infProject.settings.interface.button.mode_1.active;	
-		infProject.settings.interface.button.mode_1.active = (txtButton == 'Монтаж')?'План':'Монтаж';		
-	}
-	
-	$('[inf_type="mode_1"]').text(txtButton);
-	
-	if(txtButton == 'Монтаж')
-	{
-		$('[nameId="top_menu_b1"]').hide(); $('[nameId="top_menu_b1"]').attr('inf-visible', 'false');
-		$('[nameId="top_menu_b2"]').show();	$('[nameId="top_menu_b2"]').attr('inf-visible', 'true');
-	}
-	else
-	{
-		$('[nameId="top_menu_b2"]').hide();	$('[nameId="top_menu_b2"]').attr('inf-visible', 'false');
-		$('[nameId="top_menu_b1"]').show();	$('[nameId="top_menu_b1"]').attr('inf-visible', 'true');
-	}
-
-	
-	var visible_1 = (infProject.settings.interface.button.mode_1.active == 'Монтаж') ? true : false;
-	var visible_2 = (infProject.settings.interface.button.mode_1.active == 'Монтаж') ? false : true;	//для стен, wd
-	
-	//----------
-		
-
-	showHideArrObj(infProject.scene.array.point, visible_2);	// прячем/показываем точки у стен
-	
-
-	blockActiveObj({visible_1: visible_1, visible_2: visible_2});
-
-	deActiveSelected();	
-}
-
 
 
 // блокируем/разблокируем объекты
@@ -255,11 +206,10 @@ function blockActiveObj(cdm)
 
 
 
-// прячем/показываем объекты в режиме план/монтаж + блокировка действий 
+// прячем(уменьшаем)/показываем стены 
 function showHideWallHeight_1(cdm)
 { 
 	if(!cdm) cdm = {};
-	
 	
 	if(cdm.active)
 	{

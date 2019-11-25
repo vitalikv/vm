@@ -167,6 +167,7 @@ var lightMap_1 = new THREE.TextureLoader().load(infProject.path+'/img/lightMap_1
 
 var clickO = resetPop.clickO();
 infProject.project = null;
+infProject.settings.active = { pg: 'pivot' };
 infProject.scene.array = resetPop.infProjectSceneArray(); 
 infProject.scene.grid = { obj: createGrid(infProject.settings.grid), active: false, link: false, show: true };
 infProject.scene.block = { key : { scroll : false } };		// блокировка действий/клавишь
@@ -176,14 +177,10 @@ infProject.geometry = { circle : createCircleSpline() }
 infProject.geometry.labelWall = createGeometryPlan(0.25 * 2, 0.125 * 2);
 infProject.geometry.labelFloor = createGeometryPlan(1.0 * kof_rd, 0.25 * kof_rd);
 infProject.geometry.wf_point = createGeometryCube(0.1, 0.1, 0.1, {});
-infProject.tools = { pivot: createPivot(), gizmo: createGizmo360(), cutWall: [], point: createToolPoint(), axis: [createLineAxis(), createLineAxis()] }
-infProject.tools.list_group = {active: true, o1: [], el: []}; 
-infProject.tools.center_obj = {active: false, o1: [], el: []};  
-infProject.tools.merge_obj = {active: false, o1: [], o2: [], el: []};  
+infProject.tools = { pivot: createPivot(), gizmo: createGizmo360(), cutWall: [], point: createToolPoint(), axis: [createLineAxis(), createLineAxis()] } 
 
 infProject.catalog = infoListObj();  
 infProject.listColor = resetPop.listColor(); 
-infProject.settings.active = { pg: 'pivot', group: true };
 infProject.start = true; 
 
 infProject.ui = {}

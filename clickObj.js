@@ -208,6 +208,8 @@ function switchPivotGizmo(cdm)
 	
 	if(!obj) return;			
 	
+	infProject.settings.active.pg = cdm.mode;
+	
 	infProject.tools.pivot.visible = false;
 	infProject.tools.gizmo.visible = false;
 	
