@@ -9,9 +9,9 @@ function infoListObj()
 	arr[0] =
 	{	
 		lotid : 1,
-		url : infProject.path+'import/nasos_z.fbx', 
-		name : 'насос',
-		planeMath : 0.5,
+		url : infProject.path+'import/furn_1.fbx', 
+		name : 'диван',
+		planeMath : 0.1,
 	}
 	
 	arr[1] =

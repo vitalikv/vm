@@ -164,6 +164,7 @@ var room = [];
 var ceiling = [];
 var arrWallFront = [];
 var lightMap_1 = new THREE.TextureLoader().load(infProject.path+'/img/lightMap_1.png');
+var texture_point_1 = new THREE.TextureLoader().load(infProject.path+'/img/point1.png');
 
 var clickO = resetPop.clickO();
 infProject.project = null;
@@ -754,24 +755,59 @@ function createToolPoint()
 	}	
 
 	
-	var obj = new THREE.Mesh( createGeometryCircle(v), new THREE.MeshLambertMaterial( { color : 0x333333, wireframe:false } ) ); 
+	var obj = new THREE.Mesh( createGeometryCircle(v), new THREE.MeshLambertMaterial( { color : 0xffffff, transparent: true, opacity: 1.0, depthTest: false, lightMap : lightMap_1 } ) );
+	obj.material.map = texture_point_1;
+	obj.material.map.offset.x = 0.5;
+	obj.material.map.offset.y = 0.5;
+	obj.material.map.repeat.set(4.9, 4.9);
 	obj.userData.tag = 'tool_point';
 	obj.renderOrder = 1;
 	obj.position.set(0,0,0);
 	obj.visible = false;	
 	scene.add( obj );
-	
+	upUvs_4( obj )
 	return obj;
 }
 
 
 
 
+function upUvs_4( obj )
+{
+	obj.updateMatrixWorld();
+	var geometry = obj.geometry;
+	
+    geometry.faceVertexUvs[0] = [];
+	var faces = geometry.faces;
+	
+    for (var i = 0; i < faces.length; i++) 
+	{		
+		var components = ['x', 'y', 'z'].sort(function(a, b) {			
+			return Math.abs(faces[i].normal[a]) - Math.abs(faces[i].normal[b]);
+		});	
+
+
+        var v1 = geometry.vertices[faces[i].a];
+        var v2 = geometry.vertices[faces[i].b];
+        var v3 = geometry.vertices[faces[i].c];				
+
+        geometry.faceVertexUvs[0].push([
+            new THREE.Vector2(v1[components[0]], v1[components[1]]),
+            new THREE.Vector2(v2[components[0]], v2[components[1]]),
+            new THREE.Vector2(v3[components[0]], v3[components[1]])
+        ]);
+    }
+
+    geometry.uvsNeedUpdate = true;
+	geometry.elementsNeedUpdate = true; 
+}
+
+
 
 
 function createPoint( pos, id )
 {
-	var point = obj_point[obj_point.length] = new THREE.Mesh( infProject.tools.point.geometry, new THREE.MeshLambertMaterial( { color : 0x333333, transparent: true, opacity: 0.6, depthTest: false, lightMap : lightMap_1 } ) ); 
+	var point = obj_point[obj_point.length] = new THREE.Mesh( infProject.tools.point.geometry, infProject.tools.point.material.clone() );
 	point.position.copy( pos );		
 
 	point.renderOrder = 1;

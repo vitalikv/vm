@@ -14,7 +14,9 @@ function changeCamera(cam)
 
 	
 	if(camera == cameraTop)
-	{					
+	{				
+		blockActiveObj({visible_1: false, visible_2: false});
+		
 		changeDepthColor();			
 		cameraZoomTop( camera.zoom );
 		if(infProject.scene.grid.show) infProject.scene.grid.obj.visible = true;		

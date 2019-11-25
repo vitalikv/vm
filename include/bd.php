@@ -91,12 +91,12 @@ $infProject['settings']['floor']['areaPoint'] = 'inside';
 $infProject['settings']['floor']['label'] = false;
 $infProject['settings']['floor']['color'] = 0xf7f2d5;
 $infProject['settings']['wall']['label'] = 'double';
-$infProject['settings']['wall']['color']['top'] = 0xded3b8;
+$infProject['settings']['wall']['color']['top'] = 0x444444;
 $infProject['settings']['wall']['color']['front'] = 0xada186;
-$infProject['settings']['grid']['size'] = 0.2;
+$infProject['settings']['grid']['size'] = 1.0;
 $infProject['settings']['grid']['count'] = null;
-$infProject['settings']['grid']['pos'] = [ 'y' => 0.19 ];
-$infProject['settings']['grid']['color'] = 0x009dff;
+$infProject['settings']['grid']['pos'] = [ 'y' => 0.09 ];
+$infProject['settings']['grid']['color'] = 0xcccccc;
 $infProject['settings']['interface']['button']['showHideWall_1'] = ['active' => 'Спрятать стены'];
 
 

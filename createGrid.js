@@ -7,11 +7,12 @@ function createGrid(cdm)
 {
 	var lineGrid = new THREE.Group();
 	
-	var size = (cdm.size) ? cdm.size : 0.2;
+	var size = (cdm.size) ? cdm.size : 1.0;
 	size = Math.round(size * 100)/100; 
 	var count = (cdm.count) ? cdm.count : (15/size);
 	
-	var color = 0xd6d6d6;	
+	var color = 0xd6d6d6;
+	var color = 0xcccccc;	
 	if(cdm.color) { color = cdm.color; }	
 	
 	var geometry = new THREE.Geometry();
