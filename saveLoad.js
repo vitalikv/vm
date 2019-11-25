@@ -34,7 +34,6 @@ var resetPop =
 		array.fundament = [];
 		array.lineGrid = { limit : false };
 		array.base = (infProject.start)? infProject.scene.array.base : [];	// массив клонируемых объектов
-		array.group = [];
 		
 		return array;
 	},
@@ -86,7 +85,6 @@ function resetScene()
 	var window = infProject.scene.array.window;
 	var door = infProject.scene.array.door;
 	var obj = infProject.scene.array.obj;
-	var group = infProject.scene.array.group;
 	
 	for ( var i = 0; i < wall.length; i++ )
 	{ 
@@ -143,14 +141,6 @@ function resetScene()
 	{ 
 		disposeNode(obj[i]);
 		scene.remove(obj[i]);
-	}
-
-	for ( var i = 0; i < group.length; i++ )
-	{ 
-		var centerObj = group[i].userData.groupObj.centerObj;
-		
-		disposeNode(centerObj);
-		scene.remove(centerObj); 
 	}	
 	
 	
@@ -162,22 +152,7 @@ function resetScene()
 	
 	infProject.ui.list_wf = [];
 	
-	// удаляем список дочерних объектов UI
-	for(var i = 0; i < infProject.tools.list_group.el.length; i++) 
-	{
-		infProject.tools.list_group.el[i].remove();
-	}	
 	
-	infProject.tools.list_group = {active: true, o1: [], el: []}; 
-	
-	
-	// удаляем список центров объекта UI
-	for(var i = 0; i < infProject.tools.center_obj.el.length; i++)
-	{
-		infProject.tools.center_obj.el[i].remove();
-	}	
-	
-	infProject.tools.center_obj = {active: false, o1: [], el: []};	
 	
 	//disposeHierchy(scene, disposeNode);
 	
@@ -438,7 +413,6 @@ function getJsonGeometry()
 	var walls = [];
 	var rooms = [];
 	var furn = [];
-	var group = [];
 	
 	
 	var wall = infProject.scene.array.wall;
@@ -560,13 +534,6 @@ function getJsonGeometry()
 	{
 		var obj = infProject.scene.array.obj[i];
 		
-		var gr = null;
-		
-		if(obj.userData.obj3D.group)	// если объект приналежит группе
-		{
-			gr = { name: 'group', id: obj.userData.obj3D.group.userData.id }; 
-		}
-		
 		var pos = new THREE.Vector3(obj.position.x, obj.position.y, -obj.position.z);
 		var rot = new THREE.Vector3( THREE.Math.radToDeg(obj.rotation.x), THREE.Math.radToDeg(obj.rotation.y), THREE.Math.radToDeg(obj.rotation.z) );
 		
@@ -577,42 +544,13 @@ function getJsonGeometry()
 		furn[m].lotid = Number(obj.userData.obj3D.lotid);
 		furn[m].pos = pos;
 		furn[m].rot = rot;
-		if(gr) { furn[m].group = gr; }
-	}
-	
-	
-	for ( var i = 0; i < infProject.scene.array.group.length; i++ )
-	{
-		var obj = infProject.scene.array.group[i].userData.groupObj.centerObj;
-		
-		var pos = new THREE.Vector3(obj.position.x, obj.position.y, -obj.position.z);
-		var rot = new THREE.Vector3( THREE.Math.radToDeg(obj.rotation.x), THREE.Math.radToDeg(obj.rotation.y), THREE.Math.radToDeg(obj.rotation.z) );
-
-		var arrO = [];
-		var child = infProject.scene.array.group[i].userData.groupObj.child;
-		
-		for ( var i2 = 0; i2 < child.length; i2++ )
-		{			
-			if(!child[i2].userData.tag) continue;
-			if(child[i2].userData.tag != 'obj') continue;
-			
-			arrO[arrO.length] = { id: Number(child[i2].userData.id) };
-		}
-		
-		var m = group.length;
-		group[m] = {};
-		group[m].id = Number(obj.userData.id);
-		group[m].pos = pos;
-		group[m].rot = rot;
-		group[m].obj = arrO;
-	}
+	}	
 	
 	
 	json.floors[0].points = points;
 	json.floors[0].walls = walls;
 	json.floors[0].rooms = rooms;
 	json.furn = furn;
-	json.group = group;
 	
 	return json;
 }
@@ -868,25 +806,6 @@ function loadObjFromBase(cdm)
 			
 			if(infProject.project.load.furn.length == infProject.project.file.furn.length)
 			{
-				var group = infProject.project.file.group;
-				
-				for ( var i2 = 0; i2 < group.length; i2++ )
-				{					
-					group[i2].pos = new THREE.Vector3( group[i2].pos.x, group[i2].pos.y, -group[i2].pos.z );
-					group[i2].rot = new THREE.Vector3( THREE.Math.degToRad(group[i2].rot.x), THREE.Math.degToRad(group[i2].rot.y), THREE.Math.degToRad(group[i2].rot.z) );
-					
-					var arrId = []; 
-					for ( var i3 = 0; i3 < group[i2].obj.length; i3++ )
-					{
-						arrId[arrId.length] = group[i2].obj[i3].id;
-					}
-					group[i2].obj = { id: arrId };
-					
-					createGroupObj_1(group[i2]);
-				}
-				
-				
-				
 				readyProject();
 			}
 		}

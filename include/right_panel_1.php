@@ -172,58 +172,7 @@ function showHideCatalogMenuUI(cdm)
 					<div class="rp_obj_name">
 						<input type="text" nameId="rp_obj_name" value="Название">					
 					</div>
-					
-					<div class="bottom_line_1">
-						<div class="flex_1 relative_1">		
-							<div class="right_panel_1_item_block" nameId="button_wrap_obj_child">
-								<div class="right_panel_1_item_block_text">
-									Группа
-								</div>	
-							</div>	
-							<div class="right_panel_1_item_block" nameId="button_wrap_obj_center">
-								<div class="right_panel_1_item_block_text">
-									Центр
-								</div>	
-							</div>								
-						</div>
-					</div>
-					
-					<div nameId="wrap_obj_center" style="display: none;">
-						<div class="right_panel_1_1_h">Центр</div>
-						<div class="right_panel_1_1_list" nameId="rp_obj_center">
-							
-						</div>
-						
-						<div class="flex_1">		
-							<div class="button1 button_gradient_1" nameId="select_pivot">
-								перемещение	
-							</div>	
-							<div class="button1 button_gradient_1" nameId="select_gizmo">
-								вращение	
-							</div>								
-						</div>	
-
-						<div class="flex_1 align_items block_rp_1">
-							<div class="checkbox_1" nameId="show_hide_join_point">
-								<div class="checkbox_1_checked" nameId="show_join_point_checked" style="display: none;"></div>						
-							</div>
-							<div class="block_rp_text">Показать точки</div>						
-						</div>	
-						
-						<div>
-							<div class="button1 button_gradient_1" nameId="button_active_join_element">
-								выбрать	
-							</div>
-							<div nameId="rp_wrap_obj_align" style="display: none;">
-								<div class="right_panel_1_1_list" nameId="rp_obj_align">
 									
-								</div>	
-								<div class="button1 button_gradient_1" nameId="join_element">
-									соединить	
-								</div>
-							</div>
-						</div>
-					</div>
 					
 					<div nameId="wrap_obj_child">
 						<div class="right_panel_1_1_h">Группа</div>
@@ -234,11 +183,11 @@ function showHideCatalogMenuUI(cdm)
 						<div class="flex_1 w_1">
 							
 							<div class="button1 button_gradient_1" nameId="select_pivot">
-								<img src="<?=$path?>/img/move_1.png">	
+								перемещение	
 							</div>	
 							<div class="button1 button_gradient_1" nameId="select_gizmo">
-								<img src="<?=$path?>/img/rotate_1.png">	
-							</div>	
+								вращение	
+							</div>
 							
 							
 							
@@ -261,22 +210,7 @@ function showHideCatalogMenuUI(cdm)
 						
 						<div class="button1 button_gradient_1" nameId="button_copy_obj">
 							копировать	
-						</div>
-							
-						<div>
-							<div class="button1 button_gradient_1" nameId="button_active_add_group">
-								выбрать	
-							</div>
-							
-							<div nameId="rp_wrap_add_group" style="display: none;">
-								<div class="right_panel_1_1_list" nameId="rp_add_group">
-									
-								</div>
-								<div class="button1 button_gradient_1" nameId="button_add_group">
-									объединить	
-								</div>	
-							</div>
-						</div>	
+						</div>								
 
 						<div class="button1 button_gradient_1" nameId="button_delete_obj">
 							удалить	

@@ -57,53 +57,6 @@ $('[nameId="button_wrap_plan"]').mousedown(function () { changeRightMenuUI_1({el
 
 
 
-$('[nameId="button_wrap_obj_center"]').mousedown(function () { changeRightMenuUI_2({el: this}); });
-$('[nameId="button_wrap_obj_child"]').mousedown(function () { changeRightMenuUI_2({el: this}); });
-
-
-// переключаем меню (центр/группа)
-function changeRightMenuUI_2(cdm)
-{
-	$('[nameId="wrap_obj_center"]').hide();
-	$('[nameId="wrap_obj_child"]').hide();
-
-	infProject.tools.list_group.active = false;
-	infProject.tools.center_obj.active = false;
-	
-	switchSelectAddObjGroup({active: false});
-	switchJoinObj({active: false});	
-	
-	if(cdm.el.attributes.nameId.value == "button_wrap_obj_center") 
-	{
-		var obj = getObjFromPivotGizmo();
-		infProject.tools.center_obj.active = true;
-		
-		if(obj) 
-		{
-			clickItemCenterObjUI_1({item: 0}); 
-			$('[nameId="wrap_obj_center"]').show();
-		}		
-	}
-	if(cdm.el.attributes.nameId.value == "button_wrap_obj_child") 
-	{
-		var obj = getObjFromPivotGizmo();
-		infProject.tools.list_group.active = true;
-		
-		if(obj) 
-		{
-			hideJoinPoint({visible: 'full'});
-			clickItemObjNameUI({item: 0});  
-			$('[nameId="wrap_obj_child"]').show();
-		}				
-	}
-		
-}
-
-
-
-
-
-
 
 $('[infcam]').on('mousedown', function(e) 
 {  
@@ -146,15 +99,7 @@ $('[inf_type="mode_1"]').on('mousedown', function(e) { showHideObjMode_1(); });
 $('[nameId="showHideWall_1"]').on('mousedown', function(e) { showHideWallHeight_1(); });
 
 
-
-
-$('[nameId="button_active_join_element"]').mousedown(function () { switchJoinObj(); }); 
-$('[nameId="button_active_add_group"]').mousedown(function () { switchSelectAddObjGroup(); });  
-$('[nameId="button_add_group"]').mousedown(function () { addGroupObj(); });  
-$('[nameId="join_element"]').mousedown(function () { joinElement(); });
-
-
-$('[nameId="show_hide_join_point"]').mousedown(function () { showHideJP(); }); 	
+	
 $('[nameId="select_pivot"]').mousedown(function () { switchPivotGizmo({mode:'pivot'}); });
 $('[nameId="select_gizmo"]').mousedown(function () { switchPivotGizmo({mode:'gizmo'}); });
 

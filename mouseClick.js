@@ -121,13 +121,7 @@ function onDocumentMouseDown( event )
 function clickRayHit(event)
 { 
 	var rayhit = null;	
-		
-	
-	if(infProject.tools.joint.p1.length > 0)
-	{
-		var ray = clickRayJoinPoint();
-		if(ray) { return ray; }
-	}	
+			
 	
 	if(infProject.tools.pivot.visible)
 	{
@@ -218,16 +212,12 @@ function clickMouseActive(cdm)
 		else if( tag == 'window' ) { clickWD( rayhit ); }
 		else if( tag == 'door' ) { clickWD( rayhit ); }
 		else if( tag == 'controll_wd' ) { clickToggleChangeWin( rayhit ); }
-		else if( tag == 'joinPoint' && camera == cameraTop && rayhit.tag == 'act_1' ) { clickItemCenterObjUI_1({obj: obj}); }
-		else if( tag == 'joinPoint' && camera == cameraTop && rayhit.tag == 'act_2') { clickItemCenterObjUI_2({obj: obj}); }
 		else if( tag == 'obj' && camera == cameraTop ) { clickObject3D( obj, {click_obj: true, menu_1: true, group: true, outline: true} ); }
 		else { flag = false; }
 	}
 	else if(cdm.type == 'up')
 	{		
 		if( tag == 'wall' && camera == camera3D ) {  }
-		else if( tag == 'joinPoint' && camera == camera3D && rayhit.tag == 'act_1') { clickItemCenterObjUI_1({obj: obj}); }
-		else if( tag == 'joinPoint' && camera == camera3D && rayhit.tag == 'act_2') { clickItemCenterObjUI_2({obj: obj}); }
 		else if( tag == 'obj' && camera == camera3D ) { clickObject3D( obj, {click_obj: true, menu_1: true, group: true, outline: true} ); }
 		else { flag = false; }
 	}	
@@ -249,7 +239,6 @@ function clickMouseActive(cdm)
 			else if(tag == 'obj') { showObjUI( obj ); }
 			else if(tag == 'pivot') { obj = infProject.tools.pivot.userData.pivot.obj; }
 			else if(tag == 'gizmo') { obj = infProject.tools.gizmo.userData.gizmo.obj; }
-			else if(tag == 'joinPoint') { obj = infProject.tools.joint.active_1; } 
 		}		
 		else if(camera == camera3D)
 		{
@@ -257,7 +246,6 @@ function clickMouseActive(cdm)
 			else if(tag == 'obj') { showObjUI( obj ); }	
 			else if(tag == 'pivot') { obj = infProject.tools.pivot.userData.pivot.obj; }
 			else if(tag == 'gizmo') { obj = infProject.tools.gizmo.userData.gizmo.obj; }
-			else if(tag == 'joinPoint') { obj = infProject.tools.joint.active_1; }
 		}
 		else if(camera == cameraWall)
 		{
@@ -395,7 +383,6 @@ function hideMenuObjUI_2D( o )
 			case 'door': hideSizeWD(o); hideMenuUI(o); break;
 			case 'window': hideSizeWD(o); hideMenuUI(o); break;
 			case 'obj': hidePivotGizmo(o); break;
-			case 'joinPoint': hidePivotGizmo(o); break;
 		}
 	}
 	
@@ -411,7 +398,6 @@ function hideMenuObjUI_3D( o )
 		switch ( o.userData.tag ) 
 		{
 			case 'obj': hidePivotGizmo(o); break;
-			case 'joinPoint': hidePivotGizmo(o); break;
 		}
 	}
 }

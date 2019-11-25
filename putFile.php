@@ -30,7 +30,6 @@ clickObj.js
 clickMoveGizmo.js
 loadObj.js
 uiInterface.js
-joinElement.js
 ';
 
 

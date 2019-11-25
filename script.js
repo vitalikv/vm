@@ -179,9 +179,8 @@ infProject.geometry.wf_point = createGeometryCube(0.1, 0.1, 0.1, {});
 infProject.tools = { pivot: createPivot(), gizmo: createGizmo360(), cutWall: [], point: createToolPoint(), axis: [createLineAxis(), createLineAxis()] }
 infProject.tools.list_group = {active: true, o1: [], el: []}; 
 infProject.tools.center_obj = {active: false, o1: [], el: []};  
-infProject.tools.merge_obj = {active: false, o1: [], o2: [], el: []}; 
-infProject.tools.joint = createJoinP(); 
-infProject.tools.plane = {o1: [], el: []};
+infProject.tools.merge_obj = {active: false, o1: [], o2: [], el: []};  
+
 infProject.catalog = infoListObj();  
 infProject.listColor = resetPop.listColor(); 
 infProject.settings.active = { pg: 'pivot', group: true };
@@ -257,8 +256,7 @@ if(1==1)
 		if(!cdm) cdm = {};
 		
 		var arr = [obj];
-		if(cdm.arrO) { var arr = cdm.arrO; }
-		else if(infProject.settings.active.group) { var arr = getObjsFromGroup( obj ); }		
+		if(cdm.arrO) { var arr = cdm.arrO; }	
 		
 		outlinePass.selectedObjects = arr;  
 	}

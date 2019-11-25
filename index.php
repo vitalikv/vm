@@ -99,7 +99,6 @@
     <script src="<?=$path?>floor.js?<?=$vrs?>"></script>
     <script src="<?=$path?>detectZone.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>loadObj.js?<?=$vrs?>"></script>
-	<script src="<?=$path?>joinElement.js?<?=$vrs?>"></script>
 	
     <script src="<?=$path?>inputWall.js?<?=$vrs?>"></script>
     <script src="<?=$path?>label.js?<?=$vrs?>"></script>  	

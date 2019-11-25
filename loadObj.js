@@ -52,11 +52,6 @@ function infoListObj()
 		url : infProject.path+'import/rad_al_secziy_500_.fbx', 
 		name : 'радиатор алюминиевый',
 		planeMath : 0.5,
-		
-		//inf.joinPoint[0] = {name: 'size_1_L_', size: '1', joinObj: null};
-		//inf.joinPoint[1] = {name: 'size_2_L_', size: '1', joinObj: null};
-		//inf.joinPoint[2] = {name: 'size_1_R_', size: '1', joinObj: null};
-		//inf.joinPoint[3] = {name: 'size_2_R_', size: '1', joinObj: null};		
 	}
 	
 	arr[6] =
@@ -335,79 +330,6 @@ function addObjInScene(inf, cdm)
 	if(cdm.cursor) { clickO.move = obj; } 
 	
 	renderCamera();
-	
-	
-	if(cdm.lotid == 111223)
-	{
-		//obj.position.set(0,1,0);
-		
-		obj.updateMatrixWorld();
-		
-		var obj1 = obj.children[1];
-		var obj2 = obj.children[2];
-		
-		var pos1 = obj1.getWorldPosition(new THREE.Vector3());
-		var q1 = obj1.getWorldQuaternion(new THREE.Quaternion());
-		
-		var pos2 = obj2.getWorldPosition(new THREE.Vector3());
-		var q2 = obj2.getWorldQuaternion(new THREE.Quaternion());		
-		
-		scene.add( obj1 );
-		scene.add( obj2 );
-		
-		obj1.position.copy(pos1);
-		obj1.quaternion.copy(q1);
-		
-		obj2.position.copy(pos2);
-		obj2.quaternion.copy(q2);
-
-		
-		console.log(obj1.position)
-		obj1.position.z += 1;
-		obj2.position.z += 1;
-	}
-	
-	if(1 == 1)
-	{
-		var arr = [];
-		var id = 0;
-		
-		obj.traverse( function ( child ) 
-		{
-			if ( child.isMesh ) 
-			{ 
-				//console.log(child.name);
-				
-				if(new RegExp( '_est_' ,'i').test( child.name ))
-				{
-					//console.log(8888888, child.name, child.rotation.x, child.rotation.y, child.rotation.z);
-					
-					//child.visible = false;						
-					
-					var cube = new THREE.Mesh( createGeometryWD(0.03, 0.03, 0.03), infProject.tools.joint.material.default );
-					cube.position.copy(child.position);
-					cube.quaternion.copy(child.quaternion);
-					cube.visible = false;
-					//cube.rotation.y += 1;
-					var axesHelper = new THREE.AxesHelper( 0.2 );
-					child.add( axesHelper );							
-					
-					cube.userData.tag = 'joinPoint';
-					cube.userData.id = id;  id++;
-					cube.userData.centerPoint = { join: null };						 
-					cube.userData.centerPoint.nameRus = '22';
-					
-					obj.add( cube );
-					
-					arr[arr.length] = cube;
-					
-				}
-			}
-		});
-		
-
-	}
-
 
 }
 
