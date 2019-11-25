@@ -41,13 +41,9 @@ function mouseDownRight()
 				if(point.userData.point.last.cdm == 'new_point_1') { deletePoint( point ).wall.userData.id = point.userData.point.last.cross.walls.old; }
 			}
 		}
-		else if (obj.userData.tag == 'wf_point' ) 
-		{
-			if(obj.userData.wf_point.type == 'tool') { deletePointWF(obj); }			
-		}
 		else if(obj.userData.tag == 'obj')
 		{
-			deleteObjectPop(obj); console.log(infProject.scene.array.obj);
+			deleteObjectPop(obj); 
 		}		
 
 		clickO = resetPop.clickO();
@@ -102,10 +98,6 @@ function onDocumentMouseDown( event )
 		if(clickO.move.userData.tag == 'point') 
 		{			
 			if(clickO.move.userData.point.type) { clickCreateWall( clickO.move ); return; }  
-		}
-		if(clickO.move.userData.tag == 'wf_point')
-		{
-			if(clickO.move.userData.wf_point.type == 'tool') { clickPointToolsWF( clickO.move ); return; }
 		}
 	}
 	 
@@ -180,12 +172,6 @@ function clickRayHit(event)
 		
 		var ray = rayIntersect( event, arr, 'arr' );
 		if(ray.length > 0) { rayhit = ray[0]; return rayhit; }		
-	}
-	
-	if(!infProject.scene.block.click.tube)
-	{
-		var ray = hoverCursorLineWF(event);	
-		if(ray) { rayhit = ray; }		
 	}
 
 	if(!infProject.scene.block.click.controll_wd)
@@ -262,12 +248,9 @@ function clickMouseActive(cdm)
 		else if( tag == 'wall' && camera == cameraTop ) { clickWall_2D( rayhit ); }
 		else if( tag == 'wall' && camera == cameraWall ) { clickWall_3D( rayhit ); }
 		else if( tag == 'point' ) { clickPoint( rayhit ); }
-		else if( tag == 'wf_point' ) { clickWFPoint( rayhit ); }
-		else if( tag == 'wf_line' ) {  }
 		else if( tag == 'window' ) { clickWD( rayhit ); }
 		else if( tag == 'door' ) { clickWD( rayhit ); }
 		else if( tag == 'controll_wd' ) { clickToggleChangeWin( rayhit ); }
-		else if( tag == 'wf_line' ) {  }
 		else if( tag == 'joinPoint' && camera == cameraTop && rayhit.tag == 'act_1' ) { clickItemCenterObjUI_1({obj: obj}); }
 		else if( tag == 'joinPoint' && camera == cameraTop && rayhit.tag == 'act_2') { clickItemCenterObjUI_2({obj: obj}); }
 		else if( tag == 'obj' && camera == cameraTop ) { clickObject3D( obj, {click_obj: true, menu_1: true, group: true, outline: true} ); }
@@ -296,8 +279,6 @@ function clickMouseActive(cdm)
 			else if(tag == 'point') { $('[nameId="point_menu_1"]').show(); }
 			else if(tag == 'door') { showRulerWD( obj ); showTableWD( obj ); }
 			else if(tag == 'window') { showRulerWD( obj ); showTableWD( obj ); }
-			else if(tag == 'wf_line') { showWF_line_UI( obj ); }
-			else if(tag == 'wf_point') { showWF_point_UI( obj ); }
 			else if(tag == 'obj') { showObjUI( obj ); }
 			else if(tag == 'pivot') { obj = infProject.tools.pivot.userData.pivot.obj; }
 			else if(tag == 'gizmo') { obj = infProject.tools.gizmo.userData.gizmo.obj; }
@@ -363,7 +344,6 @@ function onDocumentMouseMove( event )
 		else if ( tag == 'door' ) { moveWD( event, obj ); }
 		else if ( tag == 'controll_wd' ) { moveToggleChangeWin( event, obj ); }
 		else if ( tag == 'point' ) { movePoint( event, obj ); }
-		else if ( tag == 'wf_point' ) { moveWFPoint( event, obj ); }
 		else if ( tag == 'room' ) { cameraMove3D( event ); }		
 		else if ( tag == 'free_dw' ) { dragWD_2( event, obj ); }
 		else if ( tag == 'obj' ) { moveObjectPop( event ); }
@@ -414,17 +394,6 @@ function onDocumentMouseUp( event )
 		{
 			if(obj.userData.point.type) {  } 
 			else { clickO.move = null; }
-		}
-		else if (tag == 'wf_point') 
-		{ 
-			if(obj.userData.wf_point.type == 'tool') 
-			{ 
-				upLineWF(obj);
-			}
-			else 
-			{ 
-				clickWFPointUp(obj); 
-			}			
 		}		
 		else { clickO.move = null; }		
 	}
@@ -461,8 +430,6 @@ function hideMenuObjUI_2D( o )
 			case 'point': hideMenuUI(o);  break;
 			case 'door': hideSizeWD(o); hideMenuUI(o); break;
 			case 'window': hideSizeWD(o); hideMenuUI(o); break;
-			case 'wf_line': hideMenuUI(o); break;
-			case 'wf_point': hideMenuUI(o); break;
 			case 'obj': hidePivotGizmo(o); break;
 			case 'joinPoint': hidePivotGizmo(o); break;
 		}
@@ -574,11 +541,7 @@ function consoleInfo( obj )
 	else if ( tag == 'obj' ) 
 	{
 		console.log( "obj : " + obj.userData.id + " | lotid : " + obj.lotid  + " | userData : ", obj.userData, obj );
-	}	
-	else if ( tag == 'wf_line' ) 
-	{
-		console.log( tag + " id : " + obj.userData.id + " | userData : ", obj.userData, obj );
-	}	
+	}		
 	else 
 	{
 		console.log( "pr_id : " + obj.userData.id + " | lotid : " + obj.lotid + " | caption : " + obj.caption, obj );

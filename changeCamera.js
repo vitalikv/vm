@@ -116,7 +116,6 @@ function changeDepthColor()
 	var wall = infProject.scene.array.wall;
 	var window = infProject.scene.array.window;
 	var door = infProject.scene.array.door;	
-	var tube = infProject.scene.array.tube;
 	
 	for ( var i = 0; i < wall.length; i++ )
 	{
@@ -137,18 +136,7 @@ function changeDepthColor()
 			point[i].userData.point.pillar.visible = pillar;
 		}
 	}		
-	
-	var wf = [];
-	
-	for ( var i = 0; i < tube.length; i++ )
-	{
-		for ( var i2 = 0; i2 < tube[i].userData.wf_line.point.length; i2++ )
-		{
-			wf[wf.length] = tube[i].userData.wf_line.point[i2];
-		}		
-	}
-	
-	showHideArrObj(wf, visible_2);
+
 	showHideArrObj(window, visible_2);
 	showHideArrObj(door, visible_2);
 	
@@ -230,15 +218,6 @@ function showHideObjMode_1(cdm)
 	//----------
 		
 
-
-	var wf = [];
-	var tube = infProject.scene.array.tube;	
-	for ( var i = 0; i < tube.length; i++ )
-	{
-		for ( var i2 = 0; i2 < tube[i].userData.wf_line.point.length; i2++ ){ wf[wf.length] = tube[i].userData.wf_line.point[i2]; }	
-	}
-	
-	showHideArrObj(wf, visible_1);	// прячем/показываем точки у труб
 	showHideArrObj(infProject.scene.array.point, visible_2);	// прячем/показываем точки у стен
 	
 
@@ -254,9 +233,6 @@ function blockActiveObj(cdm)
 {
 	var visible_1 = cdm.visible_1;
 	var visible_2 = cdm.visible_2;
-	
-	infProject.scene.block.click.tube = visible_2;
-	infProject.scene.block.hover.tube = visible_2;
 	
 	infProject.scene.block.click.wall = visible_1;
 	infProject.scene.block.hover.wall = visible_1;

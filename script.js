@@ -1603,12 +1603,6 @@ document.body.addEventListener("keydown", function (e)
 				
 				inputWidthOneWall({wall:clickO.last_obj, width:{value: width}, offset:'wallRedBlueArrow'}); 
 			}
-			if(infProject.activeInput == 'size_tube_diameter_2')
-			{
-				var size = $('[nameid="size_tube_diameter_2"]').val();
-				
-				inputWF_tubeDiametr({line: clickO.last_obj, size: size});
-			}
 			else if(infProject.activeInput == 'dp_inf_1_proj')
 			{
 				inputLoadProject();

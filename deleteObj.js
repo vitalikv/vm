@@ -20,8 +20,6 @@ function detectDeleteObj()
 		
 	if ( tag == 'wall' ) { deleteWall_1( obj ).room; }
 	else if ( tag == 'point' ) { if(obj.p.length == 2) { deletePoint( obj ); } }
-	else if ( tag == 'wf_point' ) { deletePointWF(obj); }
-	else if ( tag == 'wf_line' ) { deleteLineWF(obj); }
 	else if ( tag == 'window' || tag == 'door' ) { deleteWinDoor( obj ); }
 	else if ( tag == 'obj' ) { deleteObjectPop(obj); }
 	

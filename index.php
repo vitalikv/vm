@@ -108,9 +108,7 @@
     <script src="<?=$path?>saveLoad.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>uiInterface.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>eventClick.js?<?=$vrs?>"></script>
-    <script src="<?=$path?>script.js?<?=$vrs?>"></script>    		
-	
-	<script src="<?=$path?>block/floorWarm.js?<?=$vrs?>"></script> 
+    <script src="<?=$path?>script.js?<?=$vrs?>"></script>    		 
 		
 
 </body>

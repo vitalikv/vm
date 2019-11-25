@@ -30,7 +30,7 @@ var resetPop =
 	
 	infProjectSceneArray : function()
 	{
-		var array = { point : obj_point, wall : obj_line, window : [], door : [], room : room, ceiling : ceiling, obj : [], tube : [] };
+		var array = { point : obj_point, wall : obj_line, window : [], door : [], room : room, ceiling : ceiling, obj : [] };
 		array.fundament = [];
 		array.lineGrid = { limit : false };
 		array.base = (infProject.start)? infProject.scene.array.base : [];	// массив клонируемых объектов
@@ -47,7 +47,6 @@ var resetPop =
 		array.window2D = 'rgb(122, 160, 195)';
 		array.active2D = 'rgb(255, 55, 0)';
 		array.hover2D = 'rgb(69, 165, 58)';
-		array.lineTube2D = 0x0252f2;
 
 		return array;
 	},
@@ -86,7 +85,6 @@ function resetScene()
 	var point = infProject.scene.array.point;
 	var window = infProject.scene.array.window;
 	var door = infProject.scene.array.door;
-	var tube = infProject.scene.array.tube;
 	var obj = infProject.scene.array.obj;
 	var group = infProject.scene.array.group;
 	
@@ -139,24 +137,6 @@ function resetScene()
 		if(room[i].userData.room.outline) { scene.remove(room[i].userData.room.outline); }
 		scene.remove(room[i]); 
 		scene.remove(ceiling[i]);	
-	}
-
-	for ( var i = 0; i < tube.length; i++ )
-	{
-		for ( var i2 = tube[i].userData.wf_line.point.length - 1; i2 > -1; i2-- )
-		{
-			disposeNode(tube[i].userData.wf_line.point[i2]);
-			scene.remove(tube[i].userData.wf_line.point[i2]);		
-		}
-		
-		if(tube[i].userData.wf_line.tube) 
-		{ 
-			disposeNode(tube[i].userData.wf_line.tube);
-			scene.remove(tube[i].userData.wf_line.tube); 
-		}
-	
-		disposeNode(tube[i]);
-		scene.remove(tube[i]);		
 	}
 	
 	for ( var i = 0; i < obj.length; i++ )
@@ -459,7 +439,6 @@ function getJsonGeometry()
 	var rooms = [];
 	var furn = [];
 	var group = [];
-	var pipe = [];
 	
 	
 	var wall = infProject.scene.array.wall;
@@ -629,32 +608,11 @@ function getJsonGeometry()
 	}
 	
 	
-	for ( var i = 0; i < infProject.scene.array.tube.length; i++ )
-	{
-		var tube = infProject.scene.array.tube[i].userData.wf_line;
-		
-		var m = pipe.length;
-		pipe[m] = {};
-		pipe[m].id = infProject.scene.array.tube[i].userData.id;
-		pipe[m].diameter = tube.diameter;
-		pipe[m].color = tube.color;
-		
-		pipe[m].point = [];
-		
-		for ( var i2 = 0; i2 < tube.point.length; i2++ )
-		{
-			pipe[m].point[i2] = {};
-			pipe[m].point[i2].id = tube.point[i2].userData.id;
-			pipe[m].point[i2].pos = tube.point[i2].position.clone();
-		}
-	}
-	
 	json.floors[0].points = points;
 	json.floors[0].walls = walls;
 	json.floors[0].rooms = rooms;
 	json.furn = furn;
 	json.group = group;
-	json.pipe = pipe;
 	
 	return json;
 }
@@ -719,7 +677,6 @@ function loadFilePL(arr)
 	var walls = arr.floors[0].walls;
 	var rooms = arr.floors[0].rooms;
 	var furn = (arr.furn) ? arr.furn : [];
-	var pipe = (arr.pipe) ? arr.pipe : [];
 			
 	var wall = [];
 	
@@ -853,19 +810,6 @@ function loadFilePL(arr)
 	
 			
 
-	
-	for ( var i = 0; i < pipe.length; i++ )
-	{
-		var p = [];
-		for ( var i2 = 0; i2 < pipe[i].point.length; i2++ )
-		{
-			p[p.length] = createPointWF({id: pipe[i].point[i2].id, pos: pipe[i].point[i2].pos});
-		}
-		
-		var line = createLineWF({point: p, diameter: pipe[i].diameter, color: new THREE.Color(pipe[i].color)}); 
-		
-		geometryTubeWF({line : line, createLine : true});	
-	}
 
 
 	loadObjInBase({furn: furn});

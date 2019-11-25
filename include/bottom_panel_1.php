@@ -104,20 +104,7 @@
 			<div class="color_tube_1_change" color_tube_1_change='141414' style="background-color:#141414;"></div>
 		</div>
 	</div>
-
-	<div class="toolbar" data-action ='top_panel_1' nameId='wf_point_menu_1' style="display: none;">
-		<div class="toolbar-header">точка</div>
-		<div class="toolbar-menu">
-			<div class="input-size-2">
-				<div class="text_1">длина (м)</div>
-				<div class="text_input_1" nameId='size_tube_dist_3'>0</div>
-			</div>
-			
-			<div class="button1-wrap-2">
-				<div data-action ='deleteObj' nameId='delete_wf_point_1' class="button1 button_gradient_1"><img src="<?=$path?>/img/waste.png"></div>
-			</div>			
-		</div>
-	</div>	
+	
 	<?}?>
 
 	<?if($interface['wall_2']['bottom']['width_1'] == 1){?>
