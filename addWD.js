@@ -14,16 +14,21 @@ function createEmptyFormWD_1(cdm)
 	
 	var material = new THREE.MeshLambertMaterial({ color: color, transparent: true, opacity: 1.0, depthTest: false, lightMap : lightMap_1 });
 	
+	if(1==2)
+	{
+		material.map = texture_wd_1;
+		material.map.offset.set(0.5, 0.5);
+		material.map.repeat.set(0.33, 5.0);			
+	}	
+	
 	if(camera == cameraTop)
 	{ 
-		material.depthTest = false;
-		material.transparent = true;		
+		material.depthTest = false;		
 		material.opacity = 1.0; 	
 	}
 	else if(1 == 2)
 	{ 		
 		material.depthTest = true;
-		material.transparent = true;
 		material.opacity = 0;					
 	}	
 	
@@ -95,7 +100,10 @@ function createEmptyFormWD_1(cdm)
 	obj.userData.door.ruler = {};
 	obj.userData.door.last = { pos : new THREE.Vector3(), rot : new THREE.Vector3(), x : 0, y : 0 };
 	obj.userData.door.topMenu = true;
+	obj.userData.door.lotid = (cdm.lotid)? cdm.lotid : null;
 	//obj.userData.door.active = { click: true, hover: true };
+	
+	upUvs_4( obj );
 	
 	scene.add( obj );
 	
@@ -108,7 +116,7 @@ function createEmptyFormWD_1(cdm)
 		obj.position.y += (obj.geometry.boundingBox.max.y - obj.geometry.boundingBox.min.y) / 2; 	
 		
 		changeWidthWD(obj, cdm.wall);		// выставляем ширину окна/двери равную ширине стены
-		addWD({ obj: obj, wall: obj.userData.door.wall, pos: obj.position });
+		addWD({ obj: obj });
 	}
 	else
 	{
@@ -193,7 +201,7 @@ function clickToolWD(obj)
 			if(!obj.userData.door.wall) { return true; }
 			
 			clickO.last_obj = null;
-			addWD({ obj : obj, wall : obj.userData.door.wall, pos : obj.position });  
+			addWD({ obj : obj });  
 			return true; 
 		}
 	}
@@ -262,6 +270,12 @@ function addWD( cdm )
 	
 	obj.geometry.computeBoundingBox();
 	obj.geometry.computeBoundingSphere();
+	
+	
+	if(obj.userData.door.lotid)
+	{
+		loadObjServer({type: 'wd', wd: obj, lotid: obj.userData.door.lotid});
+	}
 
  	
 	clickO.obj = null;
@@ -271,6 +285,19 @@ function addWD( cdm )
 	renderCamera();
 }
 
+
+
+// вставляем в wd объект окна/двери
+function setObjInWD(inf, cdm)
+{
+	var wd = cdm.wd;
+	var obj = inf.obj;
+	
+	wd.add( obj );
+	
+	obj.position.set(0,0,0);
+	obj.rotation.set(0,0,0);
+}
 
 
 

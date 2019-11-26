@@ -165,6 +165,7 @@ var ceiling = [];
 var arrWallFront = [];
 var lightMap_1 = new THREE.TextureLoader().load(infProject.path+'/img/lightMap_1.png');
 var texture_point_1 = new THREE.TextureLoader().load(infProject.path+'/img/point1.png');
+var texture_wd_1 = new THREE.TextureLoader().load(infProject.path+'/img/wd_1.png');
 
 var clickO = resetPop.clickO();
 infProject.project = null;
@@ -477,72 +478,6 @@ function createGeometryCube(x, y, z, cdm)
 
 
 
-function createGeometryWD(x, y, z) 
-{
-	var geometry = new THREE.Geometry();
-	x /= 2;
-	y /= 2;
-	z /= 2;
-	var vertices = [
-				new THREE.Vector3(-x,-y,z),
-				new THREE.Vector3(-x,y,z),
-				new THREE.Vector3(x,y,z),
-				new THREE.Vector3(x,-y,z),
-				new THREE.Vector3(x,-y,-z),
-				new THREE.Vector3(x,y,-z),
-				new THREE.Vector3(-x,y,-z),
-				new THREE.Vector3(-x,-y,-z),
-			];	
-			
-	var faces = [
-				new THREE.Face3(0,3,2),
-				new THREE.Face3(2,1,0),
-				new THREE.Face3(4,7,6),
-				new THREE.Face3(6,5,4),				
-				new THREE.Face3(0,1,6),
-				new THREE.Face3(6,7,0),					
-				new THREE.Face3(1,2,5),
-				new THREE.Face3(5,6,1),				
-				new THREE.Face3(2,3,4),
-				new THREE.Face3(4,5,2),				
-				new THREE.Face3(3,0,7),
-				new THREE.Face3(7,4,3),
-			];
-	
-	var uvs3 = [
-				new THREE.Vector2(0,0),
-				new THREE.Vector2(1,0),
-				new THREE.Vector2(1,1),
-			];
-	var uvs4 = [
-				new THREE.Vector2(1,1),
-				new THREE.Vector2(0,1),
-				new THREE.Vector2(0,0),
-			];	
-
-	var uvs1 = [
-				new THREE.Vector2(0,0),
-				new THREE.Vector2(1,0),
-				new THREE.Vector2(0.95,1),
-			];
-	var uvs2 = [
-				new THREE.Vector2(0.95,1),
-				new THREE.Vector2(1-0.95,1),
-				new THREE.Vector2(0,0),
-			];				
-
-
-			
-	geometry.vertices = vertices;
-	geometry.faces = faces;
-	geometry.faceVertexUvs[0] = [uvs3, uvs4, uvs3, uvs4, uvs3, uvs4, uvs1, uvs2, uvs3, uvs4, uvs3, uvs4];
-	geometry.computeFaceNormals();	
-	geometry.uvsNeedUpdate = true;		
-	
-	return geometry;
-}
-
-
 
 function createGeometryWall(x, y, z, pr_offsetZ)
 {
@@ -760,6 +695,7 @@ function createToolPoint()
 	obj.material.map.offset.x = 0.5;
 	obj.material.map.offset.y = 0.5;
 	obj.material.map.repeat.set(4.9, 4.9);
+	obj.material.visible = false;
 	obj.userData.tag = 'tool_point';
 	obj.renderOrder = 1;
 	obj.position.set(0,0,0);
@@ -1180,7 +1116,7 @@ function clickButton( event )
 		}
 		else if(clickO.button == 'create_wd_3')
 		{
-			createEmptyFormWD_1({type:'window'});
+			createEmptyFormWD_1({type:'window', lotid: null});
 		}			
 		else if(clickO.button == 'add_lotid')
 		{

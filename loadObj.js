@@ -161,7 +161,7 @@ function infoListObj()
 }
 
 
-
+// получаем параметры объекта из базы
 function getInfoObj(cdm)
 {
 	var lotid = cdm.lotid;
@@ -210,7 +210,7 @@ function loadObjServer(cdm)
 			
 			addObjInBase({lotid: lotid, obj: obj});
 			
-			if(cdm.loadFromFile)	// загрузка из сохраненного файла 
+			if(cdm.loadFromFile)	// загрузка из сохраненного файла json 
 			{
 				loadObjFromBase({lotid: lotid, furn: cdm.furn});
 			}
@@ -275,6 +275,13 @@ function addObjInBase(cdm)
 // добавляем объект в сцену
 function addObjInScene(inf, cdm)
 {
+	// загрузка wd
+	if(cdm.wd)
+	{  
+		setObjInWD(inf, cdm);
+		return;
+	}
+	
 	var obj = inf.obj;
 	
 	if(cdm.pos){ obj.position.copy(cdm.pos); }

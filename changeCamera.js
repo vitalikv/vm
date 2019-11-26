@@ -144,7 +144,7 @@ function showHideArrObj(arr, visible)
 {	
 	if(arr.length == 0) return;
 	
-	for ( var i = 0; i < arr.length; i++ ) { arr[i].visible = visible; }				
+	for ( var i = 0; i < arr.length; i++ ) { arr[i].material.visible = visible; }				
 }
 
 
