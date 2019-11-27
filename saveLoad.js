@@ -296,8 +296,7 @@ function saveWindows(wall)
 		for ( var i2 = 0; i2 < o[i].length; i2++ )
 		{ 
 			var wd = o[i][i2];
-			var v = wd.geometry.vertices;
-			var f = wd.userData.door.form.v;
+			var v = wd.geometry.vertices; 
 
 			wd.updateMatrixWorld();
 			wd.geometry.computeBoundingBox();

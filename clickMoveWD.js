@@ -76,11 +76,6 @@ function findOnWallWD(wd)
 	}		
 	
 	wd.userData.door.last.pos = wd.position.clone();	
-	
-	var v = wd.geometry.vertices;
-	var f = wd.userData.door.form.v;
-	wd.userData.door.last.x = v[f.maxX[0]].x - v[f.minX[0]].x;
-	wd.userData.door.last.y = v[f.maxY[0]].y - v[f.minY[0]].y;
 }
 
 
