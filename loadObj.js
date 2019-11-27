@@ -3,157 +3,45 @@
 
 function infoListObj()
 {
-	var arr = [];
-	
+	var arr = [];		
 	
 	arr[0] =
-	{	
+	{
 		lotid : 1,
-		url : infProject.path+'import/furn_1.fbx', 
-		name : 'диван',
-		planeMath : 0.1,
+		url : infProject.path+'import/wm_wind_1.fbx', 
+		name : 'окно',
+		planeMath : 1.5,
 	}
 	
 	arr[1] =
-	{
+	{	
 		lotid : 2,
-		url : infProject.path+'import/kotel_1.fbx', 
-		name : 'котел',
-		planeMath : 1.5,
-	}
+		url : infProject.path+'import/furn_1.fbx', 
+		name : 'диван',
+		planeMath : 0.1,
+	}	
 	
 	arr[2] =
 	{
 		lotid : 3,
-		url : infProject.path+'import/budres_900.fbx', 
-		name : 'радиатор',
-		planeMath : 0.8,
+		url : infProject.path+'import/wm_wind_3.fbx', 
+		name : 'окно',
+		planeMath : 1.5,
 	}
 	
 	arr[3] =
 	{
 		lotid : 4,
-		url : infProject.path+'import/bak_1.fbx', 
-		name : 'расширительный бак',
-		planeMath : 0.5,
+		url : infProject.path+'import/vm_door_1.fbx', 
+		name : 'дверь',
+		planeMath : 0.0,
 	}	
 	
-	arr[4] =
-	{
-		lotid : 5,
-		url : infProject.path+'import/kollector_1.fbx', 
-		name : 'коллектор',
-		planeMath : 0.5,
-	}
 	
-	arr[5] =
-	{
-		lotid : 6,
-		url : infProject.path+'import/rad_al_secziy_500_.fbx', 
-		name : 'радиатор алюминиевый',
-		planeMath : 0.5,
-	}
-	
-	arr[6] =
-	{
-		lotid : 7,
-		url : infProject.path+'export/soedin_al_rad_1.fbx', 
-		name : 'соединение алюминиевого радиатора',
-		planeMath : 0.5,
-		stopUI: true,
-	}
-	
-	arr[7] =
-	{
-		lotid : 8,
-		url : infProject.path+'import/kran_sgon_3s4.fbx',
-		name : 'шаровой кран',
-		planeMath : 0.5,		
-	}
-	
-	arr[8] =
-	{
-		lotid : 9,
-		url : infProject.path+'import/rad1_zagl_1_.fbx', 
-		name : 'заглушка радиаторная',
-		planeMath : 0.5,		
-	}
-	
-	arr[9] =
-	{
-		lotid : 10,
-		url : infProject.path+'import/rad1_zagl_3s4.fbx', 
-		name :'заглушка радиаторная 3/4',
-		planeMath : 0.5,		
-	}	
-	
-	arr[10] =
-	{
-		lotid : 10,
-		url : infProject.path+'import/rad1_zagl_1s2.fbx', 
-		name :'заглушка радиаторная 1/2',
-		planeMath : 0.5,		
-	}
-
-	arr[11] =
-	{
-		lotid : 10,
-		url : infProject.path+'import/rad1_zagl_vozd.fbx', 
-		name :'радиаторный воздухоотводчик',
-		planeMath : 0.5,		
-	}
-	
-	arr[12] =
-	{
-		lotid : 10,
-		url : infProject.path+'import/nasos_1.fbx', 
-		name :'насос',
-		planeMath : 0.5,		
-	}	
-	
-	arr[13] =
-	{
-		lotid : 10,
-		url : infProject.path+'import/termo_kran_1s2.fbx', 
-		name :'регулеровачный кран 1/2',
-		planeMath : 0.5,		
-	}	
-
-	arr[14] =
-	{
-		lotid : 10,
-		url : infProject.path+'import/termo_regul_1s2.fbx', 
-		name :'терморегулятор',
-		planeMath : 0.5,		
-	}
-	
-	arr[15] =
-	{
-		lotid : 10,
-		url : infProject.path+'import/mp_tronik_32х20х32.fbx', 
-		name :'тройник 32х20х32 (мп)',
-		planeMath : 0.5,		
-	}
-
-	arr[16] =
-	{
-		lotid : 10,
-		url : infProject.path+'import/mp_tronik_26х16х20.fbx', 
-		name :'тройник 26х16х20 (мп)',
-		planeMath : 0.5,		
-	}	
-	
-	arr[17] =
-	{
-		lotid : 10,
-		url : infProject.path+'import/mp_ugol_nar_16x1s2.fbx', 
-		name :'угол 16х1/2(нр) (мп)',
-		planeMath : 0.5,		
-	}	
 	
 	for(var i = 0; i < arr.length; i++)
 	{
-		arr[i].lotid = i+1;
+		//arr[i].lotid = i+1;
 	}
 	
 	
@@ -174,6 +62,8 @@ function getInfoObj(cdm)
 			return infProject.catalog[i];
 		}
 	}
+	
+	return null;
 }
 
 
@@ -188,7 +78,9 @@ function loadObjServer(cdm)
 	
 	var lotid = cdm.lotid;
 	
-	var inf = getInfoObj({lotid: lotid});	
+	var inf = getInfoObj({lotid: lotid});
+
+	if(!inf) return;
 	
 	var obj = getObjFromBase({lotid: lotid});
 	

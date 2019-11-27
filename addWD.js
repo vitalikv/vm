@@ -296,7 +296,7 @@ function setObjInWD(inf, cdm)
 	wd.add( obj );
 	
 	obj.position.set(0,0,0);
-	obj.rotation.set(0,0,0);
+	obj.rotation.set(0,Math.PI,0);
 }
 
 

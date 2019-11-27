@@ -783,14 +783,6 @@ function createPoint( pos, id )
 
   
 
-var shaderMaterialWall = new THREE.ShaderMaterial({
-    uniforms: 
-	{
-		u_resolution: { type: "v3", value: {x: w_w, y: w_h} },
-	},
-    vertexShader:   document.getElementById('2d-vertex-shader').textContent,
-    fragmentShader: document.getElementById('2d-fragment-shader').textContent
-});
 
 
 function createOneWall3( point1, point2, width, cdm ) 
@@ -814,7 +806,6 @@ function createOneWall3( point1, point2, width, cdm )
 	var material = new THREE.MeshLambertMaterial({ color : color[0], lightMap : lightMap_1 });
 	
 	var materials = [ material.clone(), material.clone(), material.clone(), new THREE.MeshLambertMaterial( { color: color[1], lightMap : lightMap_1 } ) ];
-	var materials = [ material.clone(), material.clone(), material.clone(), shaderMaterialWall ];
 	
 	if(cdm.color)
 	{
@@ -1120,11 +1111,11 @@ function clickButton( event )
 		}
 		else if(clickO.button == 'create_wd_2')
 		{
-			createEmptyFormWD_1({type:'door'});
+			createEmptyFormWD_1({type:'door', lotid: 4});
 		}
 		else if(clickO.button == 'create_wd_3')
 		{
-			createEmptyFormWD_1({type:'window', lotid: null});
+			createEmptyFormWD_1({type:'window', lotid: 1});
 		}			
 		else if(clickO.button == 'add_lotid')
 		{
