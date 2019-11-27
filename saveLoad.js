@@ -298,28 +298,33 @@ function saveWindows(wall)
 			var wd = o[i][i2];
 			var v = wd.geometry.vertices;
 			var f = wd.userData.door.form.v;
-		
-			var v7 = new THREE.Vector3().subVectors( v[f.maxX[0]], v[f.minX[0]] ).divideScalar ( 2 );		
-			var v7 = wd.localToWorld( v[f.minX[0]].clone().add(v7) );
-			var dir1 = new THREE.Vector3().subVectors( p[1].position, p[0].position ).normalize();
-			var dir2 = new THREE.Vector3().subVectors( v7, p[0].position );
-			qt1 = quaternionDirection(dir1);
-			var x = localTransformPoint(dir2, qt1).z; 
-			x = x / p[1].position.distanceTo( p[0].position );
-			
-			var y = wall.worldToLocal( wd.localToWorld(v[f.minY[0]].clone()) ).y;
 
+			wd.updateMatrixWorld();
+			wd.geometry.computeBoundingBox();
+			wd.geometry.computeBoundingSphere();
+			var dX = wd.geometry.boundingBox.max.x - wd.geometry.boundingBox.min.x;
+			var dY = wd.geometry.boundingBox.max.y - wd.geometry.boundingBox.min.y;
+			var center = wd.geometry.boundingSphere.center;
+		
+		
+			var v7 = wd.localToWorld( center.clone() );			
+			var qt1 = quaternionDirection( new THREE.Vector3().subVectors( p[1].position, p[0].position ).normalize() );
+			var x = localTransformPoint(new THREE.Vector3().subVectors( v7, p[0].position ), qt1).z; 
+			
+			x = x / p[1].position.distanceTo( p[0].position );		// процентное соотношение от начала стены
+			
+			var y = wall.worldToLocal( wd.localToWorld(new THREE.Vector3(0, wd.geometry.boundingBox.min.y, 0)) ).y;
+			
+			
 			var arr = {};
 			
-			arr.id = wd.userData.id;	// id
-			arr.lotid  = wd.userData.door.lotid;		// lotid  
-			arr.width = Math.round((v[f.maxX[0]].x - v[f.minX[0]].x) * 100) / 100;	// width
-			arr.height = Math.round((v[f.maxY[0]].y - v[f.minY[0]].y) * 100) / 100;	// height		
-			arr.startPointDist = Math.round(x * 100) / 100;				// pos_start
-			arr.over_floor = Math.round(y * 100) / 100;				// over_floor
-			if(wd.userData.door.open_type) { arr.open_type = wd.userData.door.open_type; }	// open_type	
-			if(wd.userData.tag == 'door') { arr.doState = 'false'; }							// doState	
-			arr.options = '';
+			arr.id = wd.userData.id;						// id
+			arr.lotid  = wd.userData.door.lotid;					// lotid  
+			arr.width = dX;									// width
+			arr.height = dY;								// height		
+			arr.startPointDist = x;							// pos_start
+			arr.over_floor = y;								// over_floor		
+			//arr.options = '';
 			
 			if(wd.userData.tag == 'window') { windows[windows.length] = arr; }
 			else if(wd.userData.tag == 'door') { doors[doors.length] = arr; }			
@@ -652,8 +657,8 @@ function loadFilePL(arr)
 			wall[i].arrO[i2] = {  }
 			
 			wall[i].arrO[i2].id = arrO[i2].id;
-			wall[i].arrO[i2].pos = new THREE.Vector3(Math.round(arrO[i2].startPointDist * 100) / 100, Math.round(arrO[i2].over_floor * 100) / 100, 0);
-			wall[i].arrO[i2].size = new THREE.Vector2(Math.round(arrO[i2].width * 100) / 100, Math.round(arrO[i2].height * 100) / 100);
+			wall[i].arrO[i2].pos = new THREE.Vector3(arrO[i2].startPointDist, arrO[i2].over_floor, 0);
+			wall[i].arrO[i2].size = new THREE.Vector2(arrO[i2].width, arrO[i2].height);
 			wall[i].arrO[i2].type = arrO[i2].type;
 		} 	
 	}

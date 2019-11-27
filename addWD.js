@@ -82,6 +82,7 @@ function createEmptyFormWD_1(cdm)
 	
 	
 	var arr = { minX : minX, maxX : maxX, minY : minY, maxY : maxY, minZ : minZ, maxZ : maxZ };
+	console.log(554, arr);
 	
 	var form = { type : '' , v : arr };	
 	
@@ -240,7 +241,7 @@ function addWD( cdm )
 	var pos = obj.position;
 	obj.userData.tag = obj.userData.door.type;
 	
-	pos.y -= 0.001;		// делаем чуть ниже уровня пола
+	//pos.y -= 0.001;		// делаем чуть ниже уровня пола
 	obj.position.copy( pos );
 	obj.rotation.copy( wall.rotation ); 
 	obj.material.transparent = false;
