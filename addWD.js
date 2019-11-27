@@ -328,9 +328,10 @@ function setObjInWD(inf, cdm)
 	console.log(objPop.geometry.boundingBox);
 	console.log(objPop.scale);
 	
-	objPop.position.set(center.x/10, center.y/10, center.z/10);
-	//objPop.position.copy(centerWD);
-	objPop.rotation.set(0,Math.PI,0);
+	objPop.position.set(0,0,0);
+	objPop.rotation.set(0,0,0);
+	//objPop.position.set(center.x/objPop.scale.x, center.y/objPop.scale.y, center.z/objPop.scale.z);
+	//objPop.position.copy(centerWD);	
 }
 
 
@@ -362,5 +363,6 @@ function changeWidthWD(obj, wall)
 	obj.userData.door.wall = wall;
 } 
  
- 
+
+
  

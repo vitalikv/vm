@@ -25,7 +25,7 @@ function infoListObj()
 	arr[2] =
 	{
 		lotid : 3,
-		url : infProject.path+'import/wm_wind_3.fbx', 
+		url : infProject.path+'import/wm_wind_2.fbx', 
 		name : 'окно',
 		planeMath : 1.5,
 		material : true,
