@@ -103,6 +103,25 @@ function createEmptyFormWD_1(cdm)
 	obj.userData.door.lotid = (cdm.lotid)? cdm.lotid : null;
 	//obj.userData.door.active = { click: true, hover: true };
 	
+	
+	//default размеры
+	if(1==1)
+	{
+		obj.geometry.computeBoundingBox();		
+		var dX = obj.geometry.boundingBox.max.x - obj.geometry.boundingBox.min.x;
+		var dY = obj.geometry.boundingBox.max.y - obj.geometry.boundingBox.min.y;			
+		form.size = new THREE.Vector3(dX, dY, 1);				
+	}
+		
+	//default координаты точек
+	if(1==1)
+	{
+		var v2 = [];
+		var v = obj.geometry.vertices;
+		for ( var i = 0; i < v.length; i++ ) { v2[i] = v[i].clone(); }
+		obj.userData.door.form.v2 = v2;		
+	}
+	
 	upUvs_4( obj );
 	
 	scene.add( obj );
@@ -287,16 +306,30 @@ function addWD( cdm )
 
 
 
-// вставляем в wd объект окна/двери
+// вставляем в wd 3D объект окна/двери
 function setObjInWD(inf, cdm)
 {
 	var wd = cdm.wd;
-	var obj = inf.obj;
+	var objPop = inf.obj;
 	
-	wd.add( obj );
+	wd.add( objPop );
 	
-	obj.position.set(0,0,0);
-	obj.rotation.set(0,Math.PI,0);
+	wd.updateMatrixWorld();
+	var centerWD = wd.geometry.boundingSphere.center.clone();	
+
+	objPop.updateMatrixWorld();
+	objPop.geometry.computeBoundingBox();
+	objPop.geometry.computeBoundingSphere();
+	
+	var center = objPop.geometry.boundingSphere.center;
+	
+	console.log(center.clone());
+	console.log(objPop.geometry.boundingBox);
+	console.log(objPop.scale);
+	
+	objPop.position.set(center.x/10, center.y/10, center.z/10);
+	//objPop.position.copy(centerWD);
+	objPop.rotation.set(0,Math.PI,0);
 }
 
 

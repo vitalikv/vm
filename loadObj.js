@@ -11,6 +11,7 @@ function infoListObj()
 		url : infProject.path+'import/wm_wind_1.fbx', 
 		name : 'окно',
 		planeMath : 1.5,
+		material : true,
 	}
 	
 	arr[1] =
@@ -27,6 +28,7 @@ function infoListObj()
 		url : infProject.path+'import/wm_wind_3.fbx', 
 		name : 'окно',
 		planeMath : 1.5,
+		material : true,
 	}
 	
 	arr[3] =
@@ -34,7 +36,8 @@ function infoListObj()
 		lotid : 4,
 		url : infProject.path+'import/vm_door_1.fbx', 
 		name : 'дверь',
-		planeMath : 0.0,
+		planeMath : 1.0,
+		material : true,
 	}	
 	
 	
@@ -80,7 +83,7 @@ function loadObjServer(cdm)
 	
 	var inf = getInfoObj({lotid: lotid});
 
-	if(!inf) return;
+	if(!inf) return;	// объект не существует в API
 	
 	var obj = getObjFromBase({lotid: lotid});
 	
@@ -156,7 +159,29 @@ function addObjInBase(cdm)
 		{  
 			return null;
 		}
-	}	
+	}
+
+	// накладываем на материал объекта lightMap
+	obj.traverse(function(child) 
+	{
+		if(child.isMesh) 
+		{ 
+			if(child.material)
+			{
+				if(Array.isArray(child.material))
+				{
+					for(var i = 0; i < child.material.length; i++)
+					{
+						child.material[i].lightMap = lightMap_1;
+					}
+				}
+				else
+				{
+					child.material.lightMap = lightMap_1;
+				}					
+			}				
+		}
+	});	
 	
 	base[base.length] = {lotid: lotid, obj: obj.clone()}; 
 }
@@ -194,31 +219,13 @@ function addObjInScene(inf, cdm)
 	obj.userData.tag = 'obj';
 	obj.userData.obj3D = {};
 	obj.userData.obj3D.lotid = cdm.lotid;
-	obj.userData.obj3D.nameRus = inf.name;  
-	obj.material = new THREE.MeshLambertMaterial( {color: 0xffff00, transparent: true, opacity: 0.5 } );
-	obj.material.visible = false;
-	//obj.rotation.y += 1;
-	// накладываем на материал объекта lightMap
-	obj.traverse(function(child) 
+	obj.userData.obj3D.nameRus = inf.name;
+
+	if(!inf.material)
 	{
-		if(child.isMesh) 
-		{ 
-			if(child.material)
-			{
-				if(Array.isArray(child.material))
-				{
-					for(var i = 0; i < child.material.length; i++)
-					{
-						child.material[i].lightMap = lightMap_1;
-					}
-				}
-				else
-				{
-					child.material.lightMap = lightMap_1;
-				}					
-			}				
-		}
-	});		
+		obj.material = new THREE.MeshLambertMaterial( {color: 0xffff00, transparent: true, opacity: 0.5 } );
+		obj.material.visible = false;		
+	}			
 	
 	infProject.scene.array.obj[infProject.scene.array.obj.length] = obj;
 

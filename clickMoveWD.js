@@ -353,13 +353,17 @@ function inputWidthHeightWD(wd)
 function сhangeSizePosWD( wd, pos, x, y )
 {	
 	var v = wd.geometry.vertices;
-	var f = wd.userData.door.form.v;
+	var v2 = wd.userData.door.form.v2;
+	var size = wd.userData.door.form.size;
 	
-	for ( var i = 0; i < f.minX.length; i++ ) { v[f.minX[i]].x = -x / 2; }
-	for ( var i = 0; i < f.maxX.length; i++ ) { v[f.maxX[i]].x = x / 2; }
-	for ( var i = 0; i < f.minY.length; i++ ) { v[f.minY[i]].y = -y / 2; }
-	for ( var i = 0; i < f.maxY.length; i++ ) { v[f.maxY[i]].y = y / 2; }
-
+	var scale = new THREE.Vector3(x/size.x, y/size.y, 1);	
+	
+	for ( var i = 0; i < v2.length; i++ )
+	{
+		v[i].x = v2[i].x * scale.x;
+		v[i].y = v2[i].y * scale.y;
+		//v[i].z *= objPop.scale.z;
+	}		
 
 	wd.geometry.verticesNeedUpdate = true;
 	wd.geometry.elementsNeedUpdate = true;	
