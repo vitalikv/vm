@@ -668,40 +668,32 @@ function createToolPoint()
 {	
 	var n = 0;
 	var v = [];
-	var circle = infProject.geometry.circle;
 	
-	for ( var i = 0; i < circle.length; i++ )
-	{
-		v[n] = new THREE.Vector3().addScaledVector( circle[i].clone().normalize(), 0.1 );
-		v[n].y = 0;		
-		n++;		
-		
-		v[n] = new THREE.Vector3();
-		v[n].y = 0;
-		n++;
-		
-		v[n] = v[n - 2].clone();
-		v[n].y = height_wall + 0.01;
-		n++;	
-		
-		v[n] = new THREE.Vector3();
-		v[n].y = height_wall + 0.01;
-		n++;		
-	}	
-
+	var geometry = new THREE.SphereGeometry( 0.1, 16, 16 );
 	
-	var obj = new THREE.Mesh( createGeometryCircle(v), new THREE.MeshLambertMaterial( { color : 0xffffff, transparent: true, opacity: 1.0, depthTest: false, lightMap : lightMap_1 } ) );
-	obj.material.map = texture_point_1;
-	obj.material.map.offset.x = 0.5;
-	obj.material.map.offset.y = 0.5;
-	obj.material.map.repeat.set(4.9, 4.9);
-	obj.material.visible = false;
+	var obj = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color : 0xcccccc, transparent: true, opacity: 1.0, depthTest: false, lightMap : lightMap_1 } ) );
+	//obj.material.map = texture_point_1;
+	//obj.material.map.offset.x = 0.5;
+	//obj.material.map.offset.y = 0.5;
+	//obj.material.map.repeat.set(4.9, 4.9); 
+	//obj.material.visible = false;
 	obj.userData.tag = 'tool_point';
+	obj.userData.tool_point = {};
 	obj.renderOrder = 1;
 	obj.position.set(0,0,0);
 	obj.visible = false;	
 	scene.add( obj );
-	upUvs_4( obj )
+	
+	//default vertices
+	if(1==1)
+	{
+		var v2 = [];
+		var v = obj.geometry.vertices;
+		for ( var i = 0; i < v.length; i++ ) { v2[i] = v[i].clone(); }
+		obj.userData.tool_point.v2 = v2;		
+	}	
+	
+	//upUvs_4( obj )
 	return obj;
 }
 

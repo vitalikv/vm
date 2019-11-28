@@ -419,25 +419,40 @@ function cameraZoomTop( delta )
 
 	var n = 0;
 	var circle = infProject.geometry.circle;
-	var v = infProject.tools.point.geometry.vertices;
+	var point = infProject.tools.point;
 	
-	for ( var i = 0; i < circle.length; i++ )
+	var v = point.geometry.vertices;
+	var v2 = point.userData.tool_point.v2;
+	
+	
+	for ( var i = 0; i < v2.length; i++ )
 	{
-		v[ n ] = new THREE.Vector3().addScaledVector( circle[ i ].clone().normalize(), 0.1 / delta );
-		v[ n ].y = 0;
-		n++;
+		v[i].x = v2[i].x * 1/delta;
+		v[i].z = v2[i].z * 1/delta;
+		//v[i].z *= objPop.scale.z;
+	}	
+	
+	if(1==2)
+	{
+		for ( var i = 0; i < circle.length; i++ )
+		{
+			v[ n ] = new THREE.Vector3().addScaledVector( circle[ i ].clone().normalize(), 0.1 / delta );
+			v[ n ].y = 0;
+			n++;
 
-		v[ n ] = new THREE.Vector3();
-		v[ n ].y = 0;
-		n++;
+			v[ n ] = new THREE.Vector3();
+			v[ n ].y = 0;
+			n++;
 
-		v[ n ] = v[ n - 2 ].clone();
-		v[ n ].y = height_wall + 0.01;
-		n++;
+			v[ n ] = v[ n - 2 ].clone();
+			v[ n ].y = height_wall + 0.01;
+			n++;
 
-		v[ n ] = new THREE.Vector3();
-		v[ n ].y = height_wall + 0.01;
-		n++;
+			v[ n ] = new THREE.Vector3();
+			v[ n ].y = height_wall + 0.01;
+			n++;
+		}
+		
 	}
 	
 	infProject.tools.point.geometry.verticesNeedUpdate = true;

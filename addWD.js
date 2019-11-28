@@ -114,7 +114,7 @@ function createEmptyFormWD_1(cdm)
 		form.size = new THREE.Vector3(dX, dY, 1);				
 	}
 		
-	//default координаты точек
+	//default vertices
 	if(1==1)
 	{
 		var v2 = [];
@@ -291,7 +291,8 @@ function addWD( cdm )
 	obj.geometry.computeBoundingBox();
 	obj.geometry.computeBoundingSphere();
 	
-	
+	if(obj.userData.tag == 'window') { obj.userData.door.lotid = 1; }
+		
 	if(obj.userData.door.lotid)
 	{
 		loadObjServer({type: 'wd', wd: obj, lotid: obj.userData.door.lotid});
@@ -331,7 +332,23 @@ function setObjInWD(inf, cdm)
 	objPop.position.set(0,0,0);
 	objPop.rotation.set(0,0,0);
 	//objPop.position.set(center.x/objPop.scale.x, center.y/objPop.scale.y, center.z/objPop.scale.z);
-	//objPop.position.copy(centerWD);	
+	//objPop.position.copy(centerWD);
+
+	// изменяем у ПОП объекта ширину/высоту/центрируем 
+	if(1==1)
+	{
+		wd.updateMatrixWorld();
+		wd.geometry.computeBoundingBox();
+		wd.geometry.computeBoundingSphere();
+		var x = wd.geometry.boundingBox.max.x - wd.geometry.boundingBox.min.x;
+		var y = wd.geometry.boundingBox.max.y - wd.geometry.boundingBox.min.y;		
+		
+		objPop.geometry.computeBoundingBox();		
+		var dX = objPop.geometry.boundingBox.max.x - objPop.geometry.boundingBox.min.x;
+		var dY = objPop.geometry.boundingBox.max.y - objPop.geometry.boundingBox.min.y;				
+		
+		objPop.scale.set(x/dX, y/dY, 1);			
+	}
 }
 
 

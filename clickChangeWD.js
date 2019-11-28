@@ -5,16 +5,19 @@ function createControllWD()
 {
 	var arr = []; 
 	
+	var geometry1 = new THREE.SphereGeometry( 0.07, 16, 16 );
+	var geometry2 = new THREE.SphereGeometry( 0.05, 16, 16 );
+	
 	for ( var i = 0; i < 4; i++ )
 	{
-		var obj = new THREE.Mesh( new THREE.BoxGeometry( 0.15, 0.15, 0.15 ), new THREE.MeshLambertMaterial( { transparent: true, opacity: 0 } ) );
+		var obj = new THREE.Mesh( geometry1, new THREE.MeshLambertMaterial( { transparent: true, opacity: 0 } ) );
 		
 		obj.userData.tag = 'controll_wd';
 		obj.userData.controll_wd = { id : i, obj : null };		
 		obj.visible = false;
 		
 		
-		var child = new THREE.Mesh( new THREE.BoxGeometry( 0.1, 0.1, 0.1 ), new THREE.MeshLambertMaterial( { color : 'rgb(17, 255, 0)', transparent: true, opacity: 1, depthTest: false } ) );
+		var child = new THREE.Mesh( geometry2, new THREE.MeshLambertMaterial( { color : 0xcccccc, transparent: true, opacity: 1, depthTest: false, lightMap : lightMap_1 } ) );
 		child.renderOrder = 2;
 		obj.add( child );
 		 
