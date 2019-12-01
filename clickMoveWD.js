@@ -365,6 +365,25 @@ function сhangeSizePosWD( wd, pos, x, y )
 	wd.geometry.computeBoundingSphere();
 
 	wd.position.copy( pos );
+	
+	 
+	// изменяем у ПОП объекта ширину/высоту/центрируем 
+	if(wd.userData.door.objPop && 1==1)
+	{
+		wd.updateMatrixWorld();
+		wd.geometry.computeBoundingBox();
+		wd.geometry.computeBoundingSphere();
+		var x = wd.geometry.boundingBox.max.x - wd.geometry.boundingBox.min.x;
+		var y = wd.geometry.boundingBox.max.y - wd.geometry.boundingBox.min.y;		
+		
+		var objPop = wd.userData.door.objPop;
+		
+		objPop.geometry.computeBoundingBox();		
+		var dX = objPop.geometry.boundingBox.max.x - objPop.geometry.boundingBox.min.x;
+		var dY = objPop.geometry.boundingBox.max.y - objPop.geometry.boundingBox.min.y;				
+		
+		objPop.scale.set(x/dX, y/dY, 1);			
+	}	
 }
 
 

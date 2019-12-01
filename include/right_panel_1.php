@@ -139,12 +139,12 @@ function showHideCatalogMenuUI(cdm)
 						объект
 					</div>	
 				</div>			
-				<div class="right_panel_1_item_block" nameId="button_wrap_catalog">
+				<div class="right_panel_1_item_block" nameId="button_wrap_catalog" style="display: none;">
 					<div class="right_panel_1_item_block_text">
 						каталог
 					</div>	
 				</div>
-				<div class="right_panel_1_item_block" nameId="button_wrap_list_obj">
+				<div class="right_panel_1_item_block" nameId="button_wrap_list_obj" style="display: none;">
 					<div class="right_panel_1_item_block_text">
 						список
 					</div>	

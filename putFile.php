@@ -51,6 +51,9 @@ for ($i = 0; $i < count($arr)-1; $i++)
 {
 	echo $arr[$i].'<br>';
 	$file = file_get_contents($arr[$i]);
+	
+	$file = preg_replace("|console.log\((.*)\);|i","",$file);
+	
 	fwrite($newFile, $file);	
 }
 

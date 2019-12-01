@@ -60,7 +60,7 @@ function createLabelCameraWall(cdm)
 		
 		if(cdm.ratio) { canvs.width = cdm.ratio.x; canvs.height = cdm.ratio.y; }
 		
-		ctx.font = cdm.size + 'pt Arial';
+		ctx.font = cdm.size + 'pt Courier New';
 		if(cdm.border == 'border line')
 		{
 			ctx.fillStyle = 'rgba(0,0,0,1)';
@@ -141,7 +141,7 @@ function upLabelCameraWall(cdm)
 	var ctx = canvs.getContext("2d");
 	
 	ctx.clearRect(0, 0, canvs.width, canvs.height);
-	ctx.font = (cdm.sizeText) ? cdm.sizeText+'pt Arial' : '50pt Arial';
+	ctx.font = (cdm.sizeText) ? cdm.sizeText+'pt Courier New' : '50pt Courier New';
 	
 	if(cdm.border == 'border line')
 	{

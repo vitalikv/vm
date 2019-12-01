@@ -316,6 +316,8 @@ function setObjInWD(inf, cdm)
 	
 	wd.add( objPop );
 	
+	wd.userData.door.objPop = objPop;
+	
 	wd.updateMatrixWorld();
 	var centerWD = wd.geometry.boundingSphere.center.clone();	
 
@@ -377,7 +379,7 @@ function changeWidthWD(obj, wall)
 	obj.geometry.computeFaceNormals();		
 	
 	obj.userData.door.width = width;
-	obj.userData.door.wall = wall;
+	obj.userData.door.wall = wall;	
 } 
  
 
