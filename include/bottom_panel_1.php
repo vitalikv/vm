@@ -50,7 +50,7 @@
 	<?}?>
 	
 	<? if($interface['wd_1'] == 1){ ?>
-	<div class="toolbar" nameId='wd_menu_1' style="display: none;">
+	<div class="toolbar" data-action ='top_panel_1' nameId='wd_menu_1' style="display: none;">
 		<div class="toolbar-header">проём</div>
 		<div class="toolbar-menu">
 			<div class="input-size">

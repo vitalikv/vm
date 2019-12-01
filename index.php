@@ -43,17 +43,14 @@
 	
 	<div class="frame">
 			
-		<div class="flex_1 top_panel_1 button_gradient_1" data-action ='top_panel_1'>
+		<!--<div class="flex_1 top_panel_1 button_gradient_1" data-action ='top_panel_1'>
 			<div class="go_home align_items" nameId="butt_main_menu">
 				<div class="go_home_txt">
 					Меню
 				</div>
 			</div>
-			<div class="title_1"><h1><?=$h1?></h1></div>
-			<!--<div class="top_menu_right_1">
-				<div class="top_menu_right_1_text" nameId="save_pr_1">Сохранить</div>
-			</div>-->				
-		</div>	
+			<div class="title_1"><h1><?=$h1?></h1></div>				
+		</div>	-->
 		
 		<div class="flex_1 height100">
 			
