@@ -61,9 +61,12 @@ $('[nameId="button_wrap_plan"]').mousedown(function () { changeRightMenuUI_1({el
 $('[infcam]').on('mousedown', function(e) 
 {  
 	var value = $(this).attr('infcam');
+	
 	var txt = (value == '3D') ? '2D' : '3D';
+	var infcam = (value == '3D') ? '2D' : '3D';
+	
 	$(this).text(txt);
-	$(this).attr({"infcam": txt});	
+	$(this).attr({"infcam": infcam});	
 	
 	clickInterface({button: value});
 }); 

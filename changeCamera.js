@@ -95,7 +95,6 @@ function changeDepthColor()
 		var depthTest = false;
 		var w2 = 1;
 		var visible = true;
-		var pillar = false;
 		var visible_2 = true;
 	}
 	else if(camera == camera3D || camera == cameraWall)
@@ -103,7 +102,6 @@ function changeDepthColor()
 		var depthTest = true;
 		var w2 = 0.0;
 		var visible = false;
-		var pillar = true;
 		var visible_2 = false;
 	}
 	else { return; } 
@@ -126,11 +124,6 @@ function changeDepthColor()
 	for ( var i = 0; i < point.length; i++ )
 	{ 
 		point[i].visible = visible; 
-		if(point[i].userData.point.pillar) 
-		{
-			point[i].userData.point.pillar.position.copy(point[i].position);
-			point[i].userData.point.pillar.visible = pillar;
-		}
 	}		
 
 	showHideArrObj(window, visible_2);

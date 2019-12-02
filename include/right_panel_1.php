@@ -171,7 +171,10 @@ function showHideCatalogMenuUI(cdm)
 			<div class="button1-wrap-1">
 				<div data-action ='create_wd_3' class="button1 button_gradient_1">Окно</div>
 			</div>			
-			
+		
+			<div class="button1-wrap-1">
+				<input type="text" nameId="rp_floor_height" value="0">
+			</div>			
 		</div>
 		
 		

@@ -20,7 +20,7 @@
 		
 		var infProject = JSON.parse('<?=$jsonPhp?>');
 
-		console.log('version '+ vr);		
+		console.log('type '+ vr);		
 	</script>
 	
 			
@@ -43,20 +43,19 @@
 	
 	<div class="frame">
 			
-		<!--<div class="flex_1 top_panel_1 button_gradient_1" data-action ='top_panel_1'>
+		<div class="flex_1 top_panel_1 button_gradient_1" data-action ='top_panel_1'>
 			<div class="go_home align_items" nameId="butt_main_menu">
 				<div class="go_home_txt">
 					Меню
 				</div>
 			</div>
 			<div class="title_1"><h1><?=$h1?></h1></div>				
-		</div>	-->
+		</div>	
 		
 		<div class="flex_1 height100">
 			
 			<div style="flex-grow:1; position: relative;">
 				<? require_once("include/top_1.php"); ?>
-				<? //require_once("include/modal_window_2.php"); ?>
 				
 				<noindex>		 
 				<? require_once("include/left_panel_1.php"); ?>	

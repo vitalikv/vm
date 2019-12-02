@@ -503,8 +503,18 @@ function changeAllHeightWall_1(cdm)
 		infProject.scene.array.wall[i].geometry.verticesNeedUpdate = true;
 		infProject.scene.array.wall[i].geometry.elementsNeedUpdate = true;
 		
-		infProject.scene.array.wall[i].userData.wall.height_1 = Math.round(height.num * 100) / 100;
+		infProject.scene.array.wall[i].userData.wall.height_1 = height.num;
 	}
+	
+	if(cdm.input)
+	{  
+		$('[nameId="rp_floor_height"]').val(height.num);
+	}
+	
+	if(cdm.globalHeight)
+	{
+		infProject.settings.height = height.num;
+	}	
 	
 	upLabelPlan_1( infProject.scene.array.wall );
 	clickPointUP_BSP( infProject.scene.array.wall );

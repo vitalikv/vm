@@ -221,7 +221,7 @@ if(infProject.settings.calc.fundament == 'svai')
 }
 
 
-camera3D.position.x = radious * Math.sin( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
+camera3D.position.x = 0;
 camera3D.position.y = radious * Math.sin( phi * Math.PI / 360 );
 camera3D.position.z = radious * Math.cos( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
 	
@@ -756,16 +756,7 @@ function createPoint( pos, id )
 	point.userData.point.type = null;
 	point.userData.point.last = { pos : pos.clone(), cdm : '', cross : null };
 	
-	point.visible = (camera == cameraTop) ? true : false;
-	
-	if(infProject.scene.tool.pillar)
-	{
-		var pillar = infProject.scene.tool.pillar.clone();
-		pillar.position.copy(point.position);
-		point.userData.point.pillar = pillar;
-		pillar.visible = (camera == camera3D) ? true : false;
-		scene.add( pillar );
-	}
+	point.visible = (camera == cameraTop) ? true : false;	
 	
 	scene.add( point );	
 	
@@ -961,103 +952,6 @@ function setTexture(cdm)
 	});			
 }
 
-
-
-
-// изменение высоты стен
-function changeHeightWall()
-{  
-	if(infProject.activeInput == 'input-height')
-	{
-		var h2 = $('input[data-action="input-height"]').val();
-		h2 /= 100;   
-	}	
-	else if(infProject.activeInput == 'size-wall-height')
-	{
-		var h2 = $('input[data-action="size-wall-height"]').val();
-	}	
-	
-	if(!isNumeric(h2)) return;	
-	h2 = Number(h2);
-	
-	
-	if(h2 < 0.01) { h2 = 0.01; }
-	if(h2 > 3) { h2 = 3; }
-		
-	height_wall = h2;	
-	if(infProject.settings.floor.changeY) { infProject.settings.floor.height = infProject.settings.floor.posY = h2; }		
-	
-	clickMovePoint_BSP( obj_line );
-	
-	for ( var i = 0; i < obj_line.length; i++ )
-	{
-		var v = obj_line[i].geometry.vertices;
-		
-		v[1].y = h2;
-		v[3].y = h2;
-		v[5].y = h2;
-		v[7].y = h2;
-		v[9].y = h2;
-		v[11].y = h2;
-		obj_line[i].geometry.verticesNeedUpdate = true;
-		obj_line[i].geometry.elementsNeedUpdate = true;
-		
-		obj_line[i].userData.wall.height_1 = Math.round(h2 * 100) / 100;
-	}
-	
-	upLabelPlan_1( obj_line );
-	clickPointUP_BSP( obj_line );
-	
-	var n = 0;
-	var circle = infProject.geometry.circle;
-	var v = infProject.tools.point.geometry.vertices;	
-	
-	for ( var i = 0; i < circle.length; i++ )
-	{		
-		v[ n ] = new THREE.Vector3().addScaledVector( circle[ i ].clone().normalize(), 0.1 / camera.zoom );
-		v[ n ].y = 0;
-		n++;
-
-		v[ n ] = new THREE.Vector3();
-		v[ n ].y = 0;
-		n++;
-		
-		v[ n ] = v[ n - 2 ].clone();
-		v[ n ].y = h2 + 0.01;
-		n++;
-
-		v[ n ] = new THREE.Vector3();
-		v[ n ].y = h2 + 0.01;
-		n++; 		
-	}	
-	infProject.tools.point.geometry.verticesNeedUpdate = true;
-	infProject.tools.point.geometry.elementsNeedUpdate = true;
-	
-	
-	
-	//h2 = Math.round(h2 * 10) / 100;
-	console.log(h2);
-	
-	if(infProject.activeInput == 'input-height')
-	{
-		$('input[data-action="input-height"]').val(h2*100);
-	}	
-	else if(infProject.activeInput == 'size-wall-height')
-	{
-		$('input[data-action="size-wall-height"]').val(h2);
-	}	
-	
-	updateShapeFloor(room);
-	calculationAreaFundament_2();
-	
-	if(infProject.scene.array.wall.length > 0) { showRuleCameraWall(); }	// обновляем размеры стены
-	
-	renderCamera();
-}
-	
-	
-
-	
 
 
 
@@ -1559,7 +1453,11 @@ document.body.addEventListener("keydown", function (e)
 			else if(infProject.activeInput == 'dp_inf_1_proj')
 			{
 				inputLoadProject();
-			}				
+			}
+			else if(infProject.activeInput == 'rp_floor_height')
+			{
+				changeAllHeightWall_1({ height: $('[nameId="rp_floor_height"]').val(), input: true, globalHeight: true });
+			}			
 		}		
 		 
 		return; 
@@ -1568,7 +1466,7 @@ document.body.addEventListener("keydown", function (e)
 
 	if(e.keyCode == 46) { detectDeleteObj(); }
 	
-	if(clickO.keys[18] && e.keyCode == 90) { sneneExporter() }		// alt + z
+	if(clickO.keys[18] && e.keyCode == 90) {  }		// alt + z
 	if(clickO.keys[18] && e.keyCode == 72) { getConsoleRendererInfo(); }		// alt + h
 	if(clickO.keys[18] && e.keyCode == 77) { inputLoadProject(); }				// alt + m
 	if(clickO.keys[18] && e.keyCode == 84) { saveFile({json: true}); }			// alt + t
@@ -1580,29 +1478,6 @@ document.body.addEventListener("keydown", function (e) { clickO.keys[e.keyCode] 
 document.body.addEventListener("keyup", function (e) { clickO.keys[e.keyCode] = false; });
 
 
-function sneneExporter()
-{ console.log( 222222 );
-
-			var exporter = new THREE.STLExporter();
-			
-				var result = exporter.parse( scene, { binary: true } );
-				saveArrayBuffer( result, 'box.stl' );
-				
-			function saveArrayBuffer( buffer, filename ) {
-				save( new Blob( [ buffer ], { type: 'application/octet-stream' } ), filename );
-			}
-
-			function save( blob, filename ) {
-			var link = document.createElement( 'a' );
-			link.style.display = 'none';
-			document.body.appendChild( link );				
-				
-				link.href = URL.createObjectURL( blob );
-				link.download = filename;
-				link.click();
-			}			
-	
-}
 
 
 // загрзука проекта из базы через input

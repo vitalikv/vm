@@ -703,41 +703,7 @@ function clickButtonLoadProjectUI(el)
 									</div>								
 								
 								
-								</div>								
-								
-								<div wwm_1="button_help" list_ui="window_main_menu_content" style="display: none;">
-									<div class="window_main_menu_content_1_h1">
-										Полезная информация
-									</div>								
-									<div class="modal_wind_2" style="margin: 30px;">
-										Приветствуем.<br> 
-										Здесь вы сможете нарисовать и подсчитать количество труб для водяных полов в онлайн режиме. 
-										Эта программа создана, чтобы простой человек без специальных знаний мог быстро спроектировать теплый пол для загородного или частного дома.
-									</div>
-									<div class="modal_wind_2" style="margin: 70px 30px 30px 30px;">
-										Посмотрите короткое видео, как пользоваться программой:
-
-										<div class="flex_1">
-											<a href="https://www.youtube.com/watch?v=rqCZYTKqfIE" class="button_youtube_1 button_gradient_1" target="_blank">
-												<img src="<?=$path?>/img/you_1.jpg">
-											</a>					
-											<a href="https://www.youtube.com/watch?v=DQl4HWaDiKc" class="button_youtube_1 button_gradient_1" target="_blank">
-												<img src="<?=$path?>/img/you_2.jpg">
-											</a>											
-										</div>					
-									</div>		
-								</div>
-
-								<div wwm_1="button_contact" list_ui="window_main_menu_content" style="display: none;">
-									<div class="window_main_menu_content_1_h1">
-										Контакты
-									</div>								
-									<div class="inf_contact button_gradient_1">
-										<div class="inf_contact_text">
-											otoplenie-doma@mail.ru
-										</div>
-									</div>		
-								</div>								
+								</div>																					
 								
 							</div>							
 						</div>

@@ -107,7 +107,6 @@ function resetScene()
 	
 	for ( var i = 0; i < point.length; i++ )
 	{ 
-		if(point[i].userData.point.pillar) { scene.remove( point[i].userData.point.pillar ); }
 		disposeNode(point[i]);
 		scene.remove(point[i]); 
 	}	

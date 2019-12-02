@@ -30,7 +30,7 @@ function detectDeleteObj()
 function deleteWall_1( wall )
 {	
 	//hideMenuObjUI_2D(wall);
-//calculationZoneFundament_1(wall)
+
 	hideMenuUI(wall);
 	
 	var points = wall.userData.wall.p;
@@ -358,8 +358,6 @@ function deletePointFromArr(point)
 {
 	var n = -1;
 	for ( var i = 0; i < obj_point.length; i++ ){ if(obj_point[i].userData.id == point.userData.id) { n = i; break; } }
-	
-	if(obj_point[n].userData.point.pillar) { scene.remove( obj_point[n].userData.point.pillar ); }
 		
 	obj_point.splice(n, 1);	
 }
