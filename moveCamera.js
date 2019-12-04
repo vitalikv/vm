@@ -145,7 +145,7 @@ var centerCam = new THREE.Vector3( 0, 0, 0 );
 
 
 function cameraMove3D( event )
-{
+{ 
 	if ( camera3D.userData.camera.type == 'fly' )
 	{
 		if ( isMouseDown2 ) 
@@ -167,6 +167,7 @@ function cameraMove3D( event )
 			
 			if(gizmo.visible) clippingGizmo360(gizmo.userData.gizmo.obj);
 			
+			wallAfterRender_2();
 		}
 		if ( isMouseDown3 )    
 		{
@@ -176,6 +177,8 @@ function cameraMove3D( event )
 			var offset = new THREE.Vector3().subVectors( camera3D.userData.camera.click.pos, intersects[0].point );
 			camera.position.add( offset );
 			centerCam.add( offset );
+			
+			wallAfterRender_2();
 		}
 	}
 	else if ( camera3D.userData.camera.type == 'first' )

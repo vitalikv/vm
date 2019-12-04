@@ -780,15 +780,16 @@ function createOneWall3( point1, point2, width, cdm )
 	var color = [0x7d7d7d, 0x696969]; 
 	
 	
-	if(infProject.settings.project == 'warm_floor' && infProject.settings.wall.color) 
+	if(infProject.settings.wall.color) 
 	{  
 		if(infProject.settings.wall.color.front) color[0] = infProject.settings.wall.color.front; 
 		if(infProject.settings.wall.color.top) color[1] = infProject.settings.wall.color.top; 
 	}	
 	
-	var material = new THREE.MeshLambertMaterial({ color : color[0], lightMap : lightMap_1 });
+	var material = new THREE.MeshLambertMaterial({ color : color[0], transparent: true, opacity: 1, lightMap : lightMap_1 });
+	var materialTop = new THREE.MeshLambertMaterial( { color: color[1], transparent: true, opacity: 1, lightMap : lightMap_1 } );
 	
-	var materials = [ material.clone(), material.clone(), material.clone(), new THREE.MeshLambertMaterial( { color: color[1], lightMap : lightMap_1 } ) ];
+	var materials = [ material.clone(), material.clone(), material.clone(), materialTop ];
 	
 	if(cdm.color)
 	{

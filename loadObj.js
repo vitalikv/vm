@@ -103,7 +103,7 @@ function loadObjServer(cdm)
 			
 			var obj = object.children[0];
 			
-			addObjInBase({lotid: lotid, obj: obj});
+			var obj = addObjInBase({lotid: lotid, obj: obj});
 			
 			if(cdm.loadFromFile)	// загрузка из сохраненного файла json 
 			{
@@ -157,7 +157,7 @@ function addObjInBase(cdm)
 	{
 		if(base[i].lotid == lotid)
 		{  
-			return null;
+			return obj;
 		}
 	}
 
@@ -168,22 +168,22 @@ function addObjInBase(cdm)
 		{ 
 			if(child.material)
 			{
-				if(Array.isArray(child.material))
+				if(!Array.isArray(child.material)) { var arrM = [child.material]; }
+				else { var arrM = child.material; }				
+				
+				for(var i = 0; i < arrM.length; i++)
 				{
-					for(var i = 0; i < child.material.length; i++)
-					{
-						child.material[i].lightMap = lightMap_1;
-					}
-				}
-				else
-				{
-					child.material.lightMap = lightMap_1;
+					arrM[i].lightMap = lightMap_1;
+					//arrM[i].transparent = true;
+					//arrM[i].userData.opacity = arrM[i].opacity;  
 				}					
 			}				
 		}
 	});	
 	
-	base[base.length] = {lotid: lotid, obj: obj.clone()}; 
+	base[base.length] = {lotid: lotid, obj: obj.clone()};
+
+	return obj;
 }
 
 

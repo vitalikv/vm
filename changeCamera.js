@@ -19,7 +19,9 @@ function changeCamera(cam)
 		
 		changeDepthColor();			
 		cameraZoomTop( camera.zoom );
-		if(infProject.scene.grid.show) infProject.scene.grid.obj.visible = true;		
+		if(infProject.scene.grid.show) infProject.scene.grid.obj.visible = true;
+
+		showAllWallRender();	// показываем стены, которые были спрятаны
 		
 		changeRightMenuUI_1({current: true});
 	}
@@ -31,6 +33,10 @@ function changeCamera(cam)
 		cameraZoomTop( cameraTop.zoom );
 		changeDepthColor();
 		if(infProject.scene.grid.show) infProject.scene.grid.obj.visible = true;
+		
+		// прячем стены
+		getInfoRenderWall();
+		wallAfterRender_2();
 		
 		changeRightMenuUI_1({current: true});
 	}

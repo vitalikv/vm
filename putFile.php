@@ -30,6 +30,7 @@ clickObj.js
 clickMoveGizmo.js
 loadObj.js
 uiInterface.js
+hideWall.js
 ';
 
 
