@@ -12,6 +12,18 @@ function changeCamera(cam)
 	renderPass.camera = cam;
 	outlinePass.renderCamera = cam;
 
+	if(camera == camera3D)
+	{
+		$('[nameId="top_menu_b1"]').hide();
+		$('[nameId="top_menu_b2"]').hide();
+		$('[inf_type="mode_1"]').hide();
+	}
+	else
+	{
+		if($('[nameId="top_menu_b1"]').attr('inf-visible') == 'true') { $('[nameId="top_menu_b1"]').show(); }
+		if($('[nameId="top_menu_b2"]').attr('inf-visible') == 'true') { $('[nameId="top_menu_b2"]').show();	}
+		$('[inf_type="mode_1"]').show();
+	}	
 	
 	if(camera == cameraTop)
 	{				

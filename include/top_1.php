@@ -15,8 +15,13 @@
 		</div>				
 	</div> 
 	
-	<div class="tp_right_1">		
-		<div infcam = '3D' class="button1 button_gradient_1">3D</div>			
+	<div class="tp_right_1">
+	
+		<select nameId="camera_button" class="select-css">
+			<option class="select-css-1" value ="2D">камера 2D</option>
+			<option value ="3D">камера 3D</option>
+		</select>	
+		
 	</div>
 	
 </div>

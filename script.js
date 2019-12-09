@@ -1046,8 +1046,7 @@ function clickInterface(cdm)
 		
 		if(cdm.button == '2D')
 		{  			
-			if(infProject.settings.interface.button.cam2d == 'front') { changeCamera(cameraWall); }
-			else { changeCamera(cameraTop); } 
+			changeCamera(cameraTop);
 		}
 		else if(cdm.button == '3D')
 		{

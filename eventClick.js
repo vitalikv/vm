@@ -18,6 +18,8 @@ $('[nameId="button_contact"]').mousedown(function () { changeMainMenuUI({value: 
 //$('[nameId="save_pr_1"]').mousedown(function () { saveFile(); $('[nameId="background_main_menu"]').css({"display":"none"}); });
 
 
+$('[nameId="camera_button"]').change(function() { clickInterface({button: $( this ).val()}); });
+
 
 getSlotMainMenuUI();	
 
@@ -58,18 +60,7 @@ $('[nameId="button_wrap_plan"]').mousedown(function () { changeRightMenuUI_1({el
 
 
 
-$('[infcam]').on('mousedown', function(e) 
-{  
-	var value = $(this).attr('infcam');
-	
-	var txt = (value == '3D') ? '2D' : '3D';
-	var infcam = (value == '3D') ? '2D' : '3D';
-	
-	$(this).text(txt);
-	$(this).attr({"infcam": infcam});	
-	
-	clickInterface({button: value});
-}); 
+
  
 
 $('[nameId="color_tube_1_default"]').on('mousedown', function(e) 
