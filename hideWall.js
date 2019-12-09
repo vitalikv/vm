@@ -41,35 +41,48 @@ function wallAfterRender_2()
 		var wall = wallVisible[ i ].wall;
 		//var pos = new THREE.Vector3().subVectors( wall.p[1].position, wall.p[0].position ).divideScalar( 2 ).add(wall.p[0].position);
 		
-		if ( camera.getWorldDirection(new THREE.Vector3()).dot( wallVisible[ i ].normal.clone() ) > 0 )  
-		{
-			setTransparentMat({obj: wall, value: 0.3});
+		var res = camera.getWorldDirection(new THREE.Vector3()).dot( wallVisible[ i ].normal.clone() );
+		
+		if ( res > 0.5 )  
+		{ 	
+			wall.renderOrder = Math.abs(res);
+			setTransparentMat({obj: wall, value: 1 - Math.abs(res)});
 			
 			for ( var i2 = 0; i2 < wall.userData.wall.arrO.length; i2++ ) 
 			{
-				if( wall.userData.wall.arrO[i2].userData.door.objPop )
-				{
-					wall.userData.wall.arrO[i2].userData.door.objPop.visible = false;
-					//setTransparentMat({obj: wall.userData.wall.arrO[i2].userData.door.objPop, value: 0.3});
-				}				
+				wall.userData.wall.arrO[i2].visible = false;				
 			}
 		}
 		else
 		{
+			wall.renderOrder = 0;
 			setTransparentMat({obj: wall, value: 1});
 			
 			for ( var i2 = 0; i2 < wall.userData.wall.arrO.length; i2++ ) 
 			{
-				if( wall.userData.wall.arrO[i2].userData.door.objPop )
-				{
-					wall.userData.wall.arrO[i2].userData.door.objPop.visible = true;
-					//setTransparentMat({obj: wall.userData.wall.arrO[i2].userData.door.objPop, default: true});
-				}
+				wall.userData.wall.arrO[i2].visible = true;
 			}
 		}
 	}
 }
 
+
+// показываем стены, которые были спрятаны
+function showAllWallRender()
+{		
+	for ( var i = 0; i < wallVisible.length; i++ ) 
+	{ 
+		var wall = wallVisible[i].wall;
+
+		wall.renderOrder = 0;
+		setTransparentMat({obj: wall, value: 1});
+		
+		for ( var i2 = 0; i2 < wall.userData.wall.arrO.length; i2++ ) 
+		{
+			wall.userData.wall.arrO[i2].visible = true;
+		}		
+	}
+}
 
 
 function setTransparentMat(cdm)
@@ -99,21 +112,7 @@ function setTransparentMat(cdm)
 }
 
 
-// показываем стены, которые были спрятаны
-function showAllWallRender()
-{		
-	for ( var i = 0; i < wallVisible.length; i++ ) 
-	{ 
-		var wall = wallVisible[i].wall;
-		if(wall.visible) { continue; }
-		wall.visible = true;
-		for ( var i2 = 0; i2 < wall.userData.wall.arrO.length; i2++ ) 
-		{ 
-			wall.userData.wall.arrO[i2].visible = true; 
-			if(wall.userData.wall.arrO[i2].userData.door.popObj) wall.userData.wall.arrO[i2].userData.door.popObj.visible = true; 
-		}			
-	}
-}
+
 
 
 

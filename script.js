@@ -786,8 +786,8 @@ function createOneWall3( point1, point2, width, cdm )
 		if(infProject.settings.wall.color.top) color[1] = infProject.settings.wall.color.top; 
 	}	
 	
-	var material = new THREE.MeshLambertMaterial({ color : color[0], transparent: true, opacity: 1, lightMap : lightMap_1 });
-	var materialTop = new THREE.MeshLambertMaterial( { color: color[1], transparent: true, opacity: 1, lightMap : lightMap_1 } );
+	var material = new THREE.MeshPhongMaterial({ color : color[0], transparent: true, opacity: 1, lightMap : lightMap_1 });
+	var materialTop = new THREE.MeshPhongMaterial( { color: color[1], transparent: true, opacity: 1, lightMap : lightMap_1 } );
 	
 	var materials = [ material.clone(), material.clone(), material.clone(), materialTop ];
 	
