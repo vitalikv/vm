@@ -790,6 +790,23 @@ canvas
 
 
 
+.rp_item_plane
+{	
+	padding: 3px;
+	margin: 10px 0 30px 0;
+	border: 1px solid #ccc;
+}
+
+.rp_label_plane
+{
+	width: 155px; 
+	font-family: arial,sans-serif; 
+	font-size: 20px; 
+	color: #666; 
+	text-align:center;	
+}
+
+
 .button1-wrap-1 
 { 
 	padding:0 2px;

@@ -18,7 +18,7 @@
 	<div class="tp_right_1">
 	
 		<select nameId="camera_button" class="select-css">
-			<option class="select-css-1" value ="2D">камера 2D</option>
+			<option value ="2D">камера 2D</option>
 			<option value ="3D">камера 3D</option>
 		</select>	
 		

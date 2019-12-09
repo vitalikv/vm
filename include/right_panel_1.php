@@ -160,20 +160,100 @@ function showHideCatalogMenuUI(cdm)
 			<div class="right_panel_1_1_h">План</div>
 			
 			
-			<div class="button1-wrap-1">
-				<div data-action ='wall' class="button1 button_gradient_1">Стена</div>
+			<div class="flex_column_1 rp_item_plane">			
+				<div class="flex_1">
+					<div class="flex_1 align_items">
+						<div class="rp_label_plane">
+							толщина
+						</div>
+					</div>
+					<div class="flex_1 align_items" style="width: auto;">
+						<input type="text" style="width: 90%; margin:5px 5px;" nameId="rp_wall_width_1" value="0">
+					</div>
+				</div>				
+				
+				<div>
+					<div data-action ='wall' class="button1 button_gradient_1">Стена</div>
+				</div>
 			</div>				
 			
-			<div class="button1-wrap-1">
-				<div data-action ='create_wd_2' class="button1 button_gradient_1">Дверь</div>
+			<div class="flex_column_1 rp_item_plane">
+				<div class="flex_1">
+					<div class="flex_1 align_items">
+						<div class="rp_label_plane">
+							длина
+						</div>
+					</div>
+					<div class="flex_1 align_items" style="width: auto;">
+						<input type="text" style="width: 90%; margin:5px 5px;" nameId="rp_door_length_1" value="0">
+					</div>
+				</div>
+				
+				<div class="flex_1">
+					<div class="flex_1 align_items">
+						<div class="rp_label_plane">
+							высота
+						</div>
+					</div>
+					<div class="flex_1 align_items" style="width: auto;">
+						<input type="text" style="width: 90%; margin:5px 5px;" nameId="rp_door_height_1" value="0">
+					</div>
+				</div>				
+				
+				<div>
+					<div data-action ='create_wd_2' class="button1 button_gradient_1">Дверь</div>
+				</div>
+			</div>
+
+			<div class="flex_column_1 rp_item_plane">
+				<div class="flex_1">
+					<div class="flex_1 align_items">
+						<div class="rp_label_plane">
+							длина
+						</div>
+					</div>
+					<div class="flex_1 align_items" style="width: auto;">
+						<input type="text" style="width: 90%; margin:5px 5px;" nameId="rp_wind_length_1" value="0">
+					</div>
+				</div>
+				
+				<div class="flex_1">
+					<div class="flex_1 align_items">
+						<div class="rp_label_plane">
+							высота
+						</div>
+					</div>
+					<div class="flex_1 align_items" style="width: auto;">
+						<input type="text" style="width: 90%; margin:5px 5px;" nameId="rp_wind_height_1" value="0">
+					</div>
+				</div>	
+
+				<div class="flex_1">
+					<div class="flex_1 align_items">
+						<div class="rp_label_plane">
+							над полом
+						</div>
+					</div>
+					<div class="flex_1 align_items" style="width: auto;">
+						<input type="text" style="width: 90%; margin:5px 5px;" nameId="rp_wind_above_floor_1" value="0">
+					</div>
+				</div>					
+				
+				<div>
+					<div data-action ='create_wd_3' class="button1 button_gradient_1">Окно</div>
+				</div>
 			</div>			
-			
-			<div class="button1-wrap-1">
-				<div data-action ='create_wd_3' class="button1 button_gradient_1">Окно</div>
-			</div>			
+					
 		
-			<div class="button1-wrap-1">
-				<input type="text" nameId="rp_floor_height" value="0">
+			<div class="flex_1 rp_item_plane">
+				<div class="flex_1 align_items">
+					<div class="rp_label_plane">
+						высота этажа
+					</div>
+				</div>
+				<div class="flex_1 align_items" style="width: auto;">
+					<input type="text" style="width: 90%; margin:5px 5px;" nameId="rp_floor_height" value="0">
+				</div>
 			</div>			
 		</div>
 		
