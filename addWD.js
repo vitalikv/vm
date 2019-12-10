@@ -14,12 +14,6 @@ function createEmptyFormWD_1(cdm)
 	
 	var material = new THREE.MeshLambertMaterial({ color: color, transparent: true, opacity: 1.0, depthTest: false, lightMap : lightMap_1 });
 	
-	if(1==2)
-	{
-		material.map = texture_wd_1;
-		material.map.offset.set(0.5, 0.5);
-		material.map.repeat.set(0.33, 5.0);			
-	}	
 	
 	if(camera == cameraTop)
 	{ 
@@ -32,11 +26,7 @@ function createEmptyFormWD_1(cdm)
 		material.opacity = 0;					
 	}	
 	
-	var spline = [];
-	spline[0] = new THREE.Vector2( -0.5, -1.1 );	
-	spline[1] = new THREE.Vector2( 0.5, -1.1 );
-	spline[2] = new THREE.Vector2( 0.5, 1.1 );
-	spline[3] = new THREE.Vector2( -0.5, 1.1 );		
+	var spline = [];			
 	
 	if(cdm.size)
 	{
@@ -50,10 +40,27 @@ function createEmptyFormWD_1(cdm)
 	}
 	else if(type == 'window')
 	{
-		spline[0] = new THREE.Vector2( -0.5, -0.5 );	
-		spline[1] = new THREE.Vector2( 0.5, -0.5 );
-		spline[2] = new THREE.Vector2( 0.5, 0.5 );
-		spline[3] = new THREE.Vector2( -0.5, 0.5 );		
+		var x = infProject.settings.wind.width / 2;
+		var y = infProject.settings.wind.height / 2;
+		
+		spline[0] = new THREE.Vector2( -x, -y );	
+		spline[1] = new THREE.Vector2( x, -y );
+		spline[2] = new THREE.Vector2( x, y );
+		spline[3] = new THREE.Vector2( -x, y );		
+	}
+	else if(type == 'door')
+	{  
+		var x = infProject.settings.door.width / 2;
+		var y = infProject.settings.door.height / 2;
+		
+		spline[0] = new THREE.Vector2( -x, -y );	
+		spline[1] = new THREE.Vector2( x, -y );
+		spline[2] = new THREE.Vector2( x, y );
+		spline[3] = new THREE.Vector2( -x, y );		
+	}
+	else
+	{
+		return;
 	}
 	
 	var shape = new THREE.Shape( spline );
@@ -82,14 +89,13 @@ function createEmptyFormWD_1(cdm)
 	
 	
 	var arr = { minX : minX, maxX : maxX, minY : minY, maxY : maxY, minZ : minZ, maxZ : maxZ };
-	console.log(554, arr);
 	
 	var form = { type : '' , v : arr };	
 	
 	obj.userData.tag = 'free_dw';
 	obj.userData.door = {};
 	obj.userData.door.type = type;
-	obj.userData.door.size = new THREE.Vector3( 1, 1, 0.2 );
+	obj.userData.door.size = new THREE.Vector3();
 	obj.userData.door.form = form;
 	obj.userData.door.bound = {}; 
 	obj.userData.door.floorCenterY = (cdm.type == 'window') ? 1.5 : 1.1;  // центр wd над полом
@@ -111,7 +117,9 @@ function createEmptyFormWD_1(cdm)
 		obj.geometry.computeBoundingBox();		
 		var dX = obj.geometry.boundingBox.max.x - obj.geometry.boundingBox.min.x;
 		var dY = obj.geometry.boundingBox.max.y - obj.geometry.boundingBox.min.y;			
-		form.size = new THREE.Vector3(dX, dY, 1);				
+		form.size = new THREE.Vector3(dX, dY, 1);
+		
+		obj.userData.door.floorCenterY = dY/2; console.log('floorCenterY', dY/2);
 	}
 		
 	//default vertices

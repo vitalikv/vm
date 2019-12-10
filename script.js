@@ -572,7 +572,7 @@ function createLineAxis()
 	v[3].x = v[2].x = v[5].x = v[4].x = 500;
 	v[0].x = v[1].x = v[6].x = v[7].x = -500;	
 	
-	var material = new THREE.MeshLambertMaterial( { color : 0x00ff00, transparent: true, depthTest: false, lightMap : lightMap_1 } );
+	var material = new THREE.MeshLambertMaterial( { color : 0xcccccc, transparent: true, depthTest: false, lightMap : lightMap_1 } );
 	
 	for(var i = 0; i < 2; i++)
 	{
@@ -1323,15 +1323,7 @@ document.body.addEventListener("keydown", function (e)
 			else if(infProject.activeInput == 'dp_inf_1_proj')
 			{
 				inputLoadProject();
-			}
-			else if(infProject.activeInput == 'rp_floor_height')
-			{
-				changeAllHeightWall_1({ height: $('[nameId="rp_floor_height"]').val(), input: true, globalHeight: true });
-			}
-			else if(infProject.activeInput == 'rp_wall_width_1')
-			{
-				upRightPlaneInput({ value: $('[nameId="rp_wall_width_1"]').val(), el: infProject.activeInput_2 });
-			}				
+			}			
 		}		
 		 
 		return; 

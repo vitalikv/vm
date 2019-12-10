@@ -115,21 +115,38 @@ function startRightPlaneInput(cdm)
 
 
 
-function upRightPlaneInput(cdm) 
+function upRightPlaneInput_1(cdm) 
 {
-	var res = checkNumberInput({ value: cdm.value, unit: 1, limit: {min: 0.01, max: 5} });
+	var el = cdm.el;
+	var value = el.val();
+	
+	var inf = null;
+	if(cdm.el[0] == $('[nameId="rp_wall_width_1"]')[0]) { var inf = infProject.settings.wall.width; }
+	else if(cdm.el[0] == $('[nameId="rp_door_length_1"]')[0]) { var inf = infProject.settings.door.width; }
+	else if(cdm.el[0] == $('[nameId="rp_door_height_1"]')[0]) { var inf = infProject.settings.door.height; }
+	else if(cdm.el[0] == $('[nameId="rp_wind_length_1"]')[0]) { var inf = infProject.settings.wind.width; }
+	else if(cdm.el[0] == $('[nameId="rp_wind_height_1"]')[0]) { var inf = infProject.settings.wind.height; }	
+	else if(cdm.el[0] == $('[nameId="rp_wind_above_floor_1"]')[0]) { var inf = infProject.settings.wind.h1; }	
+	else { return; }	
+	
+	var res = checkNumberInput({ value: value, unit: 1, limit: {min: 0.01, max: 5} });	
 	
 	if(!res) 
 	{
-		$('[nameId="rp_wall_width_1"]').val(infProject.settings.wall.width);
+		el.val(res.num);
 		return;
 	}
 	
-	$('[nameId="rp_wall_width_1"]').val(res.num);
+	el.val(res.num);
 	
-	infProject.settings.wall.width = res.num;
+	if(cdm.el[0] == $('[nameId="rp_wall_width_1"]')[0]) { infProject.settings.wall.width = res.num; }
+	else if(cdm.el[0] == $('[nameId="rp_door_length_1"]')[0]) { infProject.settings.door.width = res.num; }
+	else if(cdm.el[0] == $('[nameId="rp_door_height_1"]')[0]) { infProject.settings.door.height = res.num; }
+	else if(cdm.el[0] == $('[nameId="rp_wind_length_1"]')[0]) { infProject.settings.wind.width = res.num; }
+	else if(cdm.el[0] == $('[nameId="rp_wind_height_1"]')[0]) { infProject.settings.wind.height = res.num; }	
+	else if(cdm.el[0] == $('[nameId="rp_wind_above_floor_1"]')[0]) { infProject.settings.wind.h1 = res.num; }	
 	
-	console.log(3333, cdm);
+	console.log(3333, cdm.el[0] == $('[nameId="rp_wall_width_1"]')[0], cdm.el[0], $('[nameId="rp_wall_width_1"]')[0] );
 }
 
 

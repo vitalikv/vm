@@ -105,13 +105,65 @@ $('[data-action="addPointCenterWall"]').mousedown(function () { addPointCenterWa
 
 
 
-$('input').on('focus keyup change', function () 
-{ 
-	infProject.activeInput = $(this).data('action');
-	if($(this).data('action') == undefined) { infProject.activeInput = $(this).data('input'); infProject.activeInput_2 = $(this); }
-	if(infProject.activeInput == undefined) { infProject.activeInput = $(this).attr('nameId'); infProject.activeInput_2 = $(this); }
-	console.log(infProject.activeInput);
-});
+$('input').on('focus', function () { actionInputUI({el: $(this), act: 'down'}); });
+$('input').on('change', function () { actionInputUI({el: $(this), act: 'up'}); });
+$('input').on('keyup', function () {  });
+
+function actionInputUI(cdm)
+{
+	var el = cdm.el;
+	
+	infProject.activeInput = el.data('action');
+	if(el.data('action') == undefined) { infProject.activeInput = el.data('input'); }
+	if(infProject.activeInput == undefined) { infProject.activeInput = el.attr('nameId'); }
+	
+	infProject.activeInput_2 = {el: el, act: cdm.act};
+	
+	if(cdm.act == 'down' || cdm.act == 'up')
+	{
+		console.log(cdm.act, infProject.activeInput);
+	}
+	
+	if(cdm.act == 'up')
+	{
+		actionChangeInputUI();
+	}
+		
+}
+
+
+function actionChangeInputUI(cdm)
+{
+	if(infProject.activeInput == 'rp_floor_height')
+	{
+		changeAllHeightWall_1({ height: $('[nameId="rp_floor_height"]').val(), input: true, globalHeight: true });
+	}
+	else if(infProject.activeInput == 'rp_wall_width_1')
+	{
+		upRightPlaneInput_1({ el: infProject.activeInput_2.el });
+	}
+	else if(infProject.activeInput == 'rp_door_length_1')
+	{
+		upRightPlaneInput_1({ el: infProject.activeInput_2.el });
+	}
+	else if(infProject.activeInput == 'rp_door_height_1')
+	{
+		upRightPlaneInput_1({ el: infProject.activeInput_2.el });
+	}
+	else if(infProject.activeInput == 'rp_wind_length_1')
+	{
+		upRightPlaneInput_1({ el: infProject.activeInput_2.el });
+	}
+	else if(infProject.activeInput == 'rp_wind_height_1')
+	{
+		upRightPlaneInput_1({ el: infProject.activeInput_2.el });
+	}
+	else if(infProject.activeInput == 'rp_wind_above_floor_1')
+	{
+		upRightPlaneInput_1({ el: infProject.activeInput_2.el });
+	}	
+}
+
 
 $('input').blur(function () 
 { 
