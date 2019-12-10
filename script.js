@@ -170,6 +170,7 @@ var texture_wd_1 = new THREE.TextureLoader().load(infProject.path+'/img/wd_1.png
 var clickO = resetPop.clickO();
 infProject.project = null;
 infProject.settings.active = { pg: 'pivot' };
+infProject.camera = { d3: { theta: 0, phi: 75, targetPos: new THREE.Vector3() } }; 
 infProject.scene.array = resetPop.infProjectSceneArray(); 
 infProject.scene.grid = { obj: createGrid(infProject.settings.grid), active: false, link: false, show: true };
 infProject.scene.block = { key : { scroll : false } };		// блокировка действий/клавишь
@@ -221,15 +222,6 @@ if(infProject.settings.calc.fundament == 'svai')
 }
 
 
-camera3D.position.x = 0;
-camera3D.position.y = radious * Math.sin( phi * Math.PI / 360 );
-camera3D.position.z = radious * Math.cos( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
-	
-camera3D.position.add(centerCam);	
-camera3D.lookAt(centerCam);
-
-
-
 
 // outline render
 if(1==1)
@@ -267,7 +259,7 @@ if(1==1)
 }
 
 
-
+startPosCamera3D({radious: 15, theta: 90, phi: 35});		// стартовое положение 3D камеры
 addObjInCatalogUI_1();	// каталог UI
 changeRightMenuUI_1({name: 'button_wrap_plan'});	// назначаем первоначальную вкладку , которая будет включена
 

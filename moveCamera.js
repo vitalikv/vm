@@ -140,8 +140,17 @@ function updateKeyDown()
 	if(flag) { renderCamera(); }
 }
 
-var radious = 10, theta = 90, onMouseDownTheta = 0, phi = 75, onMouseDownPhi = 75;
-var centerCam = new THREE.Vector3( 0, 0, 0 );
+
+
+function startPosCamera3D(cdm)
+{
+	camera3D.position.x = 0;
+	camera3D.position.y = cdm.radious * Math.sin( cdm.phi * Math.PI / 360 );
+	camera3D.position.z = cdm.radious * Math.cos( cdm.theta * Math.PI / 360 ) * Math.cos( cdm.phi * Math.PI / 360 );
+			
+	camera3D.lookAt(new THREE.Vector3( 0, 0, 0 ));	
+}
+
 
 
 function cameraMove3D( event )
@@ -151,10 +160,10 @@ function cameraMove3D( event )
 		if ( isMouseDown2 ) 
 		{  
 			newCameraPosition = null;
-			radious = centerCam.distanceTo( camera.position );
-			theta = - ( ( event.clientX - onMouseDownPosition.x ) * 0.5 ) + onMouseDownTheta;
-			phi = ( ( event.clientY - onMouseDownPosition.y ) * 0.5 ) + onMouseDownPhi;
-			phi = Math.min( 180, Math.max( -80, phi ) );
+			var radious = centerCam.distanceTo( camera.position );
+			var theta = - ( ( event.clientX - onMouseDownPosition.x ) * 0.5 ) + infProject.camera.d3.theta;
+			var phi = ( ( event.clientY - onMouseDownPosition.y ) * 0.5 ) + infProject.camera.d3.phi;
+			var phi = Math.min( 180, Math.max( -10, phi ) );
 
 			camera.position.x = radious * Math.sin( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
 			camera.position.y = radious * Math.sin( phi * Math.PI / 360 );
@@ -267,19 +276,15 @@ function clickSetCamera3D( event, click )
 		
 		// получаем угол наклона камеры к target (к точке куда она смотрит)
 		var dergree = THREE.Math.radToDeg( dir.angleTo(new THREE.Vector3(dir.x, 0, dir.z)) ) * 2;	
-		if(dir.y > 0) { dergree *= -1; }
-		phi = dergree;  	
-		
+		if(dir.y > 0) { dergree *= -1; } 			
 		
 		// получаем угол направления (на плоскости) камеры к target 
 		dir.y = 0; 
-		dir.normalize();    
-		theta = THREE.Math.radToDeg( Math.atan2(dir.x, dir.z) - Math.PI ) * 2;	
-		
+		dir.normalize();    			
 		
 		isMouseDown2 = true;
-		onMouseDownTheta = theta;
-		onMouseDownPhi = phi;
+		infProject.camera.d3.theta = THREE.Math.radToDeg( Math.atan2(dir.x, dir.z) - Math.PI ) * 2;
+		infProject.camera.d3.phi = dergree;
 	}
 	else if ( click == 'right' )		// 2
 	{
