@@ -60,6 +60,7 @@ $interface['obj_b1'] = 1;
 $infProject = array('url' => $url, 'title' => $title, 'nameId' => $nameId, 'path' => $path, 'load' => [ img => [] ]);
 
 $infProject['activeInput'] = '';
+$infProject['activeInput_2'] = null;
 $infProject['activeDiv'] = null;
 
 $infProject['user'] = [];

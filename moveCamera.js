@@ -163,7 +163,7 @@ function cameraMove3D( event )
 			var radious = infProject.camera.d3.targetPos.distanceTo( camera.position );
 			var theta = - ( ( event.clientX - onMouseDownPosition.x ) * 0.5 ) + infProject.camera.d3.theta;
 			var phi = ( ( event.clientY - onMouseDownPosition.y ) * 0.5 ) + infProject.camera.d3.phi;
-			var phi = Math.min( 180, Math.max( -10, phi ) );
+			var phi = Math.min( 180, Math.max( -5, phi ) );
 
 			camera.position.x = radious * Math.sin( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
 			camera.position.y = radious * Math.sin( phi * Math.PI / 360 );
@@ -423,59 +423,25 @@ function cameraZoomTop( delta )
 		camera.updateProjectionMatrix();		
 	}
 
-	var k = 0.085 / delta;
-
-	var n = 0;
-	var circle = infProject.geometry.circle;
-	var point = infProject.tools.point;
 	
+	infProject.tools.axis[0].scale.set(1,1/delta,1/delta);
+	infProject.tools.axis[1].scale.set(1,1/delta,1/delta);
+
+	var point = infProject.tools.point;	
 	var v = point.geometry.vertices;
 	var v2 = point.userData.tool_point.v2;
-	
-	
+		
 	for ( var i = 0; i < v2.length; i++ )
 	{
 		v[i].x = v2[i].x * 1/delta;
 		v[i].z = v2[i].z * 1/delta;
-		//v[i].z *= objPop.scale.z;
 	}	
-	
-	if(1==2)
-	{
-		for ( var i = 0; i < circle.length; i++ )
-		{
-			v[ n ] = new THREE.Vector3().addScaledVector( circle[ i ].clone().normalize(), 0.1 / delta );
-			v[ n ].y = 0;
-			n++;
 
-			v[ n ] = new THREE.Vector3();
-			v[ n ].y = 0;
-			n++;
-
-			v[ n ] = v[ n - 2 ].clone();
-			v[ n ].y = height_wall + 0.01;
-			n++;
-
-			v[ n ] = new THREE.Vector3();
-			v[ n ].y = height_wall + 0.01;
-			n++;
-		}
-		
-	}
-	
 	infProject.tools.point.geometry.verticesNeedUpdate = true;
 	infProject.tools.point.geometry.elementsNeedUpdate = true;
-	
-	
-	var value = 0.05 / camera.zoom; 
-	var v = infProject.geometry.wf_point.vertices;
-	v[0].x = v[1].x = v[6].x = v[7].x = -value;
-	v[2].x = v[3].x = v[4].x = v[5].x = value;
-	v[0].z = v[1].z = v[2].z = v[3].z = value;	
-	v[4].z = v[5].z = v[6].z = v[7].z = -value;
-	infProject.geometry.wf_point.verticesNeedUpdate = true;
-	infProject.geometry.wf_point.elementsNeedUpdate = true;
+		
 
+	var k = 0.085 / delta;
 	// zoom label
 	var k = 1 / delta;
 	if(k <= infProject.settings.camera.limitZoom) 

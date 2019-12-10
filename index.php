@@ -61,7 +61,6 @@
 				<? require_once("include/left_panel_1.php"); ?>	
 				
 				<? require_once("include/bottom_panel_1.php"); ?>	
-				<? require_once("include/modal_window_1.php"); ?>
 				<? require_once("include/modal_window_3.php"); ?>
 									
 				</noindex>

@@ -288,11 +288,6 @@ function dopFunct1(point, pos2, lineAxis, axis)
 	if(axis == 'z') { point.position.z = pos2.z; } 
 	
 	var pos2 = new THREE.Vector3(pos2.x, point.position.y, pos2.z);
-	var d = point.position.distanceTo( pos2 );	
-	
-	var v = lineAxis.geometry.vertices;		
-	v[3].x = v[2].x = v[5].x = v[4].x = d;		
-	lineAxis.geometry.verticesNeedUpdate = true;
 
 	var dir = new THREE.Vector3().subVectors( point.position, pos2 ).normalize();
 	var angleDeg = Math.atan2(dir.x, dir.z);

@@ -97,6 +97,43 @@ function createTextUI_1(cdm)
 
 
 
+// input для вкладки план (окно/дверь/толщина стены/высота этажа)
+function startRightPlaneInput(cdm)
+{
+	
+	$('[nameId="rp_wall_width_1"]').val(infProject.settings.wall.width);
+	
+	$('[nameId="rp_door_length_1"]').val(infProject.settings.door.width);
+	$('[nameId="rp_door_height_1"]').val(infProject.settings.door.height);
+	
+	$('[nameId="rp_wind_length_1"]').val(infProject.settings.wind.width);
+	$('[nameId="rp_wind_height_1"]').val(infProject.settings.wind.height);
+	$('[nameId="rp_wind_above_floor_1"]').val(infProject.settings.wind.h1);
+	
+	$('[nameId="rp_floor_height"]').val(infProject.settings.height);
+}
+
+
+
+function upRightPlaneInput(cdm) 
+{
+	var res = checkNumberInput({ value: cdm.value, unit: 1, limit: {min: 0.01, max: 5} });
+	
+	if(!res) 
+	{
+		$('[nameId="rp_wall_width_1"]').val(infProject.settings.wall.width);
+		return;
+	}
+	
+	$('[nameId="rp_wall_width_1"]').val(res.num);
+	
+	infProject.settings.wall.width = res.num;
+	
+	console.log(3333, cdm);
+}
+
+
+
 
 
 

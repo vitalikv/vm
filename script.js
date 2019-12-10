@@ -157,19 +157,19 @@ var kof_rd = 1;
 var countId = 2;
 var camera = cameraTop;
 var height_wall = infProject.settings.height;
-var width_wall = infProject.settings.wall.width;
 var obj_point = [];
 var obj_line = [];
 var room = [];
 var ceiling = [];
 var arrWallFront = [];
 var lightMap_1 = new THREE.TextureLoader().load(infProject.path+'/img/lightMap_1.png');
-var texture_point_1 = new THREE.TextureLoader().load(infProject.path+'/img/point1.png');
 var texture_wd_1 = new THREE.TextureLoader().load(infProject.path+'/img/wd_1.png');
 
 var clickO = resetPop.clickO();
 infProject.project = null;
 infProject.settings.active = { pg: 'pivot' };
+infProject.settings.door = { width: 1, height: 2.2 };
+infProject.settings.wind = { width: 1, height: 1, h1: 1.5 };
 infProject.camera = { d3: { theta: 0, phi: 75, targetPos: new THREE.Vector3() } }; 
 infProject.scene.array = resetPop.infProjectSceneArray(); 
 infProject.scene.grid = { obj: createGrid(infProject.settings.grid), active: false, link: false, show: true };
@@ -179,8 +179,7 @@ infProject.scene.block.hover = {wall: false, point: false, door: false, window: 
 infProject.geometry = { circle : createCircleSpline() }
 infProject.geometry.labelWall = createGeometryPlan(0.25 * 2, 0.125 * 2);
 infProject.geometry.labelFloor = createGeometryPlan(1.0 * kof_rd, 0.25 * kof_rd);
-infProject.geometry.wf_point = createGeometryCube(0.1, 0.1, 0.1, {});
-infProject.tools = { pivot: createPivot(), gizmo: createGizmo360(), cutWall: [], point: createToolPoint(), axis: [createLineAxis(), createLineAxis()] } 
+infProject.tools = { pivot: createPivot(), gizmo: createGizmo360(), cutWall: [], point: createToolPoint(), axis: createLineAxis() } 
 
 infProject.catalog = infoListObj();  
 infProject.listColor = resetPop.listColor(); 
@@ -262,7 +261,7 @@ if(1==1)
 startPosCamera3D({radious: 15, theta: 90, phi: 35});		// стартовое положение 3D камеры
 addObjInCatalogUI_1();	// каталог UI
 changeRightMenuUI_1({name: 'button_wrap_plan'});	// назначаем первоначальную вкладку , которая будет включена
-
+startRightPlaneInput({});	
 
 //----------- start
 
@@ -566,24 +565,22 @@ function createGeometryWall(x, y, z, pr_offsetZ)
 
 function createLineAxis() 
 {
-	var geometry = createGeometryCube(0.5, 0.01, 0.01);
+	var axis = [];
 	
-	var p1 = new THREE.Vector3(0,0,0);
-	var p2 = new THREE.Vector3(1,0,0);
+	var geometry = createGeometryCube(0.5, 0.02, 0.02);		
+	var v = geometry.vertices;	
+	v[3].x = v[2].x = v[5].x = v[4].x = 500;
+	v[0].x = v[1].x = v[6].x = v[7].x = -500;	
 	
-	var d = p1.distanceTo( p2 );	
-	var v = geometry.vertices;
+	var material = new THREE.MeshLambertMaterial( { color : 0x00ff00, transparent: true, depthTest: false, lightMap : lightMap_1 } );
 	
-	v[3].x = v[2].x = v[5].x = v[4].x = d;
-	v[0].x = v[1].x = v[6].x = v[7].x = 0;
-	
-	
-	var axis = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { color : 0xff0000, transparent: true, depthTest: false } ) );
-	axis.position.copy( p1 );
-	axis.renderOrder = 2;
-	scene.add( axis );		
-	
-	axis.visible = false;
+	for(var i = 0; i < 2; i++)
+	{
+		axis[i] = new THREE.Mesh( geometry, material );
+		axis[i].renderOrder = 2;
+		axis[i].visible = false;
+		scene.add( axis[i] );				
+	}		
 	
 	return axis;
 }
@@ -664,11 +661,6 @@ function createToolPoint()
 	var geometry = new THREE.SphereGeometry( 0.1, 16, 16 );
 	
 	var obj = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color : 0xcccccc, transparent: true, opacity: 1.0, depthTest: false, lightMap : lightMap_1 } ) );
-	//obj.material.map = texture_point_1;
-	//obj.material.map.offset.x = 0.5;
-	//obj.material.map.offset.y = 0.5;
-	//obj.material.map.repeat.set(4.9, 4.9); 
-	//obj.material.visible = false;
 	obj.userData.tag = 'tool_point';
 	obj.userData.tool_point = {};
 	obj.renderOrder = 1;
@@ -1228,121 +1220,7 @@ var openFileImage = function (strData, filename)
 } 
   
  
-
-
-function createEstimateJson()
-{
-	var arr = [];
 	
-	var inf = infProject.settings.calc.fundament;
-	if(inf == 'lent' || inf == 'svai') 
-	{
-		var fundament = infProject.scene.array.fundament;		
-		
-		for ( var i = 0; i < fundament.length; i++ )
-		{
-			
-			var points = fundament[i].points;
-			var walls = fundament[i].walls;
-			
-			var sum = 0;
-			for ( var i2 = 0; i2 < walls.length; i2++ )
-			{
-				sum += walls[i2].userData.wall.area.top;
-			}
-			
-			sum = Math.round(sum * 100)/100;
-			
-			console.log(infProject.nameId);
-			console.log('площадь :' + sum + 'm2');
-			console.log('высота :' + height_wall + 'cm');
-			console.log('объем : '+Math.round((sum * height_wall) * 100) / 100 +' m3');	
-
-			var cdm = {};
-			cdm.name = infProject.nameId;	// название
-			cdm.area = sum;		// площадь
-			cdm.height = height_wall * 100;		// высота
-			cdm.space = Math.round((sum * height_wall) * 100) / 100;	// объем
-			
-			arr[arr.length] = cdm;
-		}		
-	}	
-	else
-	{
-		
-		for (var u = 0; u < room.length; u++)
-		{
-			var cdm = {};
-			cdm.name = infProject.nameId;	// название
-			cdm.area = room[u].userData.room.areaTxt;		// площадь
-			cdm.height = height_wall * 100;		// высота
-			cdm.space = Math.round((room[u].userData.room.areaTxt * height_wall) * 100) / 100;	// объем
-			
-			arr[arr.length] = cdm;			
-		}
-	}
-
-	if(arr.length > 0)
-	{
-		var html = '';
-		
-		for (var i = 0; i < arr.length; i++)
-		{
-			html += '<div class="modal_body_content_estimate">';
-			
-			html += '<div class="block_form_1">';
-			html += '<div class="block_form_1_h1">Площадь</div>';
-			html += '<div class="block_form_1_desc" area_1="">'+arr[i].area+' м2</div>';
-			html += '</div>';
-
-			html += '<div class="block_form_1">';
-			html += '<div class="block_form_1_h1">Высота</div>';
-			html += '<div class="block_form_1_desc" area_1="">'+arr[i].height+' cм</div>';
-			html += '</div>';	
-
-			html += '<div class="block_form_1">';
-			html += '<div class="block_form_1_h1">Объем бетона</div>';
-			html += '<div class="block_form_1_desc" area_1="">'+arr[i].space+' м3</div>';
-			html += '</div>';	
-			
-			html += '<div class="block_form_1">';
-			html += '<div class="block_form_1_h1">Вес бетона</div>';
-			html += '<div class="block_form_1_desc" area_1="">'+Math.round(arr[i].space * 2350/10)/100+' т</div>';
-			html += '</div>';
-
-			html += '<div class="block_form_1">';
-			html += '<div class="block_form_1_h1">Опалубка</div>';
-			html += '<div class="block_form_1_desc" area_1="">24 м</div>';
-			html += '</div>';
-			
-			html += '<div class="block_form_1">';
-			html += '<div class="block_form_1_h1">Периметр плиты</div>';
-			html += '<div class="block_form_1_desc" area_1="">24 м</div>';
-			html += '</div>';		
-			
-			html += '</div>';
-
-			if(i < arr.length - 1)
-			{
-				html += '<div style="background: #444; height: 1px; width: 90%; margin: auto; box-shadow:0px 0px 2px #bababa;"></div>';
-			}				
-		}
-		
-		
-		$('[modal_body="estimate"]').html(html);
-	}
-	else
-	{
-		var html = '<div class="modal_body_content_estimate_error">';
-		html += '<br><br>нет данных<br><br>';
-		html += 'постройте фундамент';
-		html += '</div>';
-		
-		$('[modal_body="estimate"]').html(html);
-	}
-}
-
-		
 	
  
 function setUnits()
@@ -1449,7 +1327,11 @@ document.body.addEventListener("keydown", function (e)
 			else if(infProject.activeInput == 'rp_floor_height')
 			{
 				changeAllHeightWall_1({ height: $('[nameId="rp_floor_height"]').val(), input: true, globalHeight: true });
-			}			
+			}
+			else if(infProject.activeInput == 'rp_wall_width_1')
+			{
+				upRightPlaneInput({ value: $('[nameId="rp_wall_width_1"]').val(), el: infProject.activeInput_2 });
+			}				
 		}		
 		 
 		return; 
@@ -1536,123 +1418,13 @@ var docReady = false;
 
 $(document).ready(function () 
 { 
-	docReady = true; 
-	
-	if(infProject.scene.load != '') { loadStartForm({form: infProject.scene.load}); }
-
-	if(infProject.settings.camera.type == '3d') { changeCamera(camera3D); }
-	if(infProject.settings.camera.type == 'front') { changeCamera(cameraWall); }
+	docReady = true; 	
 		 
 	 
-	loadFile({json: true}); 
+	loadFile({json: true});  
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(0, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 1), rot: new THREE.Vector3(0, 1, 0)});
-	
-	//loadObjServer({lotid: 8, pos: new THREE.Vector3(1, 1, 0), rot: new THREE.Vector3(0, 0, 0)}); 
-	
-	if(1==2)
-	{
-		var loader = new THREE.FBXLoader();
-		loader.load( infProject.path+'export/rad_al_secziy_500_.fbx', function ( objects ) 
-		{ console.log(222, objects);
-			
-			for ( var i = 0; i < objects.children.length; i++ )
-			{
-				var obj = objects.children[i];
-				obj.position.set(i*0.3,0,0);
-
-				obj.userData.tag = 'obj';
-				obj.userData.id = countId; countId++;
-				obj.userData.obj3D = {};
-				obj.userData.obj3D.lotid = 1; 
-				infProject.scene.array.obj[infProject.scene.array.obj.length] = obj;
-								
-			
-				obj.traverse( function ( child ) {
-					if ( child.isMesh ) 
-					{ console.log(child.name);
-						child.castShadow = true;
-						child.receiveShadow = true;
-					}
-				} );
-				scene.add( obj );
-				
-				if(i==0 && 1==2)
-				{
-					var txt = obj.toJSON();
-					//console.log(csv);
-					var csv = JSON.stringify( txt );	
-					var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);	
-					
-					var link = document.createElement('a');
-					document.body.appendChild(link);
-					link.href = csvData;
-					link.target = '_blank';
-					link.download = 'filename.json';
-					link.click();			
-				}				
-				
-			}
-		});
-		
-	}
-		
-		
-	if(1==2)
-	{
-		new THREE.ObjectLoader().load
-		(
-			infProject.path+'export/filename.json',
-			
-			function ( obj )
-			{
-				infProject.scene.array.obj[infProject.scene.array.obj.length] = obj;
-				
-				//obj.rotation.set(0,0,0);
-
-				scene.add( obj );		
-			}
-		);	
-		
-	}
-	
-	
-	if(1==2)	
-	{
-		
-		var loader = new THREE.FBXLoader();
-		loader.load( infProject.path+'export/kran3.bin', function ( objects ) 
-		{ console.log(222, objects);
-			
-			var obj = objects.children[0];
-			obj.position.set(3,0,0);
-
-			obj.userData.tag = 'obj';
-			obj.userData.id = countId; countId++;
-			obj.userData.obj3D = {};
-			obj.userData.obj3D.lotid = 1; 
-			infProject.scene.array.obj[infProject.scene.array.obj.length] = obj;
-
-			scene.add( obj );
-		});		
-		
-		
-		var oReq = new XMLHttpRequest();
-		oReq.open("POST", infProject.path+'export/kran3.bin', true);
-		oReq.onload = function (oEvent) 
-		{
-			console.log(444, oReq.response);
-
-			var obj = new THREE.FBXLoader().parse(oReq.response)
-			scene.add( obj ); 
-		};
-		oReq.send();						
-		
-	}	
-
-
-
 	
 });
 

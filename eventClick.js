@@ -98,13 +98,6 @@ $('[data-action="screenshot"]').mousedown(function () { saveAsImage(); return fa
 
 
 
-$('[link_form]').mousedown(function () 
-{ 
-	createForm({form : 'shape'+$(this).attr("link_form")}); 
-	$('[data-action="modal"]').css({"display":"none"}); 
-}); 
-
-
 
 
 $('[data-action="deleteObj"]').mousedown(function () { detectDeleteObj(); return false; });
@@ -115,34 +108,18 @@ $('[data-action="addPointCenterWall"]').mousedown(function () { addPointCenterWa
 $('input').on('focus keyup change', function () 
 { 
 	infProject.activeInput = $(this).data('action');
-	if($(this).data('action') == undefined) { infProject.activeInput = $(this).data('input');  }
-	if(infProject.activeInput == undefined) { infProject.activeInput = $(this).attr('nameId');  }
+	if($(this).data('action') == undefined) { infProject.activeInput = $(this).data('input'); infProject.activeInput_2 = $(this); }
+	if(infProject.activeInput == undefined) { infProject.activeInput = $(this).attr('nameId'); infProject.activeInput_2 = $(this); }
 	console.log(infProject.activeInput);
 });
-$('input').blur(function () { infProject.activeInput = ''; });	
 
-
-$('[data-action="estimate"]').mousedown(function () 
+$('input').blur(function () 
 { 
-	createEstimateJson();
-	$('.modal').css({"display":"block"});
-	$('[modal_body="estimate"]').css({"display":"block"}); 
-	$('[modal_body="form"]').css({"display":"none"});
-	$('[modal_title="estimate"]').css({"display":"block"});
-	$('[modal_title="form"]').css({"display":"none"});			
-}); 
+	infProject.activeInput = '';
+	infProject.activeInput_2 = null;
+});	
 
-$('[data-action="form_1"]').mousedown(function () 
-{ 
-	console.log('form_1');
-	checkClickUINameID('form_1');
-	clickInterface();
-	$('.modal').css({"display":"block"});
-	$('[modal_body="estimate"]').css({"display":"none"});
-	$('[modal_body="form"]').css({"display":"block"});
-	$('[modal_title="estimate"]').css({"display":"none"});
-	$('[modal_title="form"]').css({"display":"block"});
-});
+
 
 
 $('[data-action="modal_window"]').mousedown(function (e) { e.stopPropagation(); });		
