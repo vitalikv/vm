@@ -64,6 +64,83 @@ function updateListTubeUI_1(cdm)
 }
 
 
+// переключаем вкладки правой панели 
+function changeRightMenuUI_1(cdm)
+{
+	$('[nameId="wrap_catalog"]').hide();
+	$('[nameId="wrap_list_obj"]').hide();
+	$('[nameId="wrap_object"]').hide();
+	$('[nameId="wrap_plan"]').hide();
+	
+	var name = '';
+	//var name_2 = infProject.ui.right_menu.active;
+	
+	if(cdm.el) { name = cdm.el.attributes.nameId.value; }
+	else if(cdm.name) { name = cdm.name; }
+	else if(cdm.current) { name = infProject.ui.right_menu.active; }
+	
+	
+	if(name == "button_wrap_catalog") 
+	{
+		$('[nameId="wrap_catalog"]').show();
+	}
+	if(name == "button_wrap_list_obj") 
+	{
+		$('[nameId="wrap_list_obj"]').show();
+	}
+	if(name == "button_wrap_object") 
+	{
+		$('[nameId="wrap_object"]').show();
+	}
+	if(name == "button_wrap_plan") 
+	{
+		$('[nameId="wrap_plan"]').show();
+	}
+
+	infProject.ui.right_menu.active = name;
+}
+
+
+// кликнули на obj, wd (показываем нужное меню и заполняем input)
+function activeObjRightPanelUI_1(cdm) 
+{
+	$('[nameId="wrap_object_1"]').hide();
+	
+	$('[nameId="bl_object_3d"]').hide();
+	$('[nameId="rp_menu_wall"]').hide();
+	$('[nameId="rp_menu_point"]').hide();
+	$('[nameId="rp_menu_door"]').hide();
+	
+	if(!cdm) { cdm = {}; }  
+	
+	var obj = cdm.obj;
+	
+	if(!obj) return;
+	
+	if(obj.userData.tag == 'point')
+	{
+		$('[nameId="rp_menu_point"]').show();
+	}	
+	else if(obj.userData.tag == 'wall')
+	{
+		$('[nameId="rp_menu_wall"]').show();
+		$('[nameId="size_wall_width_1"]').val(obj.userData.wall.width);
+	}
+	else if(obj.userData.tag == 'door')
+	{
+		$('[nameId="rp_menu_door"]').show();
+	}	
+	else if(obj.userData.tag == 'obj')
+	{
+		$('[nameId="bl_object_3d"]').show();
+	}	
+	
+
+	$('[nameId="wrap_object_1"]').show(); 	
+	
+}
+
+
 
 // при выделении объекта меняем боковое меню
 function clickObjUI(cdm)
@@ -75,6 +152,7 @@ function clickObjUI(cdm)
 	
 	$('[nameId="rp_obj_name"]').val(obj.userData.obj3D.nameRus);
 }
+
 
 
 
@@ -114,43 +192,33 @@ function startRightPlaneInput(cdm)
 }
 
 
-
+// после изменения input для плана
 function upRightPlaneInput_1(cdm) 
 {
 	var el = cdm.el;
 	var value = el.val();
 	
 	var inf = null;
-	if(cdm.el[0] == $('[nameId="rp_wall_width_1"]')[0]) { var inf = infProject.settings.wall.width; }
-	else if(cdm.el[0] == $('[nameId="rp_door_length_1"]')[0]) { var inf = infProject.settings.door.width; }
-	else if(cdm.el[0] == $('[nameId="rp_door_height_1"]')[0]) { var inf = infProject.settings.door.height; }
-	else if(cdm.el[0] == $('[nameId="rp_wind_length_1"]')[0]) { var inf = infProject.settings.wind.width; }
-	else if(cdm.el[0] == $('[nameId="rp_wind_height_1"]')[0]) { var inf = infProject.settings.wind.height; }	
-	else if(cdm.el[0] == $('[nameId="rp_wind_above_floor_1"]')[0]) { var inf = infProject.settings.wind.h1; }	
+	if(cdm.el[0] == $('[nameId="rp_wall_width_1"]')[0]) { var inf = { json: infProject.settings.wall, name: 'width' }; }
+	else if(cdm.el[0] == $('[nameId="rp_door_length_1"]')[0]) { var inf = { json: infProject.settings.door, name: 'width' }; }
+	else if(cdm.el[0] == $('[nameId="rp_door_height_1"]')[0]) { var inf = { json: infProject.settings.door, name: 'height' }; }
+	else if(cdm.el[0] == $('[nameId="rp_wind_length_1"]')[0]) { var inf = { json: infProject.settings.wind, name: 'width' }; }
+	else if(cdm.el[0] == $('[nameId="rp_wind_height_1"]')[0]) { var inf = { json: infProject.settings.wind, name: 'height' }; }	
+	else if(cdm.el[0] == $('[nameId="rp_wind_above_floor_1"]')[0]) { var inf = { json: infProject.settings.wind, name: 'h1' }; }	
 	else { return; }	
 	
 	var res = checkNumberInput({ value: value, unit: 1, limit: {min: 0.01, max: 5} });	
 	
 	if(!res) 
 	{
-		el.val(res.num);
+		el.val(inf.json[inf.name]);
 		return;
 	}
 	
 	el.val(res.num);
 	
-	if(cdm.el[0] == $('[nameId="rp_wall_width_1"]')[0]) { infProject.settings.wall.width = res.num; }
-	else if(cdm.el[0] == $('[nameId="rp_door_length_1"]')[0]) { infProject.settings.door.width = res.num; }
-	else if(cdm.el[0] == $('[nameId="rp_door_height_1"]')[0]) { infProject.settings.door.height = res.num; }
-	else if(cdm.el[0] == $('[nameId="rp_wind_length_1"]')[0]) { infProject.settings.wind.width = res.num; }
-	else if(cdm.el[0] == $('[nameId="rp_wind_height_1"]')[0]) { infProject.settings.wind.height = res.num; }	
-	else if(cdm.el[0] == $('[nameId="rp_wind_above_floor_1"]')[0]) { infProject.settings.wind.h1 = res.num; }	
-	
-	console.log(3333, cdm.el[0] == $('[nameId="rp_wall_width_1"]')[0], cdm.el[0], $('[nameId="rp_wall_width_1"]')[0] );
+	inf.json[inf.name] = res.num; 
 }
-
-
-
 
 
 

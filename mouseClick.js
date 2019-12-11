@@ -214,13 +214,13 @@ function clickMouseActive(cdm)
 		else if( tag == 'window' ) { clickWD( rayhit ); }
 		else if( tag == 'door' ) { clickWD( rayhit ); }
 		else if( tag == 'controll_wd' ) { clickToggleChangeWin( rayhit ); }
-		else if( tag == 'obj' && camera == cameraTop ) { clickObject3D( obj, {click_obj: true, menu_1: true, group: true, outline: true} ); }
+		else if( tag == 'obj' && camera == cameraTop ) { clickObject3D( obj ); }
 		else { flag = false; }
 	}
 	else if(cdm.type == 'up')
 	{		
 		if( tag == 'wall' && camera == camera3D ) {  }
-		else if( tag == 'obj' && camera == camera3D ) { clickObject3D( obj, {click_obj: true, menu_1: true, group: true, outline: true} ); }
+		else if( tag == 'obj' && camera == camera3D ) { clickObject3D( obj ); }
 		else { flag = false; }
 	}	
 	else 
@@ -233,30 +233,10 @@ function clickMouseActive(cdm)
 		if(camera == cameraTop)
 		{
 			objActiveColor_2D(obj);
-			
-			if(tag == 'wall') { showLengthWallUI( obj ); }
-			else if(tag == 'point') { $('[nameId="point_menu_1"]').show(); }
-			else if(tag == 'door') { showRulerWD( obj ); showTableWD( obj ); }
-			else if(tag == 'window') { showRulerWD( obj ); showTableWD( obj ); }
-			else if(tag == 'obj') { showObjUI( obj ); }
-			else if(tag == 'pivot') { obj = infProject.tools.pivot.userData.pivot.obj; }
-			else if(tag == 'gizmo') { obj = infProject.tools.gizmo.userData.gizmo.obj; }
 		}		
-		else if(camera == camera3D)
-		{
-			if(tag == 'wall') {  }
-			else if(tag == 'obj') { showObjUI( obj ); }	
-			else if(tag == 'pivot') { obj = infProject.tools.pivot.userData.pivot.obj; }
-			else if(tag == 'gizmo') { obj = infProject.tools.gizmo.userData.gizmo.obj; }
-		}
-		else if(camera == cameraWall)
-		{
-			if(tag == 'wall') { showLengthWallUI( obj ); }
-			else if(tag == 'controll_wd') { obj = obj.userData.controll_wd.obj; }
-			else if(tag == 'window') { showRulerWD( obj ); showTableWD( obj ); }
-			else if(tag == 'door') { showRulerWD( obj ); showTableWD( obj ); }						
-		}
-		
+
+		if(tag == 'pivot') { obj = infProject.tools.pivot.userData.pivot.obj; }
+		else if(tag == 'gizmo') { obj = infProject.tools.gizmo.userData.gizmo.obj; }		
 		
 		clickO.last_obj = obj;
 		
@@ -446,10 +426,10 @@ function hideMenuUI(obj)
 	
 	var tag = obj.userData.tag;
 	
-	if(tag == 'wall') { $('[nameId="wall_menu_1"]').hide(); }
-	else if(tag == 'point') { $('[nameId="point_menu_1"]').hide(); }
-	else if(tag == 'window') { $('[nameId="wd_menu_1"]').hide(); }
-	else if(tag == 'door') { $('[nameId="wd_menu_1"]').hide(); }	
+	if(tag == 'wall') { activeObjRightPanelUI_1(); }
+	else if(tag == 'point') { activeObjRightPanelUI_1(); }
+	else if(tag == 'window') { activeObjRightPanelUI_1(); }
+	else if(tag == 'door') { activeObjRightPanelUI_1(); }	
 }
 
 

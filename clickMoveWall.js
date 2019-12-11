@@ -38,6 +38,11 @@ function clickWall_2D( intersect )
 	clickO.click.wall = [...new Set([...p[0].w, ...p[1].w])];  
 	
 	getInfoUndoWall(obj);
+	
+	if(camera == cameraTop)
+	{
+		activeObjRightPanelUI_1({obj: obj}); 	// UI
+	}
 }
 
 

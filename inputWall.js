@@ -2,27 +2,6 @@
 
 
 
-// кликнули на стену (в таблице показываем длину стены)
-function showLengthWallUI( wall ) 
-{
-	$('[nameId="wall_menu_1"]').show();
-		
-	var v = wall.userData.wall.v; 		
-	var x = Math.abs( v[6].x - v[0].x );		
-	var y = Math.abs( v[1].y - v[0].y );	
-	var z = Math.abs( v[4].z - v[0].z );
-	
-	//$('[nameId="size-wall-length"]').val(Math.round(x * 100)/100);
-	//$('[nameId="size-wall-height"]').val(Math.round(y * 100)/100);
-	//$('[nameId="size-wall-width"]').val(Math.round(z * 100)/100);
-
-	$('[nameId="size_wall_width_1"]').val(wall.userData.wall.width);
-	
-	//toggleButtonMenuWidthWall(wall);
-}
-
-
-
 
 // после изменения на панели длины стены, нажали enter и миняем длину стены
 function inputChangeWall_1(cdm)
@@ -216,7 +195,7 @@ function inputLengthWall_1(cdm)
 	upLabelPlan_1( wallR );		
 	updateShapeFloor( compileArrPickZone(wall) );  				 			
 	
-	showLengthWallUI(wall);
+	activeObjRightPanelUI_1({obj: wall});
 
 	clickPointUP_BSP(wallR);
 }

@@ -31,6 +31,14 @@ function clickWD( intersect )
 	obj.userData.door.offset = new THREE.Vector3().subVectors( obj.position, pos );	
 	
 	findOnWallWD(obj);	
+	
+	if(camera == cameraTop)
+	{
+		showRulerWD( obj ); 	// показываем линейки 
+		showTableWD( obj );		// UI
+		
+		activeObjRightPanelUI_1({obj: obj}); 	// UI
+	}
 }
 
 
@@ -248,7 +256,7 @@ function hideSizeWD( obj )
 }
 
 
-// кликнули на окно/дверь (показываем/скрываем таблицу, длина/ширина/высота )
+// кликнули на окно/дверь (показываем длина/ширина/высота )
 function showTableWD(wd)
 {			
 	wd.geometry.computeBoundingBox();
@@ -266,12 +274,9 @@ function showTableWD(wd)
 	var h = wall.worldToLocal( pos.clone() ).y;	
 	
 	wd.userData.door.h1 = h; 
-
-	$('[nameId="wd_menu_1"]').show();
 	
 	$('[nameId="size-wd-length"]').val(Math.round(d1 * 100) / 100);
 	$('[nameId="size-wd-height"]').val(Math.round(d2 * 100) / 100);
-
 }
 
 

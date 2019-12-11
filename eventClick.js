@@ -211,54 +211,5 @@ $('[data-action="modal_window_close_1"]').mousedown(function ()
 
 
 
-// переключаем вкладки правой панели 
-function changeRightMenuUI_1(cdm)
-{
-	$('[nameId="wrap_catalog"]').hide();
-	$('[nameId="wrap_list_obj"]').hide();
-	$('[nameId="wrap_object"]').hide();
-	$('[nameId="wrap_plan"]').hide();
-	
-	var name = '';
-	//var name_2 = infProject.ui.right_menu.active;
-	
-	if(cdm.el) { name = cdm.el.attributes.nameId.value; }
-	else if(cdm.name) { name = cdm.name; }
-	else if(cdm.current) { name = infProject.ui.right_menu.active; }
-	
-	
-	if(name == "button_wrap_catalog") 
-	{
-		$('[nameId="wrap_catalog"]').show();
-	}
-	if(name == "button_wrap_list_obj") 
-	{
-		$('[nameId="wrap_list_obj"]').show();
-	}
-	if(name == "button_wrap_object") 
-	{
-		$('[nameId="wrap_object"]').show();
-	}
-	if(name == "button_wrap_plan") 
-	{
-		$('[nameId="wrap_plan"]').show();
-	}
-
-	infProject.ui.right_menu.active = name;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

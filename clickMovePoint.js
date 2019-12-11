@@ -34,7 +34,9 @@ function clickPoint( intersect )
 				wd.userData.door.last.rot = wd.rotation.clone(); 
 			}
 		}		 			
-	}	
+	}
+
+	activeObjRightPanelUI_1({obj: obj}); 	// UI
 }
 
 

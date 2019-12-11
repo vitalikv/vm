@@ -259,26 +259,92 @@ function showHideCatalogMenuUI(cdm)
 		
 		
 		<div nameId="wrap_object">
-			<div class="flex_column_1" nameId="wrap_object_1" style="display: none;">
+			<div class="flex_column_1" nameId="wrap_object_1" style="display: block;">
 				<div class="right_panel_1_1_h">Объект</div>
 				
+				<div class="rp_obj_name">
+					<input type="text" nameId="rp_obj_name" value="Название">					
+				</div>
 				
-				<div class="rp_obj">  
 				
-					<div class="rp_obj_name">
-						<input type="text" nameId="rp_obj_name" value="Название">					
+				<div nameId="rp_menu_point" style="display: none;"> 
+					<div class="flex_column_1">															
+						<div>
+							<div class="button1 button_gradient_1" data-action="deleteObj">Удалить</div>
+						</div>						
+					</div>	
+				</div>				
+				
+				
+				<div nameId="rp_menu_wall" style="display: none;"> 
+					<div class="flex_column_1">			
+						<div class="flex_1">
+							<div class="flex_1 align_items">
+								<div class="rp_label_plane">
+									толщина
+								</div>
+							</div>
+							<div class="flex_1 align_items" style="width: auto;">
+								<input type="text" style="width: 90%; margin:5px 5px;" nameId="size_wall_width_1" value="0">
+							</div>
+						</div>				
+						
+						<div>
+							<div class="button1 button_gradient_1">Применить</div>
+						</div>
+						
+						<div>
+							<div class="button1 button_gradient_1" data-action="deleteObj">Удалить</div>
+						</div>						
+					</div>	
+				</div>
+				
+				
+				<div class="flex_column_1" nameId="rp_menu_door" style="display: none;">
+					<div class="flex_1">
+						<div class="flex_1 align_items">
+							<div class="rp_label_plane">
+								длина
+							</div>
+						</div>
+						<div class="flex_1 align_items" style="width: auto;">
+							<input type="text" style="width: 90%; margin:5px 5px;" nameId="size-wd-length" value="0">
+						</div>
 					</div>
-									
 					
+					<div class="flex_1">
+						<div class="flex_1 align_items">
+							<div class="rp_label_plane">
+								высота
+							</div>
+						</div>
+						<div class="flex_1 align_items" style="width: auto;">
+							<input type="text" style="width: 90%; margin:5px 5px;" nameId="size-wd-height" value="0">
+						</div>
+					</div>				
+					
+					<div>
+						<div class="button1 button_gradient_1">Применить</div>
+					</div>
+					
+					<div>
+						<div class="button1 button_gradient_1" data-action="deleteObj">Удалить</div>
+					</div>
+				</div>				
+				
+				
+				
+				<div nameId="bl_object_3d" style="display: none;">  
+				
 					<div nameId="wrap_obj_child">
 						
 						<div class="flex_1 w_1">
 							
 							<div class="button1 button_gradient_1" nameId="select_pivot">
-								перемещение	
+								<img src="<?=$path?>/img/move_1.png">	
 							</div>	
 							<div class="button1 button_gradient_1" nameId="select_gizmo">
-								вращение	
+								<img src="<?=$path?>/img/rotate_1.png">		
 							</div>							
 						</div>
 

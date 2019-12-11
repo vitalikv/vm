@@ -49,9 +49,8 @@ function clickMouseUpObject(obj)
 
 
 // активируем 3D объект или разъем, ставим pivot/gizmo
-function clickObject3D( obj, cdm )
+function clickObject3D( obj )
 {
-	if(!cdm) { cdm = {}; }		
 	
 	obj.updateMatrixWorld();
 	var pos = obj.localToWorld( obj.geometry.boundingSphere.center.clone() );			 
@@ -119,6 +118,8 @@ function clickObject3D( obj, cdm )
 	}		
 	
 	setScalePivotGizmo();
+	
+	activeObjRightPanelUI_1({obj: obj});	// показываем меню UI 
 }
 
 
@@ -185,19 +186,14 @@ function hidePivotGizmo(obj)
 	//clickO.obj = null;  
 	clickO.last_obj = null;
 	
-	$('[nameId="wrap_object_1"]').hide();
-	
+	activeObjRightPanelUI_1(); 	// UI
 	
 	outlineRemoveObj();
 }
 
 
 
-// при выделении объекта, показываем меню 
-function showObjUI()
-{	
-	$('[nameId="wrap_object_1"]').show();
-}
+ 
 
 
 
@@ -265,7 +261,7 @@ function copyObj(cdm)
 	
 	hidePivotGizmo(obj);
 	
-	clickObject3D( arr2[0], {click_obj: true, menu_1: true, group: true, outline: true} );
+	clickObject3D( arr2[0] );
 }
 
 

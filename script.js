@@ -260,7 +260,8 @@ if(1==1)
 
 startPosCamera3D({radious: 15, theta: 90, phi: 35});		// стартовое положение 3D камеры
 addObjInCatalogUI_1();	// каталог UI
-changeRightMenuUI_1({name: 'button_wrap_plan'});	// назначаем первоначальную вкладку , которая будет включена
+//changeRightMenuUI_1({name: 'button_wrap_plan'});	// назначаем первоначальную вкладку , которая будет включена
+changeRightMenuUI_1({name: 'button_wrap_object'});
 startRightPlaneInput({});	
 
 //----------- start
@@ -976,9 +977,7 @@ function clickButton( event )
 			var point = createPoint( intersects[0].point, 0 );
 			point.position.y = 0;
 			point.userData.point.type = clickO.button; 
-			clickO.move = point;
-
-			if(point.userData.point.type == 'create_zone') { point.userData.point.type = 'create_wall'; }				
+			clickO.move = point;				
 		}
 		else if(clickO.button == 'create_wd_2')
 		{
@@ -1309,7 +1308,8 @@ document.body.addEventListener("keydown", function (e)
 			//if(infProject.activeInput == 'input-width') { inputWidthOneWall({wall:obj_line[0], width:{value:7, unit:'cm'}, offset:'wallRedBlueArrow'}) } 
 			if(infProject.activeInput == 'input-width') { changeWidthWall( $('[data-action="input-width"]').val() ); }
 			if(infProject.activeInput == 'wall_1') { inputChangeWall_1({}); }	 		
-			if(infProject.activeInput == 'wd_1') { inputWidthHeightWD(clickO.last_obj); }
+			if(infProject.activeInput == 'size-wd-length') { inputWidthHeightWD(clickO.last_obj); }
+			if(infProject.activeInput == 'size-wd-height') { inputWidthHeightWD(clickO.last_obj); }
 			if(infProject.activeInput == 'size-grid-tube-xy-1')
 			{
 				updateGrid({size : $('[nameid="size-grid-tube-xy-1"]').val()});
