@@ -248,7 +248,7 @@ function showRulerWD_2D(wd)
 		label[i].rotation.set( -Math.PI / 2, 0, rotY2 - Math.PI );
 		label[i].visible = true;
 		
-		upLabelCameraWall({label : label[i], text : Math.round(d * 100) * 10, color : 'rgba(0,0,0,1)', border : 'border line'});
+		upLabelCameraWall({label : label[i], text : Math.round(d * 100) / 100, sizeText : 85, color : 'rgba(0,0,0,1)'});
 	}	
 
 	// линейки отсечки
@@ -324,7 +324,7 @@ function showRulerWD_3D(wd)
 		
 		label[i].rotation.set( 0, wall.rotation.y + rt, 0 );    
 		label[i].visible = true;			
-		upLabelCameraWall({label : label[i], text : Math.round(d * 100) / 100, color : 'rgba(0,0,0,1)', border : 'border line'});
+		upLabelCameraWall({label : label[i], text : Math.round(d * 100) / 100, sizeText : 85, color : 'rgba(0,0,0,1)'});
 	}
 	
 	// боковые отсечки для линейки

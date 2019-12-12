@@ -1,5 +1,5 @@
 <? require_once("include/bd.php");  ?>
-<?php $vrs = '=8' ?>
+<?php $vrs = '=9' ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +11,6 @@
 	<title><?=$title?></title>
 	<meta name="description" content="<?=$description?>" />
 	<link rel="stylesheet" href="<?=$path?>css/style.css?<?=$vrs?>"> 
-	<link rel="stylesheet" href="<?=$path?>css/toggle.css?<?=$vrs?>">
 </head>
 
 <body>
@@ -57,9 +56,7 @@
 			<div style="flex-grow:1; position: relative;">
 				<? require_once("include/top_1.php"); ?>
 				
-				<noindex>		 
-				<? require_once("include/left_panel_1.php"); ?>	
-				
+				<noindex>		 				
 				<? require_once("include/bottom_panel_1.php"); ?>	
 				<? require_once("include/modal_window_3.php"); ?>
 									

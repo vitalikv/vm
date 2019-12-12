@@ -98,9 +98,8 @@ function createEmptyFormWD_1(cdm)
 	obj.userData.door.size = new THREE.Vector3();
 	obj.userData.door.form = form;
 	obj.userData.door.bound = {}; 
-	obj.userData.door.floorCenterY = (cdm.type == 'window') ? 1.5 : 1.1;  // центр wd над полом
 	obj.userData.door.width = 0.2;
-	obj.userData.door.h1 = 0;
+	obj.userData.door.h1 = 0;		// высота над полом
 	obj.userData.door.color = obj.material.color; 
 	obj.userData.door.wall = null;
 	obj.userData.door.controll = {};
@@ -117,9 +116,12 @@ function createEmptyFormWD_1(cdm)
 		obj.geometry.computeBoundingBox();		
 		var dX = obj.geometry.boundingBox.max.x - obj.geometry.boundingBox.min.x;
 		var dY = obj.geometry.boundingBox.max.y - obj.geometry.boundingBox.min.y;			
-		form.size = new THREE.Vector3(dX, dY, 1);
 		
-		obj.userData.door.floorCenterY = dY/2; console.log('floorCenterY', dY/2);
+		obj.userData.door.form.size = new THREE.Vector3(dX, dY, 1);
+		
+		var h1 = (type == 'window') ? infProject.settings.wind.h1 : 0;
+		
+		obj.userData.door.h1 = h1 - obj.geometry.boundingBox.min.y;
 	}
 		
 	//default vertices
@@ -208,8 +210,7 @@ function dragWD_2( event, obj )
 	}
 	else 
 	{ 
-		var h = wall.userData.wall.p[0].position.y; 
-		obj.position.set( pos.x, obj.userData.door.floorCenterY + h, pos.z ); 
+		obj.position.set( pos.x, obj.userData.door.h1, pos.z ); 
 	}		
 
 	changeWidthWD(obj, wall);	

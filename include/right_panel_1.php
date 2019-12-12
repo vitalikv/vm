@@ -125,7 +125,7 @@ function showHideCatalogMenuUI(cdm)
 
 <div class="right_panel_1" data-action ='right_panel_1' ui_1="" style="z-index: 1;">
 
-	<?if($interface['grid_tube_1'] == 1){?>
+
 	<div class="flex_column_1 right_panel_1_1" nameId="panel_catalog_1">
 		<div class="flex_1 bottom_line_1">
 			<div class="flex_1 relative_1 right_panel_1_item">
@@ -299,8 +299,8 @@ function showHideCatalogMenuUI(cdm)
 					</div>	
 				</div>
 				
-				
-				<div class="flex_column_1" nameId="rp_menu_door" style="display: none;">
+
+				<div class="flex_column_1" nameId="rp_menu_wd" style="display: none;">
 					<div class="flex_1">
 						<div class="flex_1 align_items">
 							<div class="rp_label_plane">
@@ -321,7 +321,18 @@ function showHideCatalogMenuUI(cdm)
 						<div class="flex_1 align_items" style="width: auto;">
 							<input type="text" style="width: 90%; margin:5px 5px;" nameId="size-wd-height" value="0">
 						</div>
-					</div>				
+					</div>	
+
+					<div class="flex_1" nameId="rp_item_wd_h1" style="display: none;">
+						<div class="flex_1 align_items">
+							<div class="rp_label_plane">
+								над полом
+							</div>
+						</div>
+						<div class="flex_1 align_items" style="width: auto;">
+							<input type="text" style="width: 90%; margin:5px 5px;" nameId="rp_wd_h1" value="0">
+						</div>
+					</div>					
 					
 					<div>
 						<div class="button1 button_gradient_1">Применить</div>
@@ -336,36 +347,31 @@ function showHideCatalogMenuUI(cdm)
 				
 				<div nameId="bl_object_3d" style="display: none;">  
 				
-					<div nameId="wrap_obj_child">
-						
-						<div class="flex_1 w_1">
-							
-							<div class="button1 button_gradient_1" nameId="select_pivot">
-								<img src="<?=$path?>/img/move_1.png">	
-							</div>	
-							<div class="button1 button_gradient_1" nameId="select_gizmo">
-								<img src="<?=$path?>/img/rotate_1.png">		
-							</div>							
-						</div>
+					<div class="flex_1 w_1">						
+						<div class="button1 button_gradient_1" nameId="select_pivot">
+							<img src="<?=$path?>/img/move_1.png">	
+						</div>	
+						<div class="button1 button_gradient_1" nameId="select_gizmo">
+							<img src="<?=$path?>/img/rotate_1.png">		
+						</div>							
+					</div>
 
-						<div class="flex_1 input_rotate">
-							<input type="text" nameId="object_rotate_X" value="0">
-							<input type="text" nameId="object_rotate_Y" value="0">
-							<input type="text" nameId="object_rotate_Z" value="0">
-						</div>
+					<div class="flex_1 input_rotate">
+						<input type="text" nameId="object_rotate_X" value="0">
+						<input type="text" nameId="object_rotate_Y" value="0">
+						<input type="text" nameId="object_rotate_Z" value="0">
+					</div>
+				
+					<div class="button1 button_gradient_1" nameId="obj_rotate_reset">
+						reset	
+					</div>
 					
-						<div class="button1 button_gradient_1" nameId="obj_rotate_reset">
-							reset	
-						</div>
-						
-						<div class="button1 button_gradient_1" nameId="button_copy_obj">
-							копировать	
-						</div>								
+					<div class="button1 button_gradient_1" nameId="button_copy_obj">
+						копировать	
+					</div>								
 
-						<div class="button1 button_gradient_1" nameId="button_delete_obj">
-							удалить	
-						</div>
-						
+					<div class="button1 button_gradient_1" nameId="button_delete_obj">
+						удалить	
 					</div>									
 					
 				</div> 
@@ -409,7 +415,6 @@ function showHideCatalogMenuUI(cdm)
 		<div class="button_show_panel_catalog_1">		
 		</div>	
 	</div>
-	<?}?>
 
 	
 </div>

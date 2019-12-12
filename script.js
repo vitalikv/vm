@@ -156,7 +156,6 @@ var kof_rd = 1;
 
 var countId = 2;
 var camera = cameraTop;
-var height_wall = infProject.settings.height;
 var obj_point = [];
 var obj_line = [];
 var room = [];
@@ -169,7 +168,7 @@ var clickO = resetPop.clickO();
 infProject.project = null;
 infProject.settings.active = { pg: 'pivot' };
 infProject.settings.door = { width: 1, height: 2.2 };
-infProject.settings.wind = { width: 1, height: 1, h1: 1.5 };
+infProject.settings.wind = { width: 1, height: 1, h1: 1.0 };
 infProject.camera = { d3: { theta: 0, phi: 75, targetPos: new THREE.Vector3() } }; 
 infProject.scene.array = resetPop.infProjectSceneArray(); 
 infProject.scene.grid = { obj: createGrid(infProject.settings.grid), active: false, link: false, show: true };
@@ -756,7 +755,7 @@ function createPoint( pos, id )
 function createOneWall3( point1, point2, width, cdm ) 
 {
 	var offsetZ = (cdm.offsetZ) ? cdm.offsetZ : 0;  
-	var height = (cdm.height) ? cdm.height : height_wall; 
+	var height = (cdm.height) ? cdm.height : infProject.settings.height; 
 	
 	var p1 = point1.position;
 	var p2 = point2.position;	
@@ -1310,6 +1309,7 @@ document.body.addEventListener("keydown", function (e)
 			if(infProject.activeInput == 'wall_1') { inputChangeWall_1({}); }	 		
 			if(infProject.activeInput == 'size-wd-length') { inputWidthHeightWD(clickO.last_obj); }
 			if(infProject.activeInput == 'size-wd-height') { inputWidthHeightWD(clickO.last_obj); }
+			if(infProject.activeInput == 'rp_wd_h1') { inputWidthHeightWD(clickO.last_obj); }
 			if(infProject.activeInput == 'size-grid-tube-xy-1')
 			{
 				updateGrid({size : $('[nameid="size-grid-tube-xy-1"]').val()});

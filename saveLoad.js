@@ -406,7 +406,7 @@ function getJsonGeometry()
 				points : [],
 				walls : [],	
 				rooms : [],
-				height : height_wall,
+				height : infProject.settings.height,
 				version : '1'
 			}			
 		]

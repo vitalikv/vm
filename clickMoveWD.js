@@ -268,15 +268,10 @@ function showTableWD(wd)
 
 	var d1 = Math.abs( maxX - minX );		
 	var d2 = Math.abs( maxY - minY );			
-
-	var wall = wd.userData.door.wall;
-	var pos = wd.localToWorld( new THREE.Vector3(0,minY,0) );
-	var h = wall.worldToLocal( pos.clone() ).y;	
-	
-	wd.userData.door.h1 = h; 
 	
 	$('[nameId="size-wd-length"]').val(Math.round(d1 * 100) / 100);
 	$('[nameId="size-wd-height"]').val(Math.round(d2 * 100) / 100);
+	$('[nameId="rp_wd_h1"]').val(Math.round((wd.userData.door.h1 + minY) * 100) / 100);
 }
 
 
@@ -292,42 +287,28 @@ function inputWidthHeightWD(wd)
 	
 	var x = $('[nameId="size-wd-length"]').val();		// ширина окна	
 	var y = $('[nameId="size-wd-height"]').val();		// высота окна
-	var h = 0;					// высота над полом	
+	var h = $('[nameId="rp_wd_h1"]').val();				// высота над полом	
 	
 	
-	// если знаначения ввели с ошибкой, то исправляем
-	if(1==1)
-	{
-		x = x.replace(",", ".");
-		y = y.replace(",", ".");
+	
+	wd.geometry.computeBoundingBox();
+	var x2 = (Math.abs(wd.geometry.boundingBox.max.x) + Math.abs(wd.geometry.boundingBox.min.x));
+	var y2 = (Math.abs(wd.geometry.boundingBox.max.y) + Math.abs(wd.geometry.boundingBox.min.y));
+	var h2 = wd.userData.door.h1 + wd.geometry.boundingBox.min.y;	
 		
-		wd.geometry.computeBoundingBox();
-		var x2 = (Math.abs(wd.geometry.boundingBox.max.x) + Math.abs(wd.geometry.boundingBox.min.x));
-		var y2 = (Math.abs(wd.geometry.boundingBox.max.y) + Math.abs(wd.geometry.boundingBox.min.y));		
-		
-		x = (isNumeric(x)) ? x : x2;
-		y = (isNumeric(y)) ? y : y2;		
-	}
+	var resX = checkNumberInput({ value: x, unit: 1, limit: {min: 0.1, max: 5} });
+	var resY = checkNumberInput({ value: y, unit: 1, limit: {min: 0.1, max: 5} });
+	var resH = checkNumberInput({ value: h, unit: 1, limit: {min: 0, max: 5} });
+	
+	x = (!resX) ? x2 : resX.num;
+	y = (!resY) ? y2 : resY.num;	 
+	h = (!resH) ? h2 : resH.num;
 	
 	
-	// ограничение размеров
-	if(1==1)
-	{
-		if(x > 10) { x = 10; }
-		else if(x < 0.1) { x = 0.1; }
-
-		if(y > 5) { y = 5; }
-		else if(y < 0.1) { y = 0.1; }	
-	}
+	wd.userData.door.h1 = h - wd.geometry.boundingBox.min.y;    // вычитаем изменение высоты окна/двери  
 	
-	
-	//var h = Number(UI('window_above_floor_1').val()) / 1000 - wd.userData.door.h1;		// высота над полом	
-	
-	h += (y - Math.abs( wd.geometry.boundingBox.max.y - wd.geometry.boundingBox.min.y )) / 2;    // вычитаем изменение высоты окна/двери  
-	
-	var pos = wd.position.clone();
-	pos.y += h;		// вычитаем изменение высоты окна/двери
-	wd.userData.door.h1 += h;
+	var pos = wd.position.clone(); 
+	pos.y = wd.userData.door.h1; 
 	
 	сhangeSizePosWD( wd, pos, x, y );	// изменяем размер окна/двери, а также перемещаем
 	
@@ -339,9 +320,8 @@ function inputWidthHeightWD(wd)
 	
 	wd.updateMatrixWorld();
 	
-	showRulerWD(wd);	// показываем линейки и контроллеры для окна/двери
-	
-	showTableWD(wd);		// обновляем меню
+	showRulerWD(wd);	// показываем линейки и контроллеры для окна/двери	
+	showTableWD(wd);	// обновляем меню
 	
 	renderCamera();
 }
@@ -373,7 +353,7 @@ function сhangeSizePosWD( wd, pos, x, y )
 	
 	 
 	// изменяем у ПОП объекта ширину/высоту/центрируем 
-	if(wd.userData.door.objPop && 1==1)
+	if(wd.userData.door.objPop)
 	{
 		wd.updateMatrixWorld();
 		wd.geometry.computeBoundingBox();

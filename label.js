@@ -195,7 +195,7 @@ function upLabelArea2(label, area, text2, size, color, border)
 	if(infProject.settings.unit.floor == 1) 
 	{
 		ctx.fillText('площадь : '+area+ ' м2', canvs.width / 2, canvs.height / 2 - 10 );
-		ctx.fillText('объем : '+Math.round((area * height_wall) * 100) / 100 +' м3', canvs.width / 2, canvs.height / 2 + 110 );			
+		ctx.fillText('объем : '+Math.round((area * infProject.settings.height) * 100) / 100 +' м3', canvs.width / 2, canvs.height / 2 + 110 );			
 	}
 	else if(infProject.settings.unit.floor == 0.01)
 	{

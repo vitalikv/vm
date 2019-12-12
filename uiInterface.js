@@ -109,7 +109,8 @@ function activeObjRightPanelUI_1(cdm)
 	$('[nameId="bl_object_3d"]').hide();
 	$('[nameId="rp_menu_wall"]').hide();
 	$('[nameId="rp_menu_point"]').hide();
-	$('[nameId="rp_menu_door"]').hide();
+	$('[nameId="rp_item_wd_h1"]').hide();
+	$('[nameId="rp_menu_wd"]').hide();
 	
 	if(!cdm) { cdm = {}; }  
 	
@@ -128,7 +129,12 @@ function activeObjRightPanelUI_1(cdm)
 	}
 	else if(obj.userData.tag == 'door')
 	{
-		$('[nameId="rp_menu_door"]').show();
+		$('[nameId="rp_menu_wd"]').show();
+	}
+	else if(obj.userData.tag == 'window')
+	{
+		$('[nameId="rp_item_wd_h1"]').show();
+		$('[nameId="rp_menu_wd"]').show();
 	}	
 	else if(obj.userData.tag == 'obj')
 	{
@@ -175,7 +181,7 @@ function createTextUI_1(cdm)
 
 
 
-// input для вкладки план (окно/дверь/толщина стены/высота этажа)
+// устанавливаем значения в input для вкладки план (окно/дверь/толщина стены/высота этажа)
 function startRightPlaneInput(cdm)
 {
 	
@@ -192,7 +198,7 @@ function startRightPlaneInput(cdm)
 }
 
 
-// после изменения input для плана
+// после изменения input для плана (окно/дверь/толщина стены/высота этажа)
 function upRightPlaneInput_1(cdm) 
 {
 	var el = cdm.el;
