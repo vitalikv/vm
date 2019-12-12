@@ -42,7 +42,7 @@
 	
 	<div class="frame">
 			
-		<div class="flex_1 top_panel_1 button_gradient_1" data-action ='top_panel_1'>
+		<div class="flex_1 top_panel_1 button_gradient_1" data-action ='top_panel_1' style="display: none;">
 			<div class="go_home align_items" nameId="butt_main_menu">
 				<div class="go_home_txt">
 					Меню
@@ -58,7 +58,6 @@
 				
 				<noindex>		 				
 				<? require_once("include/bottom_panel_1.php"); ?>	
-				<? require_once("include/modal_window_3.php"); ?>
 									
 				</noindex>
 			</div>

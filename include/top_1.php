@@ -6,12 +6,12 @@
 <div class="flex_1 top_panel_2">	
 	
 	<div class="toolbar" data-action ='top_panel_1'>
-		<div class="button1 button_gradient_1" nameId='showHideWall_1' style="display: block;"> 
+		<div class="button1 button_gradient_1" nameId='showHideWall_1' style="display: none;"> 
 			Спрятать стены
 		</div>		
 		
 		<div class="button1-wrap-1">
-			<div data-action ='screenshot' class="button1 button_gradient_1"><img src="<?=$path?>/img/screenshot.png"></div>
+			<div data-action ='screenshot1' class="button1 button_gradient_1"><img src="<?=$path?>/img/screenshot1.png"></div>
 		</div>				
 	</div> 
 	

@@ -144,7 +144,7 @@ function showHideCatalogMenuUI(cdm)
 						каталог
 					</div>	
 				</div>
-				<div class="right_panel_1_item_block" nameId="button_wrap_list_obj">
+				<div class="right_panel_1_item_block" nameId="button_wrap_list_obj" style="display: none;">
 					<div class="right_panel_1_item_block_text">
 						список
 					</div>	
@@ -259,8 +259,10 @@ function showHideCatalogMenuUI(cdm)
 		
 		
 		<div nameId="wrap_object">
-			<div class="flex_column_1" nameId="wrap_object_1" style="display: block;">
-				<div class="right_panel_1_1_h">Объект</div>
+		
+			<div class="right_panel_1_1_h">Объект</div>
+			<div class="flex_column_1" nameId="wrap_object_1" style="display: none;">
+				
 				
 				<div class="rp_obj_name">
 					<input type="text" nameId="rp_obj_name" value="Название">					
@@ -362,11 +364,11 @@ function showHideCatalogMenuUI(cdm)
 						<input type="text" nameId="object_rotate_Z" value="0">
 					</div>
 				
-					<div class="button1 button_gradient_1" nameId="obj_rotate_reset">
+					<div class="button1 button_gradient_1" nameId="obj_rotate_reset" style="display: none;">
 						reset	
 					</div>
 					
-					<div class="button1 button_gradient_1" nameId="button_copy_obj">
+					<div class="button1 button_gradient_1" nameId="button_copy_obj" style="display: none;">
 						копировать	
 					</div>								
 
