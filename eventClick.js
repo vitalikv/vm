@@ -158,6 +158,31 @@ $('input').blur(function ()
 
 
 
+// нажали кнопку применить
+$('[nameId="rp_button_apply"]').mousedown(function () 
+{  
+	var obj = clickO.last_obj;
+	
+	if(!obj) return;
+	if(!obj.userData.tag) return;
+	
+	if(obj.userData.tag == 'wall')
+	{
+		var width = $('[nameid="size_wall_width_1"]').val();
+		
+		inputWidthOneWall({wall:clickO.last_obj, width:{value: width}, offset:'wallRedBlueArrow'});		
+	}
+	else if(obj.userData.tag == 'window')
+	{
+		inputWidthHeightWD(clickO.last_obj);
+	}
+	else if(obj.userData.tag == 'door')
+	{
+		inputWidthHeightWD(clickO.last_obj);
+	}	
+});
+
+
 
 $('[data-action="modal_window"]').mousedown(function (e) { e.stopPropagation(); });		
 

@@ -292,7 +292,7 @@ function showHideCatalogMenuUI(cdm)
 						</div>				
 						
 						<div>
-							<div class="button1 button_gradient_1">Применить</div>
+							<div class="button1 button_gradient_1" nameId="rp_button_apply">Применить</div>
 						</div>
 						
 						<div>
@@ -337,7 +337,7 @@ function showHideCatalogMenuUI(cdm)
 					</div>					
 					
 					<div>
-						<div class="button1 button_gradient_1">Применить</div>
+						<div class="button1 button_gradient_1" nameId="rp_button_apply">Применить</div>
 					</div>
 					
 					<div>

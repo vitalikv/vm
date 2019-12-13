@@ -91,7 +91,7 @@ function clippingGizmo360( objPop )
 	else
 	{
 		var group = new THREE.Group();
-		group.position.copy(objPop.position);		
+		group.position.copy(infProject.tools.gizmo.position);		
 		group.lookAt(camera.position);
 		group.rotateOnAxis(new THREE.Vector3(0,1,0), -Math.PI / 2);
 		group.updateMatrixWorld();
@@ -107,7 +107,8 @@ function clippingGizmo360( objPop )
 		infProject.tools.gizmo.children[1].children[0].material.clippingPlanes[0].copy(plane);
 		infProject.tools.gizmo.children[2].children[0].material.clippingPlanes[0].copy(plane);	
 		
-		//showHelperNormal(objPop)		
+
+		//scene.add( new THREE.PlaneHelper( plane, 15, 0xff0000 ) );	
 	}
 
 }

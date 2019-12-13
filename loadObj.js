@@ -12,6 +12,7 @@ function infoListObj()
 		name : 'окно',
 		planeMath : 1.5,
 		material : true,
+		stopUI: true,
 	}
 	
 	arr[1] =
@@ -29,6 +30,7 @@ function infoListObj()
 		name : 'окно',
 		planeMath : 1.5,
 		material : true,
+		stopUI: true,
 	}
 	
 	arr[3] =
@@ -38,6 +40,7 @@ function infoListObj()
 		name : 'дверь',
 		planeMath : 1.0,
 		material : true,
+		stopUI: true,
 	}
 
 	arr[4] =
