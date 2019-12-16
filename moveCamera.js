@@ -163,7 +163,7 @@ function cameraMove3D( event )
 			var radious = infProject.camera.d3.targetPos.distanceTo( camera.position );
 			var theta = - ( ( event.clientX - onMouseDownPosition.x ) * 0.5 ) + infProject.camera.d3.theta;
 			var phi = ( ( event.clientY - onMouseDownPosition.y ) * 0.5 ) + infProject.camera.d3.phi;
-			var phi = Math.min( 180, Math.max( -5, phi ) );
+			var phi = Math.min( 180, Math.max( 5, phi ) );
 
 			camera.position.x = radious * Math.sin( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
 			camera.position.y = radious * Math.sin( phi * Math.PI / 360 );

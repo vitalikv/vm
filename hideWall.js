@@ -36,12 +36,18 @@ function getInfoRenderWall()
 function wallAfterRender_2()
 { //return; 
 
+	var camPos = camera.getWorldDirection(new THREE.Vector3());
+	
+	camPos = new THREE.Vector3(camPos.x, 0, camPos.z).normalize();
+	
 	for ( var i = 0; i < wallVisible.length; i++ )
 	{
-		var wall = wallVisible[ i ].wall;
-		//var pos = new THREE.Vector3().subVectors( wall.p[1].position, wall.p[0].position ).divideScalar( 2 ).add(wall.p[0].position);
+		var wall = wallVisible[ i ].wall;		
 		
-		var res = camera.getWorldDirection(new THREE.Vector3()).dot( wallVisible[ i ].normal.clone() );
+		var res = camPos.dot( wallVisible[ i ].normal.clone() );
+		
+		//var pos = new THREE.Vector3().subVectors( wall.userData.wall.p[1].position, wall.userData.wall.p[0].position ).divideScalar( 2 ).add(wall.userData.wall.p[0].position);
+		//var res = camPos.dot( pos );
 		
 		if ( res > 0.5 )  
 		{ 	

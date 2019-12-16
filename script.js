@@ -54,6 +54,35 @@ cameraWall.zoom = 2
 
 
 //----------- Light 
+
+if(1==1)
+{
+	scene.background = new THREE.Color().setHSL( 0.6, 0, 1 );
+	scene.fog = new THREE.Fog( scene.background, 1, 5000 );
+	var cl1 = new THREE.Color().setHSL( 0.6, 1, 0.6 );
+	
+	var vertexShader = document.getElementById( 'vertexShader' ).textContent;
+	var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
+	var uniforms = {
+		"topColor": { value: new THREE.Color( 0x0077ff ) },
+		"bottomColor": { value: new THREE.Color( 0xffffff ) },
+		"offset": { value: 33 },
+		"exponent": { value: 0.6 }
+	};
+	uniforms[ "topColor" ].value.copy( cl1 );
+	scene.fog.color.copy( uniforms[ "bottomColor" ].value );
+	var skyGeo = new THREE.SphereBufferGeometry( 4000, 32, 15 );
+	var skyMat = new THREE.ShaderMaterial( {
+		uniforms: uniforms,
+		vertexShader: vertexShader,
+		fragmentShader: fragmentShader,
+		side: THREE.BackSide
+	} );
+	var sky = new THREE.Mesh( skyGeo, skyMat );
+	scene.add( sky );
+	
+}
+
 scene.add( new THREE.AmbientLight( 0xffffff, 0.5 ) ); 
 
 var lights = [];
@@ -266,6 +295,51 @@ startRightPlaneInput({});
 //----------- start
 
 
+
+backgroundPlane();
+
+function backgroundPlane()
+{
+	var geometry = new THREE.PlaneGeometry( 1000, 1000 );
+	var material = new THREE.MeshLambertMaterial( {color: 0xffff00, side: THREE.DoubleSide } );
+	var planeMath = new THREE.Mesh( geometry, material );
+	planeMath.position.y = -0.01;
+	planeMath.rotation.set(-Math.PI/2, 0, 0);
+	scene.add( planeMath );	
+	
+	
+	
+	var cdm = {};
+	var img = infProject.path+'/img/load/beton.jpg';
+	
+	new THREE.TextureLoader().load(img, function ( image )  
+	{
+		material.color = new THREE.Color( 0xffffff );
+		var texture = image;			
+		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+		texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+		
+		if(cdm.repeat)
+		{
+			texture.repeat.x = cdm.repeat.x;
+			texture.repeat.y = cdm.repeat.y;			
+		}
+		else
+		{
+			texture.repeat.x = 1000;
+			texture.repeat.y = 1000;			
+		}
+		
+		texture.needsUpdate = true;
+		
+		material.map = texture; 
+		material.lightMap = lightMap_1;
+		material.needsUpdate = true; 					
+		
+		renderCamera();
+	});		
+	
+}
 
 
 function createPillar()
