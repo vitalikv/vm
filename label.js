@@ -9,9 +9,11 @@ function createRulerWin(cdm)
 	if(cdm.material == 'standart') { var mat = { color: cdm.color }; }
 	else { var mat = { color: cdm.color, transparent: true, depthTest : false }; }
 	
+	var material = new THREE.LineBasicMaterial( mat );
+	
 	for ( var i = 0; i < cdm.count; i++ )
 	{
-		arr[i] = new THREE.Mesh( createGeometryCube(1, 0.025, 0.025), new THREE.LineBasicMaterial( mat ) );
+		arr[i] = new THREE.Mesh( createGeometryCube(1, 0.025, 0.025), material );
 		var v = arr[i].geometry.vertices; 
 		v[0].x = v[1].x = v[6].x = v[7].x = 0;
 		
@@ -109,18 +111,20 @@ function createRulerCutoff()
 {
 	var arr = [];
 	
+	var geometry = createGeometryCube(0.1, 0.005, 0.005);
+	var material = new THREE.MeshLambertMaterial( { color : 0xff0000, transparent: true, depthTest : false } );
+	
+	var v = geometry.vertices; 
+	v[0].y = v[3].y = v[4].y = v[7].y = -0.025/2;
+	v[1].y = v[2].y = v[5].y = v[6].y = 0.025/2;	
+	v[0].z = v[1].z = v[2].z = v[3].z = -0.025/2;
+	v[4].z = v[5].z = v[6].z = v[7].z = 0.025/2;		
+	geometry.verticesNeedUpdate = true;			
+	
+	
 	for ( var i = 0; i < 8; i++ )
 	{
-		arr[i] = new THREE.Mesh( createGeometryCube(0.05, 0.005, 0.005), new THREE.MeshLambertMaterial( { color : 0xff0000, transparent: true, depthTest : false } ) );
-		
-		var v = arr[i].geometry.vertices; 
-		v[0].y = v[3].y = v[4].y = v[7].y = -0.0025;
-		v[1].y = v[2].y = v[5].y = v[6].y = 0.0025;
-		
-		v[0].z = v[1].z = v[2].z = v[3].z = -0.0025;
-		v[4].z = v[5].z = v[6].z = v[7].z = 0.0025;		
-		arr[i].geometry.verticesNeedUpdate = true;			
-		
+		arr[i] = new THREE.Mesh( geometry, material );				
 		arr[i].renderOrder = 1;
 		arr[i].visible = false;
 		

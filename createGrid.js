@@ -17,7 +17,7 @@ function createGrid(cdm)
 	
 	var geometry = new THREE.Geometry();
 	var material = new THREE.LineBasicMaterial( { color: color, opacity: 1 } );
-	
+	material.visible = false;
 	var ofsset = (count * size) / 2;
 	
 	// длина линии, центр по середине

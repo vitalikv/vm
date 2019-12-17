@@ -251,7 +251,6 @@ function hideSizeWD( obj )
 	for ( var i = 0; i < arrSize.cube.length; i++ ) { arrSize.cube[i].visible = false; }
 	for ( var i = 0; i < arrSize.format_2.line.length; i++ ) { arrSize.format_2.line[i].visible = false; }
 	for ( var i = 0; i < arrSize.format_2.label.length; i++ ){ arrSize.format_2.label[i].visible = false; }
-	//for ( var i = 0; i < arrSize.cutoff.length; i++ ) { arrSize.cutoff[i].visible = false; }	
   	for ( var i = 0; i < arrSize.cutoff.length; i++ ){ arrSize.cutoff[i].visible = false; }
 }
 

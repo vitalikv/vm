@@ -22,8 +22,8 @@ renderer.setSize( w_w, w_h );
 document.body.appendChild( renderer.domElement );
 
 var scene = new THREE.Scene();
-scene.background = new THREE.Color( 0xffffff );
-
+scene.background = new THREE.Color( 0xdefbff );
+scene.fog = new THREE.Fog('lightblue', 100, 200);
 //----------- cameraTop
 var cameraTop = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, 1, 1000 );
 cameraTop.position.set(0, 10, 0);
@@ -54,34 +54,6 @@ cameraWall.zoom = 2
 
 
 //----------- Light 
-
-if(1==1)
-{
-	scene.background = new THREE.Color().setHSL( 0.6, 0, 1 );
-	scene.fog = new THREE.Fog( scene.background, 1, 5000 );
-	var cl1 = new THREE.Color().setHSL( 0.6, 1, 0.6 );
-	
-	var vertexShader = document.getElementById( 'vertexShader' ).textContent;
-	var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
-	var uniforms = {
-		"topColor": { value: new THREE.Color( 0x0077ff ) },
-		"bottomColor": { value: new THREE.Color( 0xffffff ) },
-		"offset": { value: 33 },
-		"exponent": { value: 0.6 }
-	};
-	uniforms[ "topColor" ].value.copy( cl1 );
-	scene.fog.color.copy( uniforms[ "bottomColor" ].value );
-	var skyGeo = new THREE.SphereBufferGeometry( 4000, 32, 15 );
-	var skyMat = new THREE.ShaderMaterial( {
-		uniforms: uniforms,
-		vertexShader: vertexShader,
-		fragmentShader: fragmentShader,
-		side: THREE.BackSide
-	} );
-	var sky = new THREE.Mesh( skyGeo, skyMat );
-	scene.add( sky );
-	
-}
 
 scene.add( new THREE.AmbientLight( 0xffffff, 0.5 ) ); 
 
@@ -286,6 +258,7 @@ if(1==1)
 }
 
 
+backgroundPlane();
 startPosCamera3D({radious: 15, theta: 90, phi: 35});		// стартовое положение 3D камеры
 addObjInCatalogUI_1();	// каталог UI
 changeRightMenuUI_1({name: 'button_wrap_plan'});	// назначаем первоначальную вкладку , которая будет включена
@@ -296,7 +269,7 @@ startRightPlaneInput({});
 
 
 
-backgroundPlane();
+
 
 function backgroundPlane()
 {
@@ -310,7 +283,7 @@ function backgroundPlane()
 	
 	
 	var cdm = {};
-	var img = infProject.path+'/img/load/beton.jpg';
+	var img = infProject.path+'/img/f1.png';
 	
 	new THREE.TextureLoader().load(img, function ( image )  
 	{

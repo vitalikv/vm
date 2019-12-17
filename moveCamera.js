@@ -161,6 +161,7 @@ function cameraMove3D( event )
 		{  
 			newCameraPosition = null;
 			var radious = infProject.camera.d3.targetPos.distanceTo( camera.position );
+			
 			var theta = - ( ( event.clientX - onMouseDownPosition.x ) * 0.5 ) + infProject.camera.d3.theta;
 			var phi = ( ( event.clientY - onMouseDownPosition.y ) * 0.5 ) + infProject.camera.d3.phi;
 			var phi = Math.min( 180, Math.max( 5, phi ) );
@@ -290,7 +291,7 @@ function clickSetCamera3D( event, click )
 	{
 		isMouseDown3 = true;
 		planeMath.position.copy( infProject.camera.d3.targetPos );
-		planeMath.rotation.copy( camera.rotation );
+		planeMath.rotation.set(-Math.PI/2, 0, 0);
 		planeMath.updateMatrixWorld();
 
 		var intersects = rayIntersect( event, planeMath, 'one' );	
@@ -426,28 +427,14 @@ function cameraZoomTop( delta )
 	
 	infProject.tools.axis[0].scale.set(1,1/delta,1/delta);
 	infProject.tools.axis[1].scale.set(1,1/delta,1/delta);
-
-	var point = infProject.tools.point;	
-	var v = point.geometry.vertices;
-	var v2 = point.userData.tool_point.v2;
-		
-	for ( var i = 0; i < v2.length; i++ )
-	{
-		v[i].x = v2[i].x * 1/delta;
-		v[i].z = v2[i].z * 1/delta;
-	}	
-
-	infProject.tools.point.geometry.verticesNeedUpdate = true;
-	infProject.tools.point.geometry.elementsNeedUpdate = true;
-		
-
-	var k = 0.085 / delta;
+	
 	// zoom label
 	var k = 1 / delta;
 	if(k <= infProject.settings.camera.limitZoom) 
 	{
 		k *= kof_rd;
 
+		// wall label 
 		var n1 = 0.25 * k *2;
 		var n2 = 0.125 * k *2;		
 		var v1 = infProject.geometry.labelWall.vertices;
@@ -469,6 +456,37 @@ function cameraZoomTop( delta )
 		v[ 0 ].z = v[ 3 ].z = -n2;
 		infProject.geometry.labelFloor.verticesNeedUpdate = true;
 		infProject.geometry.labelFloor.elementsNeedUpdate = true;
+		
+		// wd label 
+		var n1 = 0.25 * k *2;
+		var n2 = 0.125 * k *2;	
+		var v1 = labelGeometry_1.vertices;
+		v1[ 0 ].x = v1[ 1 ].x = -n1;
+		v1[ 2 ].x = v1[ 3 ].x = n1;
+		v1[ 1 ].y = v1[ 2 ].y = n2;
+		v1[ 0 ].y = v1[ 3 ].y = -n2;
+		labelGeometry_1.verticesNeedUpdate = true;
+		labelGeometry_1.elementsNeedUpdate = true;	
+
+
+		// point geometry
+		var point = infProject.tools.point;	
+		var v = point.geometry.vertices;
+		var v2 = point.userData.tool_point.v2;
+			
+		for ( var i = 0; i < v2.length; i++ )
+		{
+			v[i].x = v2[i].x * 1/delta;
+			v[i].z = v2[i].z * 1/delta;
+		}	
+
+		infProject.tools.point.geometry.verticesNeedUpdate = true;
+		infProject.tools.point.geometry.elementsNeedUpdate = true;
+
+
+		// wd рулетки 
+		for ( var i = 0; i < arrSize.cutoff.length; i++ ){ arrSize.cutoff[i].scale.set(1/delta,1/delta,1/delta); }	
+		for ( var i = 0; i < arrSize.format_2.line.length; i++ ){ arrSize.format_2.line[i].scale.set(1,1/delta,1/delta); }			
 	}
 }
 
@@ -522,7 +540,16 @@ function centerCamera2D()
 		pos.divideScalar( obj_point.length );
 	}
 
-	newCameraPosition = {position2D: new THREE.Vector3(pos.x, cameraTop.position.y, pos.z)};
+	if(1==2)
+	{
+		newCameraPosition = {position2D: new THREE.Vector3(pos.x, cameraTop.position.y, pos.z)};
+	}
+	else
+	{
+		cameraTop.position.x = pos.x;
+		cameraTop.position.z = pos.z;
+		newCameraPosition = null;
+	}
 }
 
 
