@@ -51,6 +51,7 @@ function changeMainMenuUI(cdm)
 }
 
 
+$('[nameId="button_wrap_img"]').mousedown(function () { changeRightMenuUI_1({el: this}); });
 $('[nameId="button_wrap_catalog"]').mousedown(function () { changeRightMenuUI_1({el: this}); });
 $('[nameId="button_wrap_list_obj"]').mousedown(function () { changeRightMenuUI_1({el: this}); });
 $('[nameId="button_wrap_object"]').mousedown(function () { changeRightMenuUI_1({el: this}); });

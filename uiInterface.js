@@ -67,6 +67,7 @@ function updateListTubeUI_1(cdm)
 // переключаем вкладки правой панели 
 function changeRightMenuUI_1(cdm)
 {
+	$('[nameId="wrap_img"]').hide();
 	$('[nameId="wrap_catalog"]').hide();
 	$('[nameId="wrap_list_obj"]').hide();
 	$('[nameId="wrap_object"]').hide();
@@ -80,6 +81,10 @@ function changeRightMenuUI_1(cdm)
 	else if(cdm.current) { name = infProject.ui.right_menu.active; }
 	
 	
+	if(name == "button_wrap_img") 
+	{
+		$('[nameId="wrap_img"]').show();
+	}	
 	if(name == "button_wrap_catalog") 
 	{
 		$('[nameId="wrap_catalog"]').show();

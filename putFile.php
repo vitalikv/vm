@@ -31,6 +31,7 @@ clickMoveGizmo.js
 loadObj.js
 uiInterface.js
 hideWall.js
+substrate.js
 ';
 
 

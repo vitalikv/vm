@@ -88,6 +88,7 @@
     <script src="<?=$path?>floor.js?<?=$vrs?>"></script>
     <script src="<?=$path?>detectZone.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>loadObj.js?<?=$vrs?>"></script>
+	<script src="<?=$path?>substrate.js?<?=$vrs?>"></script>
 	
 	<script src="<?=$path?>hideWall.js?<?=$vrs?>"></script>
     <script src="<?=$path?>inputWall.js?<?=$vrs?>"></script>

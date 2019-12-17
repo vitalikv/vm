@@ -200,7 +200,8 @@ function dragToolPoint( event, obj )
 	  
 	if(point) 
 	{
-		
+		infProject.tools.axis[0].visible = false;
+		infProject.tools.axis[1].visible = false;		
 	} 
 	else if(dw)
 	{
@@ -221,7 +222,9 @@ function dragToolPoint( event, obj )
 		obj.userData.point.cross = wall; 
 		
 		infProject.tools.axis[0].visible = false;
-		infProject.tools.axis[1].visible = false; 
+		infProject.tools.axis[1].visible = false;
+
+		showLineAxis( obj );
 	}
 }
 
