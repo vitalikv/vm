@@ -73,6 +73,9 @@ function changeRightMenuUI_1(cdm)
 	$('[nameId="wrap_object"]').hide();
 	$('[nameId="wrap_plan"]').hide();
 	
+	infProject.scene.substrate.active = null;
+	showHideSubstrateRuler({visible: false});
+	
 	var name = '';
 	//var name_2 = infProject.ui.right_menu.active;
 	
@@ -84,6 +87,8 @@ function changeRightMenuUI_1(cdm)
 	if(name == "button_wrap_img") 
 	{
 		$('[nameId="wrap_img"]').show();
+		infProject.scene.substrate.active = infProject.scene.substrate.floor[0].plane;
+		showHideSubstrateRuler({visible: true});
 	}	
 	if(name == "button_wrap_catalog") 
 	{

@@ -54,7 +54,7 @@ function createToolRulerSubstrate()
 	ruler[1].visible = false;
 	scene.add( ruler[1] );
 	ruler[1].position.y = 0.01;
-	ruler[1].position.z = 1;	
+	ruler[1].position.x = 1;	
 
 
 	
@@ -64,6 +64,12 @@ function createToolRulerSubstrate()
 	
 	ruler[0].userData.subtool.line = line;
 	ruler[1].userData.subtool.line = line;
+	 
+	 
+	var cone = createCone({axis: 'y', pos: new THREE.Vector3(0,0.0,0), rot: new THREE.Vector3(-Math.PI/2,0,Math.PI/2), color: 0x00ff00});	
+	//cone.rotation.set( arr[i][1].x, arr[i][1].y, arr[i][1].z );
+	cone.position.y = 0.01;
+	scene.add( cone );	 
 	
 	setPosRotLineRulerSubstrate({ruler: ruler});
 
@@ -78,9 +84,10 @@ function setPosRotLineRulerSubstrate(cdm)
 	var ruler = cdm.ruler;
 	var line = ruler[0].userData.subtool.line;
 	
+	var dist = ruler[0].position.distanceTo( ruler[1].position );
 	
 	var v = line.geometry.vertices;
-	v[3].x = v[2].x = v[5].x = v[4].x = ruler[0].position.distanceTo( ruler[1].position );
+	v[3].x = v[2].x = v[5].x = v[4].x = dist;
 	v[0].x = v[1].x = v[6].x = v[7].x = 0;
 	line.geometry.verticesNeedUpdate = true; 
 	line.geometry.elementsNeedUpdate = true;
@@ -92,7 +99,9 @@ function setPosRotLineRulerSubstrate(cdm)
 	
 	var dir = new THREE.Vector3().subVectors( ruler[0].position, ruler[1].position ).normalize();
 	var angleDeg = Math.atan2(dir.x, dir.z);
-	line.rotation.set(0, angleDeg + Math.PI / 2, 0);	
+	line.rotation.set(0, angleDeg + Math.PI / 2, 0);
+
+	$('[nameId="input_size_substrate"]').val( Math.round(dist*100)/100 );
 }
 
 
@@ -103,8 +112,8 @@ function setStartPositionRulerSubstrate()
 	if(!plane) return;
 	
 	var ruler = infProject.scene.substrate.ruler;
-	ruler[0].position.set(plane.position.x, plane.position.y + 0.01, plane.position.z + 1);
-	ruler[1].position.set(plane.position.x, plane.position.y + 0.01, plane.position.z - 1);
+	ruler[0].position.set(plane.position.x + 0.5, plane.position.y + 0.01, plane.position.z);
+	ruler[1].position.set(plane.position.x - 0.5, plane.position.y + 0.01, plane.position.z);
 
 	setPosRotLineRulerSubstrate({ruler: ruler});	
 }
@@ -119,7 +128,7 @@ function createSubstrate(cdm)
 	obj.position.y = 0.01;
 	obj.rotation.y = 0.0;
 	obj.userData.tag = "substrate";
-	obj.userData.substrate = { p: [], active: false };
+	obj.userData.substrate = { p: [], active: false, img: false };
 	obj.visible = false;
 	setImgUrlSubstrate({obj: obj, img: 'img/UV_Grid_Sm.jpg'}); 
 	scene.add( obj );	
@@ -264,8 +273,7 @@ function setPositionPointSubstrate(cdm)
 function showHideSubstrate_1(cdm)
 {
 	if(!infProject.scene.substrate.active) return;
-	 
-	var ruler = infProject.scene.substrate.ruler;
+	 	
 	var plane = infProject.scene.substrate.active;
 	var point = plane.userData.substrate.p;	
 
@@ -277,15 +285,32 @@ function showHideSubstrate_1(cdm)
 	
 	for (var i = 0; i < point.length; i++)
 	{
-		point[i].visible = visible;
+		//point[i].visible = visible;
 	}
 	
 	plane.visible = visible;
-	ruler[0].visible = visible;
-	ruler[1].visible = visible;
-	ruler[0].userData.subtool.line.visible = visible;
+	
+	showHideSubstrateRuler({visible: visible});
 	
 	renderCamera();
+}
+
+
+// прячем/показываем рулетку
+function showHideSubstrateRuler(cdm)
+{
+	var visible = cdm.visible;
+	var plane = infProject.scene.substrate.active;
+	var ruler = infProject.scene.substrate.ruler;
+	
+	if(visible)	
+	{
+		if(!plane.userData.substrate.img) { visible = false; }	// если у подложки нет img, то не показываем рулетку
+	}
+	
+	ruler[0].visible = visible;
+	ruler[1].visible = visible;
+	ruler[0].userData.subtool.line.visible = visible;	
 }
 
 
@@ -398,6 +423,7 @@ function setImgCompSubstrate(cdm)
 	
 	image.onload = function() 
 	{
+		obj.userData.substrate.img = true;
 		var material = obj.material;
 		var texture = new THREE.Texture();
 		texture.image = image;
@@ -419,14 +445,7 @@ function setImgCompSubstrate(cdm)
 		
 		if(camera == cameraTop)
 		{
-			obj.position.x = camera.position.x;
-			obj.position.z = camera.position.z;
-			
-			var ruler = infProject.scene.substrate.ruler;
-			ruler[0].position.set(obj.position.x, obj.position.y + 0.01, obj.position.z + 0.5);
-			ruler[1].position.set(obj.position.x, obj.position.y + 0.01, obj.position.z - 0.5);
-
-			setPosRotLineRulerSubstrate({ruler: ruler});			
+			setStartPositionRulerSubstrate();			
 		}
 
 		setPositionPointSubstrate({plane: obj});	
@@ -689,7 +708,7 @@ function assignSizeSubstrate()
 	
 	if(!value) 
 	{
-		$('[nameid="input_size_substrate"]').val(0);
+		$('[nameid="input_size_substrate"]').val(1);
 		
 		return;
 	}	
@@ -699,7 +718,9 @@ function assignSizeSubstrate()
 	
 	var ruler = infProject.scene.substrate.ruler;	
 	var dist = ruler[0].position.distanceTo( ruler[1].position );
-	var ratio = value.num/dist;
+	var ratio = value.num/dist;  
+	
+	console.log('ratio', ratio);
 	
 	plane.geometry.computeBoundingBox();	
 	var x = (Math.abs(plane.geometry.boundingBox.max.x) + Math.abs(plane.geometry.boundingBox.min.x));
@@ -809,6 +830,10 @@ function deleteSubstrate(cdm)
 	showHideSubstrate_1({visible: false});	
 	
 	infProject.scene.substrate.active = null;	// деактивируем активный этаж
+	plane.userData.substrate.img = false;
+	
+	$('#substrate_img').attr('src', '#');
+	$('[nameid="input_size_substrate"]').val(1);
 }
 
 

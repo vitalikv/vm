@@ -172,8 +172,6 @@ infProject.settings.door = { width: 1, height: 2.2 };
 infProject.settings.wind = { width: 1, height: 1, h1: 1.0 };
 infProject.camera = { d3: { theta: 0, phi: 75, targetPos: new THREE.Vector3() } }; 
 infProject.scene.array = resetPop.infProjectSceneArray();
-infProject.scene.substrate = { ruler: [], floor: [], active: null };
-infProject.scene.substrate.ruler = createToolRulerSubstrate(); 
 infProject.scene.grid = { obj: createGrid(infProject.settings.grid), active: false, link: false, show: true };
 infProject.scene.block = { key : { scroll : false } };		// блокировка действий/клавишь
 infProject.scene.block.click = {wall: false, point: false, door: false, window: false, room: false, tube: false, controll_wd: false, obj: false};
@@ -181,6 +179,8 @@ infProject.scene.block.hover = {wall: false, point: false, door: false, window: 
 infProject.geometry = { circle : createCircleSpline() }
 infProject.geometry.labelWall = createGeometryPlan(0.25 * 2, 0.125 * 2);
 infProject.geometry.labelFloor = createGeometryPlan(1.0 * kof_rd, 0.25 * kof_rd);
+infProject.scene.substrate = { ruler: [], floor: [], active: null };
+infProject.scene.substrate.ruler = createToolRulerSubstrate(); 
 infProject.tools = { pivot: createPivot(), gizmo: createGizmo360(), cutWall: [], point: createToolPoint(), axis: createLineAxis() } 
 
 infProject.catalog = infoListObj();  

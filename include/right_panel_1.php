@@ -124,6 +124,7 @@
 		width: 200px; 
 		min-height: 100px;
 		max-height: 150px;
+		margin: auto;
         overflow: hidden;
         display: flex;
         justify-content: center;
@@ -219,7 +220,7 @@ function readURL(e)
 			var reader = new FileReader();
 			reader.onload = function (e) 
 			{
-				$('#upload-img').attr('src', e.target.result);						
+				$('#substrate_img').attr('src', e.target.result);						
 				
 				setImgCompSubstrate({image: e.target.result});					
 			}				
@@ -289,7 +290,7 @@ function readURL(e)
 					</label>
 
 					<div class="prew_substrate">
-						<img src="#" id="upload-img" alt=""/>
+						<img src="#" id="substrate_img" alt=""/>
 					</div>
 					
 					<div style="display: none;">

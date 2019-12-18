@@ -5,6 +5,7 @@ function activeHover2D( event )
 {
 	if (camera != cameraTop) { return; }
 	if (isMouseDown1) { return; }
+	if (infProject.scene.substrate.active) return;
 
 	if ( clickO.move ) 
 	{
