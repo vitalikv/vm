@@ -173,7 +173,7 @@ infProject.settings.wind = { width: 1, height: 1, h1: 1.0 };
 infProject.camera = { d3: { theta: 0, phi: 75, targetPos: new THREE.Vector3() } }; 
 infProject.scene.array = resetPop.infProjectSceneArray();
 infProject.scene.substrate = { ruler: [], floor: [], active: null };
-infProject.scene.substrate.ruler = createToolRulerSubstrate();  
+infProject.scene.substrate.ruler = createToolRulerSubstrate(); 
 infProject.scene.grid = { obj: createGrid(infProject.settings.grid), active: false, link: false, show: true };
 infProject.scene.block = { key : { scroll : false } };		// блокировка действий/клавишь
 infProject.scene.block.click = {wall: false, point: false, door: false, window: false, room: false, tube: false, controll_wd: false, obj: false};
@@ -261,6 +261,7 @@ if(1==1)
 
 
 backgroundPlane();
+createSubstrate({ pos: {y: 0.01} }); 	// подложка
 startPosCamera3D({radious: 15, theta: 90, phi: 35});		// стартовое положение 3D камеры
 addObjInCatalogUI_1();	// каталог UI
 changeRightMenuUI_1({name: 'button_wrap_img'});	// назначаем первоначальную вкладку , которая будет включена

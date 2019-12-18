@@ -120,6 +120,7 @@ function createSubstrate(cdm)
 	obj.rotation.y = 0.0;
 	obj.userData.tag = "substrate";
 	obj.userData.substrate = { p: [], active: false };
+	obj.visible = false;
 	setImgUrlSubstrate({obj: obj, img: 'img/UV_Grid_Sm.jpg'}); 
 	scene.add( obj );	
 	
@@ -141,8 +142,7 @@ function createSubstrate(cdm)
 	
 	var n = infProject.scene.substrate.floor.length;
 	infProject.scene.substrate.floor[n] = {plane: obj, point: p};
-	
-	addPlaneListUI({plane: obj});
+	infProject.scene.substrate.active = null;  console.log(infProject.scene.substrate.floor);
 }
 
 
@@ -206,7 +206,7 @@ function createPointSubstrate(cdm)
 		obj.position.set(0, plane.position.y, 0);
 		obj.userData.subpoint = {};
 		
-		//obj.visible = false;	
+		obj.visible = false;	
 		scene.add( obj );		
 		
 		arr[i] = obj;
@@ -280,6 +280,7 @@ function showHideSubstrate_1(cdm)
 		point[i].visible = visible;
 	}
 	
+	plane.visible = visible;
 	ruler[0].visible = visible;
 	ruler[1].visible = visible;
 	ruler[0].userData.subtool.line.visible = visible;
@@ -390,9 +391,11 @@ function setImgCompSubstrate(cdm)
 	var image = new Image();
 	image.src = cdm.image;
 	
-	var obj = infProject.scene.substrate.active;	console.log(3333, obj);
+	var obj = infProject.scene.substrate.floor[0].plane;	
 	if(!obj) return;
-
+	
+	infProject.scene.substrate.active = obj;
+	
 	image.onload = function() 
 	{
 		var material = obj.material;
@@ -412,8 +415,21 @@ function setImgCompSubstrate(cdm)
 		var x = (Math.abs(obj.geometry.boundingBox.max.x) + Math.abs(obj.geometry.boundingBox.min.x));
 		//var y = (Math.abs(obj.geometry.boundingBox.max.y) + Math.abs(obj.geometry.boundingBox.min.y));
 		var z = (Math.abs(obj.geometry.boundingBox.max.z) + Math.abs(obj.geometry.boundingBox.min.z));		
+				
 		
-		setPositionPointSubstrate({plane: obj});
+		if(camera == cameraTop)
+		{
+			obj.position.x = camera.position.x;
+			obj.position.z = camera.position.z;
+			
+			var ruler = infProject.scene.substrate.ruler;
+			ruler[0].position.set(obj.position.x, obj.position.y + 0.01, obj.position.z + 0.5);
+			ruler[1].position.set(obj.position.x, obj.position.y + 0.01, obj.position.z - 0.5);
+
+			setPosRotLineRulerSubstrate({ruler: ruler});			
+		}
+
+		setPositionPointSubstrate({plane: obj});	
 		
 		upUvs_4( obj );
 		
@@ -428,8 +444,10 @@ function setImgCompSubstrate(cdm)
 		material.map = texture; 
 		material.lightMap = lightMap_1;
 		material.needsUpdate = true; 					
-		console.log(image);
+		
 		setTransparencySubstrate({value: 100});
+		
+		showHideSubstrate_1({visible: true});
 		
 		renderCamera();
 	};
@@ -786,34 +804,9 @@ function deleteSubstrate(cdm)
 	//var plane = cdm.plane;
 	
 	var plane = infProject.scene.substrate.active;	
-	if(!plane) return;
-
-	var point = plane.userData.substrate.p;		
+	if(!plane) return;		
 	
-	showHideSubstrate_1({visible: false});
-	
-	var num = -1;
-	for ( var i = 0; i < infProject.scene.substrate.floor.length; i++ )
-	{ 
-		if(infProject.scene.substrate.floor[i].plane == plane) 
-		{
-			num = i;
-			break;
-		}
-	}	
-	
-	removePlaneListUI_2({plane: plane});
-	
-	deleteValueFromArrya({arr : infProject.scene.substrate.floor, o : infProject.scene.substrate.floor[num]});	
-	
-	disposeNode(plane);
-	scene.remove(plane);
-	
-	for ( var i = 0; i < point.length; i++ )
-	{ 
-		disposeNode(point[i]);
-		scene.remove(point[i]); 
-	}
+	showHideSubstrate_1({visible: false});	
 	
 	infProject.scene.substrate.active = null;	// деактивируем активный этаж
 }

@@ -26,6 +26,18 @@
 }
 
 
+.pr_plane_text_1
+{
+	width: 100%;
+	padding-top: 10px;
+	border-top: 1px solid #b3b3b3;
+	font-family: arial,sans-serif;
+	font-size: 15px;
+	text-align: center;
+	color: #666;	
+}
+
+
 .button_show_panel_catalog
 {
 	position: fixed;
@@ -188,7 +200,7 @@ function showHideCatalogMenuUI(cdm)
 //  substrate
 $('#load_substrate_1').change(readURL);	
 $('[nameId="assign_size_substrate"]').mousedown(function () { assignSizeSubstrate(); });
-
+$('[nameId="button_delete_substrate"]').mousedown(function () { deleteSubstrate(); }); 
 
 $('[nameId="input_rotate_substrate_45"]').mousedown(function () { setRotateSubstrate({angle: 45}); });
 $('[nameId="input_rotate_substrate_90"]').mousedown(function () { setRotateSubstrate({angle: 90}); });
@@ -280,14 +292,14 @@ function readURL(e)
 						<img src="#" id="upload-img" alt=""/>
 					</div>
 					
-					<div >
+					<div style="display: none;">
 						<div class="substrate_block">
 							прозрачность
 						</div>	
 						<input type="range" nameId="input_transparency_substrate" min="1" max="100" value="100">
 					</div>	
 					
-					<div class="block_1">
+					<div class="block_1" style="display: none;">
 						<div class="substrate_block">
 							вращение
 						</div>
@@ -306,14 +318,18 @@ function readURL(e)
 						</div>
 					</div>	
 					
-					длина
+					<div class="pr_plane_text_1">
+						реальная длина
+					</div>
 					<input type="text" nameId="input_size_substrate" value=0>	
 
 					<div class="button1 button_gradient_1" nameId="assign_size_substrate">
 						применить
 					</div>			
 
-									
+					<div class="button1 button_gradient_1" nameId="button_delete_substrate">
+						удалить
+					</div>									
 				</div>	
 	
 	

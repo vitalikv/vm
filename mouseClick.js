@@ -123,7 +123,31 @@ function onDocumentMouseDown( event )
 function clickRayHit(event)
 { 
 	var rayhit = null;	
-			
+		
+		
+	// вкл подложка
+	if(infProject.scene.substrate.active) 
+	{  
+		var plane = infProject.scene.substrate.active;
+		
+		var rayhit = rayIntersect( event, infProject.scene.substrate.ruler, 'arr' );
+		var rayhit = (rayhit.length > 0) ? rayhit[0] : null;
+
+		if(!rayhit)
+		{
+			var rayhit = rayIntersect( event, plane.userData.substrate.p, 'arr' );
+			var rayhit = (rayhit.length > 0) ? rayhit[0] : null;					
+		}				
+		
+		if(!rayhit)
+		{
+			var rayhit = rayIntersect( event, [plane], 'arr' );				
+			var rayhit = (rayhit.length > 0) ? rayhit[0] : null;					
+		}
+		 
+		if(rayhit) return rayhit;			
+
+	}
 	
 	if(infProject.tools.pivot.visible)
 	{
