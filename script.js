@@ -177,6 +177,7 @@ infProject.scene.block = { key : { scroll : false } };		// блокировка 
 infProject.scene.block.click = {wall: false, point: false, door: false, window: false, room: false, tube: false, controll_wd: false, obj: false};
 infProject.scene.block.hover = {wall: false, point: false, door: false, window: false, room: false, tube: false, controll_wd: false, obj: false};
 infProject.geometry = { circle : createCircleSpline() }
+infProject.geometry.cone = [createGeometryCone_1()];
 infProject.geometry.labelWall = createGeometryPlan(0.25 * 2, 0.125 * 2);
 infProject.geometry.labelFloor = createGeometryPlan(1.0 * kof_rd, 0.25 * kof_rd);
 infProject.scene.substrate = { ruler: [], floor: [], active: null };
@@ -700,6 +701,36 @@ function createCircleSpline()
 	}
 
 	return circle;
+}
+
+
+// создаем Geometry конуса для рулеток
+function createGeometryCone_1()
+{	
+	var n = 0;
+	var v = [];
+	var circle = infProject.geometry.circle;
+	
+	for ( var i = 0; i < circle.length; i++ )
+	{
+		v[n] = new THREE.Vector3().addScaledVector( circle[i].clone().normalize(), 0.03 );
+		v[n].y = -0.25;		
+		n++;		
+		
+		v[n] = new THREE.Vector3();
+		v[n].y = -0.25;
+		n++;
+		
+		v[n] = new THREE.Vector3().addScaledVector( circle[i].clone().normalize(), 0.003 );
+		v[n].y = 0.001;
+		n++;	
+		
+		v[n] = new THREE.Vector3();
+		v[n].y = 0.001;
+		n++;		
+	}	 
+	
+	return createGeometryCircle(v);
 }
 
 

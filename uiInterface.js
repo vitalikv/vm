@@ -87,6 +87,7 @@ function changeRightMenuUI_1(cdm)
 	if(name == "button_wrap_img") 
 	{
 		$('[nameId="wrap_img"]').show();
+		deActiveSelected();
 		infProject.scene.substrate.active = infProject.scene.substrate.floor[0].plane;
 		showHideSubstrateRuler({visible: true});
 	}	

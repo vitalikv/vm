@@ -453,36 +453,40 @@ function inputWidthOneWall(cdm)
 
 // изменение высоты всех стен при переключении камеры cameraTop/camera3D 
 function changeAllHeightWall_1(cdm)
-{  
-	if(infProject.scene.array.wall.length == 0) return;
-	
-	var wall = infProject.scene.array.wall[0];
-	
-	var height = cdm.height;
-	
-	var height = checkNumberInput({ value: height, unit: 1, limit: {min: 0.1, max: 5} });
+{  	
+	var height = checkNumberInput({ value: cdm.height, unit: 1, limit: {min: 0.1, max: 5} });
 	
 	if(!height) 
 	{
 		return;
 	}		
 	
-	clickMovePoint_BSP( infProject.scene.array.wall );
-	
-	for ( var i = 0; i < infProject.scene.array.wall.length; i++ )
+	if(cdm.load)
 	{
-		var v = infProject.scene.array.wall[i].geometry.vertices;
+		// загрузка проекта, поэтому не меняем высоту стен, а только изменяем cdm.globalHeight и cdm.input
+	}
+	else
+	{	
+		clickMovePoint_BSP( infProject.scene.array.wall );
 		
-		v[1].y = height.num;
-		v[3].y = height.num;
-		v[5].y = height.num;
-		v[7].y = height.num;
-		v[9].y = height.num;
-		v[11].y = height.num;
-		infProject.scene.array.wall[i].geometry.verticesNeedUpdate = true;
-		infProject.scene.array.wall[i].geometry.elementsNeedUpdate = true;
+		for ( var i = 0; i < infProject.scene.array.wall.length; i++ )
+		{
+			var v = infProject.scene.array.wall[i].geometry.vertices;
+			
+			v[1].y = height.num;
+			v[3].y = height.num;
+			v[5].y = height.num;
+			v[7].y = height.num;
+			v[9].y = height.num;
+			v[11].y = height.num;
+			infProject.scene.array.wall[i].geometry.verticesNeedUpdate = true;
+			infProject.scene.array.wall[i].geometry.elementsNeedUpdate = true;
+			
+			infProject.scene.array.wall[i].userData.wall.height_1 = height.num;
+		}
 		
-		infProject.scene.array.wall[i].userData.wall.height_1 = height.num;
+		upLabelPlan_1( infProject.scene.array.wall );
+		clickPointUP_BSP( infProject.scene.array.wall );			
 	}
 	
 	if(cdm.input)
@@ -492,11 +496,8 @@ function changeAllHeightWall_1(cdm)
 	
 	if(cdm.globalHeight)
 	{
-		infProject.settings.height = height.num;
-	}	
-	
-	upLabelPlan_1( infProject.scene.array.wall );
-	clickPointUP_BSP( infProject.scene.array.wall );
+		infProject.settings.height = height.num;  
+	}		
 	
 	renderCamera();
 }

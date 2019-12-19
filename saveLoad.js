@@ -618,6 +618,9 @@ function loadFilePL(arr)
 	var walls = arr.floors[0].walls;
 	var rooms = arr.floors[0].rooms;
 	var furn = (arr.furn) ? arr.furn : [];
+	
+	
+	changeAllHeightWall_1({ height: arr.floors[0].height, input: true, globalHeight: true });
 			
 	var wall = [];
 	
@@ -835,7 +838,7 @@ function readyProject(cdm)
 	console.log('READY', countId);
 	
 	changeCamera(cameraTop);
-	centerCamera2D();	
+	//centerCamera2D();	
 }
 
 

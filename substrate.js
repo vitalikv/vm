@@ -4,39 +4,13 @@
 
 // создаем линейку для подложки
 function createToolRulerSubstrate()
-{
-	var x1 = 0.2;
-	var x2 = 0.02;
-	var k = 0.04;
-	
-	var g1 = createGeometryCube(1, 0.01, k);	
-	var v = g1.vertices; 
-	v[3].x = v[2].x = v[5].x = v[4].x = -x2;
-	v[0].x = v[1].x = v[6].x = v[7].x = -x1;
-	
-	var g2 = createGeometryCube(1, 0.01, k);	
-	var v = g2.vertices; 			
-	v[3].x = v[2].x = v[5].x = v[4].x = x1;
-	v[0].x = v[1].x = v[6].x = v[7].x = x2;
-
-	var g3 = createGeometryCube(k, 0.01, 1);	
-	var v = g3.vertices; 	
-	v[0].z = v[1].z = v[2].z = v[3].z = -x2;
-	v[4].z = v[5].z = v[6].z = v[7].z = -x1;
-	
-	var g4 = createGeometryCube(k, 0.01, 1);	
-	var v = g4.vertices; 		
-	v[0].z = v[1].z = v[2].z = v[3].z = x1;
-	v[4].z = v[5].z = v[6].z = v[7].z = x2;	
-
-	g1.merge(g2);
-	g1.merge(g3);
-	g1.merge(g4);
-	
+{	
 	var ruler = [];
-	var material = new THREE.MeshPhongMaterial( { color : 0x00ff00, transparent: true, opacity: 0.7, lightMap : lightMap_1 } );
 	
-	ruler[0] = new THREE.Mesh( g1, material );
+	var material = new THREE.MeshPhongMaterial( { color : 0x00ff00, transparent: true, opacity: 1, lightMap : lightMap_1 } );
+	
+	ruler[0] = new THREE.Mesh(infProject.geometry.cone[0], material);
+	ruler[0].rotation.set(-Math.PI/2,0,0);
 	ruler[0].userData.tag = "substrate_tool";
 	ruler[0].userData.subtool = {};
 	ruler[0].userData.subtool.num = 1;
@@ -46,7 +20,8 @@ function createToolRulerSubstrate()
 	ruler[0].position.y = 0.01;	
 
 	
-	ruler[1] = new THREE.Mesh( g1, material );
+	ruler[1] = new THREE.Mesh(infProject.geometry.cone[0], material);
+	ruler[1].rotation.set(-Math.PI/2,0,Math.PI);
 	ruler[1].userData.tag = "substrate_tool";
 	ruler[1].userData.subtool = {};
 	ruler[1].userData.subtool.num = 2;
@@ -58,18 +33,17 @@ function createToolRulerSubstrate()
 
 
 	
-	var line = new THREE.Mesh( createGeometryCube(1, 0.01, k/2), new THREE.MeshPhongMaterial( { color : 0xff0000, lightMap : lightMap_1 } ) );
+	var line = new THREE.Mesh( createGeometryCube(1, 0.01, 0.01), new THREE.MeshPhongMaterial( { color : 0x00ff00, lightMap : lightMap_1 } ) );
+	var v = line.geometry.vertices; 
+	v[0].y = v[3].y = v[4].y = v[7].y = -0.005;
+	v[1].y = v[2].y = v[5].y = v[6].y = 0.005;			
+	line.geometry.verticesNeedUpdate = true;	
 	line.visible = false;
 	scene.add( line );	
 	
 	ruler[0].userData.subtool.line = line;
 	ruler[1].userData.subtool.line = line;
-	 
-	 
-	var cone = createCone({axis: 'y', pos: new THREE.Vector3(0,0.0,0), rot: new THREE.Vector3(-Math.PI/2,0,Math.PI/2), color: 0x00ff00});	
-	//cone.rotation.set( arr[i][1].x, arr[i][1].y, arr[i][1].z );
-	cone.position.y = 0.01;
-	scene.add( cone );	 
+	 	 
 	
 	setPosRotLineRulerSubstrate({ruler: ruler});
 
@@ -95,12 +69,15 @@ function setPosRotLineRulerSubstrate(cdm)
 	line.geometry.computeBoundingSphere();	
 	
 	line.position.copy(ruler[0].position);
-	line.position.y += 0.005;
+	//line.position.y += 0.005;
 	
 	var dir = new THREE.Vector3().subVectors( ruler[0].position, ruler[1].position ).normalize();
 	var angleDeg = Math.atan2(dir.x, dir.z);
 	line.rotation.set(0, angleDeg + Math.PI / 2, 0);
-
+	
+	ruler[0].rotation.set(-Math.PI/2, 0, angleDeg + Math.PI);
+	ruler[1].rotation.set(-Math.PI/2, 0, angleDeg);
+	
 	$('[nameId="input_size_substrate"]').val( Math.round(dist*100)/100 );
 }
 
@@ -829,7 +806,7 @@ function deleteSubstrate(cdm)
 	
 	showHideSubstrate_1({visible: false});	
 	
-	infProject.scene.substrate.active = null;	// деактивируем активный этаж
+	//infProject.scene.substrate.active = null;	// деактивируем активный этаж
 	plane.userData.substrate.img = false;
 	
 	$('#substrate_img').attr('src', '#');

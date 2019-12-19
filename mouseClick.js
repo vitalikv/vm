@@ -130,7 +130,7 @@ function clickRayHit(event)
 	{  
 		var plane = infProject.scene.substrate.active;
 		
-		if(!plane.userData.substrate.img) return;
+		if(!plane.userData.substrate.img) return null;
 		
 		var rayhit = rayIntersect( event, infProject.scene.substrate.ruler, 'arr' );
 		var rayhit = (rayhit.length > 0) ? rayhit[0] : null;
@@ -148,7 +148,7 @@ function clickRayHit(event)
 		}
 		 
 		if(rayhit) return rayhit;			
-
+		else return null;
 	}
 	
 	if(infProject.tools.pivot.visible)

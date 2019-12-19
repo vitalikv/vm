@@ -330,7 +330,11 @@ function readURL(e)
 
 					<div class="button1 button_gradient_1" nameId="button_delete_substrate">
 						удалить
-					</div>									
+					</div>
+
+					<div class="button1 button_gradient_1" nameId="button_auto_building" style="margin-top: 60px;">
+						автопостроение
+					</div>						
 				</div>	
 	
 	
