@@ -158,12 +158,10 @@ var kof_rd = 1;
 var countId = 2;
 var camera = cameraTop;
 var obj_point = [];
-var obj_line = [];
 var room = [];
 var ceiling = [];
 var arrWallFront = [];
 var lightMap_1 = new THREE.TextureLoader().load(infProject.path+'/img/lightMap_1.png');
-var texture_wd_1 = new THREE.TextureLoader().load(infProject.path+'/img/wd_1.png');
 
 var clickO = resetPop.clickO();
 infProject.project = null;
@@ -834,8 +832,8 @@ function crtW( cdm )
 
 	
 	var geometry = createGeometryWall(d, height, width, offsetZ);	
-	var wall = obj_line[obj_line.length] = new THREE.Mesh( geometry, materials ); 
- 	
+	var wall = new THREE.Mesh( geometry, materials ); 
+ 	infProject.scene.array.wall[infProject.scene.array.wall.length] = wall;
 	
 	wall.label = [];
 	wall.label[0] = createLabelCameraWall({ count : 1, text : 0, size : 85, ratio : {x:256*2, y:256}, geometry : infProject.geometry.labelWall, opacity : 0.5 })[0];	
@@ -1348,9 +1346,7 @@ document.body.addEventListener("keydown", function (e)
 		{ 
 			console.log(infProject.activeInput);
 			
-			if(infProject.activeInput == 'input-height') { changeHeightWall(); }
-			//if(infProject.activeInput == 'input-width') { inputWidthOneWall({wall:obj_line[0], width:{value:7, unit:'cm'}, offset:'wallRedBlueArrow'}) } 
-			if(infProject.activeInput == 'input-width') { changeWidthWall( $('[data-action="input-width"]').val() ); }
+			if(infProject.activeInput == 'input-height') { changeHeightWall(); } 
 			if(infProject.activeInput == 'wall_1') { inputChangeWall_1({}); }	 		
 			if(infProject.activeInput == 'size-wd-length') { inputWidthHeightWD(clickO.last_obj); }
 			if(infProject.activeInput == 'size-wd-height') { inputWidthHeightWD(clickO.last_obj); }

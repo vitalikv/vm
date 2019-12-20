@@ -444,7 +444,7 @@ function cameraZoomTop( delta )
 		v1[ 0 ].z = v1[ 3 ].z = -n2;
 		infProject.geometry.labelWall.verticesNeedUpdate = true;
 		infProject.geometry.labelWall.elementsNeedUpdate = true;
-		upLabelPlan_1( obj_line, true );
+		upLabelPlan_1( infProject.scene.array.wall, true );
 
 
 		var n1 = 1 * k;

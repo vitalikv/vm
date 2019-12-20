@@ -92,7 +92,9 @@ function readAutoBuildingJson(cdm)
 	}
 	
 	upLabelPlan_1(infProject.scene.array.wall);	// размеры стен
-	detectRoomZone();	// пол	
+	detectRoomZone();	// пол		
+	
+	renderCamera();
 }
 
 

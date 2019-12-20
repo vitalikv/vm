@@ -16,18 +16,20 @@ function isNumeric(n)
 // проверка пересеклась ли стена с другой стеной (когда тащим точку)
 function crossLineOnLine_1(point)
 {
+	var wall = infProject.scene.array.wall;
+	
 	for ( var i = 0; i < point.w.length; i++ )
 	{
-		for ( var i2 = 0; i2 < obj_line.length; i2++ )
+		for ( var i2 = 0; i2 < wall.length; i2++ )
 		{
-			if(point.w[i] == obj_line[i2]) { continue; }
+			if(point.w[i] == wall[i2]) { continue; }
 			
-			if(Math.abs(point.position.y - obj_line[i2].userData.wall.p[0].position.y) > 0.3) continue;		// проверка высоты этажа
+			if(Math.abs(point.position.y - wall[i2].userData.wall.p[0].position.y) > 0.3) continue;		// проверка высоты этажа
 			
 			var p0 = point.w[i].userData.wall.p[0].position;
 			var p1 = point.w[i].userData.wall.p[1].position;
-			var p2 = obj_line[i2].userData.wall.p[0].position;
-			var p3 = obj_line[i2].userData.wall.p[1].position;
+			var p2 = wall[i2].userData.wall.p[0].position;
+			var p3 = wall[i2].userData.wall.p[1].position;
 			
 			if(intersectWall_3(p0, p1, p2, p3)) { return true; }	// стены пересеклись
 		}

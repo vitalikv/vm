@@ -200,48 +200,7 @@ function inputLengthWall_1(cdm)
 	clickPointUP_BSP(wallR);
 }
 
-
-
-// изменяем ширину у всех стену
-function changeWidthWall( value )
-{
-	if(!isNumeric(value)) return;
-	value = Number(value);
-	value /= 100;
-
-	if(value < 0.005) { value = 0.005; }
-	if(value > 1) { value = 1; }	
 	
-	
-	//clickMovePoint_BSP( obj_line );
-	value /= 2;
-	
-	for(var i = 0; i < obj_line.length; i++)
-	{
-		var wall = obj_line[i];
-		console.log(wall.userData.id); 
-		var v = wall.geometry.vertices;
-						
-		var z = [value, -value];
-
-		v[0].z = v[1].z = v[6].z = v[7].z = z[0];
-		v[4].z = v[5].z = v[10].z = v[11].z = z[1];	
-
-		wall.geometry.verticesNeedUpdate = true; 
-		wall.geometry.elementsNeedUpdate = true;
-		
-		wall.geometry.computeBoundingSphere();
-		wall.geometry.computeBoundingBox();
-		wall.geometry.computeFaceNormals();	
-	}
-	
-	for ( var i = 0; i < obj_point.length; i++ ) { upLineYY(obj_point[i]); }	
-	upLabelPlan_1(obj_line);
-	
-	//clickPointUP_BSP(obj_line);
-	
-	renderCamera();
-}	
 
 
 

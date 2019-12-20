@@ -9,23 +9,25 @@ var wallVisible = [];
 function getInfoRenderWall()
 {
 	wallVisible = [];
-	for ( var i = 0; i < obj_line.length; i++ )
+	var wall = infProject.scene.array.wall;
+	
+	for ( var i = 0; i < wall.length; i++ )
 	{	
-		var room = detectCommonZone_1( obj_line[i] );
+		var room = detectCommonZone_1( wall[i] );
 		if(room.length == 1) 
 		{ 	
 			var side = 0;
-			for ( var i2 = 0; i2 < room[0].w.length; i2++ ) { if(room[0].w[i2] == obj_line[i]) { side = room[0].s[i2]; break; } }
-			//var pos = new THREE.Vector3().subVectors( obj_line[i].p[1].position, obj_line[i].p[0].position ).divideScalar( 2 ).add(obj_line[i].p[0].position);
+			for ( var i2 = 0; i2 < room[0].w.length; i2++ ) { if(room[0].w[i2] == wall[i]) { side = room[0].s[i2]; break; } }
+			//var pos = new THREE.Vector3().subVectors( wall[i].p[1].position, wall[i].p[0].position ).divideScalar( 2 ).add(wall[i].p[0].position);
 
 			if(side == 0) { var n1 = 0; var n2 = 1; }
 			else { var n1 = 1; var n2 = 0; }
 			
-			var x1 = obj_line[i].userData.wall.p[n2].position.z - obj_line[i].userData.wall.p[n1].position.z;
-			var z1 = obj_line[i].userData.wall.p[n1].position.x - obj_line[i].userData.wall.p[n2].position.x;	
+			var x1 = wall[i].userData.wall.p[n2].position.z - wall[i].userData.wall.p[n1].position.z;
+			var z1 = wall[i].userData.wall.p[n1].position.x - wall[i].userData.wall.p[n2].position.x;	
 			var dir = new THREE.Vector3(x1, 0, z1).normalize();						// перпендикуляр стены	
 			
-			wallVisible[wallVisible.length] = { wall : obj_line[i], normal : dir };  
+			wallVisible[wallVisible.length] = { wall : wall[i], normal : dir };  
 		}
 	}	
 }
