@@ -256,12 +256,12 @@ function splitWalls( wall, point )
 	
 	if(point.userData.point.last.cdm == 'add_point')
 	{
-		upLineYY_2(point, point.p, point.w, point.start);
+		upLineYY_2(point);
 	}
 	else
 	{
-		upLineYY_2(point, point.p, point.w, point.start);
-		upLineYY_2(point_0, point_0.p, point_0.w, point_0.start);
+		upLineYY_2(point);
+		upLineYY_2(point_0);
 	}
 	
 	upLabelPlan_1(arrW); 	
@@ -395,7 +395,7 @@ function addPointOption_4(point)
 	deletePointFromArr(point);
 	scene.remove(point);
 
-	upLineYY_2(point1, point1.p, point1.w, point1.start);
+	upLineYY_2(point1);
 	upLabelPlan_1( point1.w ); 
 
 	splitZone(wall);   

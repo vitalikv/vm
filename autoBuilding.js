@@ -91,6 +91,8 @@ function readAutoBuildingJson(cdm)
 		}
 	}
 	
+	for ( var i = 0; i < obj_point.length; i++ ) { upLineYY_2(obj_point[i]); }
+	
 	upLabelPlan_1(infProject.scene.array.wall);	// размеры стен
 	detectRoomZone();	// пол		
 	

@@ -383,7 +383,7 @@ function detectChangeArrWall_3(wall)
 function upLineYY(point)
 {		
 	// пересечение цетрального угла (который перетаскиваем)
-	upLineYY_2(point, point.p, point.w, point.start);	
+	upLineYY_2(point);	
 
 	
 	// пересечение боковых углов (соседи цетральной точки)
@@ -391,14 +391,19 @@ function upLineYY(point)
 	for ( var j = 0; j < arrP.length; j++ )
 	{
 		//if(!arrP[j]) { continue; }		
-		if(arrP[j].p.length > 1) { upLineYY_2(arrP[j], arrP[j].p, arrP[j].w, arrP[j].start); }		
+		if(arrP[j].p.length > 1) { upLineYY_2(arrP[j]); }		
 	}
 	
 }
 
 
-function upLineYY_2(point, arrP, arrW, arrS)
+function upLineYY_2(point)
 {
+	var point = point;
+	var arrP = point.p;
+	var arrW = point.w;
+	var arrS = point.start;
+	
 	var arrD = [];
 	
 	var n = 0;

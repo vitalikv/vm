@@ -720,7 +720,7 @@ function loadFilePL(arr)
 	}	
 	 
 	
-	for ( var i = 0; i < obj_point.length; i++ ) { upLineYY_2(obj_point[i], obj_point[i].p, obj_point[i].w, obj_point[i].start); }
+	for ( var i = 0; i < obj_point.length; i++ ) { upLineYY_2(obj_point[i]); }
 	
 	upLabelPlan_1(infProject.scene.array.wall);	// размеры стен
 

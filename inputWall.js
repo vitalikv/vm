@@ -374,8 +374,8 @@ function inputWidthOneWall(cdm)
 	
 	var p0 = wall.userData.wall.p[0];
 	var p1 = wall.userData.wall.p[1];
-	upLineYY_2(p0, p0.p, p0.w, p0.start);	
-    upLineYY_2(p1, p1.p, p1.w, p1.start);	
+	upLineYY_2(p0);	
+    upLineYY_2(p1);	
 	
 	// меняем ширину wd
 	for ( var i = 0; i < wall.userData.wall.arrO.length; i++ )

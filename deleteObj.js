@@ -97,8 +97,8 @@ function deleteWall_2(wall)
 	for ( var i = 0; i < p1.w.length; i++ ) { arrW[arrW.length] = p1.w[i]; }  
 	clickMovePoint_BSP( arrW );	
 	
-	if(p0.w.length > 0){ upLineYY_2(p0, p0.p, p0.w, p0.start); }
-	if(p1.w.length > 0){ upLineYY_2(p1, p1.p, p1.w, p1.start); }
+	if(p0.w.length > 0){ upLineYY_2(p0); }
+	if(p1.w.length > 0){ upLineYY_2(p1); }
 
 	upLabelPlan_1(arrW);
 	
@@ -243,8 +243,8 @@ function deletePoint( point )
 	
 	var wall = crtW({ p: [point1, point2], width: width, offsetZ : offsetZ, height : height }); 
 
-	upLineYY_2(point1, point1.p, point1.w, point1.start);
-	upLineYY_2(point2, point2.p, point2.w, point2.start);
+	upLineYY_2(point1);
+	upLineYY_2(point2);
 	
 	var arrW = [];
 	for ( var i = 0; i < arrW_2.length; i++ ) { arrW[arrW.length] = arrW_2[i]; }
