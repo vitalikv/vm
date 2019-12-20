@@ -837,7 +837,7 @@ function crtW( cdm )
 {
 	var point1 = cdm.p[0];
 	var point2 = cdm.p[1];
-	var width = cdm.width;
+	var width = (cdm.width) ? cdm.width : infProject.settings.wall.width;
 	var offsetZ = (cdm.offsetZ) ? cdm.offsetZ : 0;  
 	var height = (cdm.height) ? cdm.height : infProject.settings.height; 
 	
@@ -907,7 +907,7 @@ function crtW( cdm )
 	wall.userData.wall.p[0] = point1;
 	wall.userData.wall.p[1] = point2;	
 	wall.userData.wall.width = Math.round(width * 100) / 100;
-	wall.userData.wall.height_0 = -0.1;
+	wall.userData.wall.height_0 = 0;
 	wall.userData.wall.height_1 = Math.round(height * 100) / 100;		
 	wall.userData.wall.offsetZ = Math.round(offsetZ * 100) / 100;
 	wall.userData.wall.outline = null;

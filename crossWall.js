@@ -207,16 +207,21 @@ function checkPointInsideForm(point, arrP)
 
 
 // сравнить позиционирование
-function comparePos(pos1, pos2)
+function comparePos(pos1, pos2, cdm)
 {
+	if(!cdm) cdm = {};
+	
 	var x = pos1.x - pos2.x;
 	var y = pos1.y - pos2.y;
 	var z = pos1.z - pos2.z;
 	
+	var kof = (cdm.kof) ? cdm.kof : 0.01;
+	
+	
 	var equals = true;
-	if(Math.abs(x) > 0.01){ equals = false; }
-	if(Math.abs(y) > 0.01){ equals = false; }
-	if(Math.abs(z) > 0.01){ equals = false; }
+	if(Math.abs(x) > kof){ equals = false; }
+	if(Math.abs(y) > kof){ equals = false; }
+	if(Math.abs(z) > kof){ equals = false; }
 
 	return equals;
 }
