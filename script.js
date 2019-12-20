@@ -833,8 +833,11 @@ function createPoint( pos, id )
 
 
 
-function createOneWall3( point1, point2, width, cdm ) 
+function crtW( cdm ) 
 {
+	var point1 = cdm.p[0];
+	var point2 = cdm.p[1];
+	var width = cdm.width;
 	var offsetZ = (cdm.offsetZ) ? cdm.offsetZ : 0;  
 	var height = (cdm.height) ? cdm.height : infProject.settings.height; 
 	
@@ -1494,7 +1497,7 @@ $(document).ready(function ()
 	docReady = true; 	
 		 
 	 
-	loadFile({json: true});  
+	//loadFile({json: true});  
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(0, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 1), rot: new THREE.Vector3(0, 1, 0)});

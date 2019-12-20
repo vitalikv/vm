@@ -68,6 +68,7 @@
 	
 	</div>			
 	
+	<script src="<?=$path?>autoBuilding.js"></script>
 	<script src="<?=$path?>meshBSP.js"></script> 	
     <script src="<?=$path?>calculationArea.js?<?=$vrs?>"></script>	
 	<script src="<?=$path?>createGrid.js?<?=$vrs?>"></script>

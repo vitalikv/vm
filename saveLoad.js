@@ -620,7 +620,7 @@ function loadFilePL(arr)
 	var furn = (arr.furn) ? arr.furn : [];
 	
 	
-	changeAllHeightWall_1({ height: arr.floors[0].height, input: true, globalHeight: true });
+	changeAllHeightWall_1({ load: true, height: arr.floors[0].height, input: true, globalHeight: true });
 			
 	var wall = [];
 	
@@ -713,9 +713,9 @@ function loadFilePL(arr)
 
 		var dir = new THREE.Vector3().subVectors( point2.position, point1.position ).normalize();
 		var offsetZ = localTransformPoint(wall[i].offsetV, quaternionDirection(dir)).z;
-		var inf = { id : wall[i].id, offsetZ : -offsetZ, height : wall[i].height, load : true };
+		var inf = { id: wall[i].id, p: [point1, point2], width: wall[i].width, offsetZ: -offsetZ, height: wall[i].height, load: true };
 		
-		var obj = createOneWall3( point1, point2, wall[i].width, inf ); 		
+		var obj = crtW(inf); 		
 		
 		obj.updateMatrixWorld();
 		arrW[arrW.length] = obj;

@@ -258,7 +258,7 @@ function deletePoint( point )
 	if(point1 == null) { point1 = createPoint( p1.pos, p1.id ); }
 	if(point2 == null) { point2 = createPoint( p2.pos, p2.id ); }	
 	
-	var wall = createOneWall3( point1, point2, width, { offsetZ : offsetZ, height : height } ); 
+	var wall = crtW({ p: [point1, point2], width: width, offsetZ : offsetZ, height : height }); 
 
 	upLineYY_2(point1, point1.p, point1.w, point1.start);
 	upLineYY_2(point2, point2.p, point2.w, point2.start);

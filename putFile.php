@@ -32,6 +32,7 @@ loadObj.js
 uiInterface.js
 hideWall.js
 substrate.js
+autoBuilding.js
 ';
 
 
