@@ -590,9 +590,7 @@ function undoRedoChangeMovePoint( point, walls )
 
 
 function clickPointMouseUp(obj)
-{  
-	if(obj.w.length > 0) createWallZone(obj.w[0]);
-	
+{  	
 	obj.userData.point.last.pos = obj.position.clone();
 }
 

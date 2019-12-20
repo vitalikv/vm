@@ -60,23 +60,6 @@ function deleteWall_1( wall )
 	{	
 		if(zone) { getYardageSpace([zone]); }				
 	}
-	
-	
-	var inf = infProject.settings.calc.fundament;
-	if(inf == 'lent' || inf == 'svai')	
-	{
-		if(points[0].w.length > 0)
-		{
-			createWallZone(points[0].w[0]); 
-		}
-		
-		if(points[1].w.length > 0)
-		{
-			createWallZone(points[1].w[0]);
-		}
-
-		if(points[0].w.length == 0 && points[1].w.length == 0) { scene.remove(wall.userData.wall.zone.label); }
-	}
 
 	return { room : newZones }; 
 }
@@ -287,9 +270,6 @@ function deletePoint( point )
 	
 	infProject.tools.axis[0].visible = false;
 	infProject.tools.axis[1].visible = false; 
-
-	createWallZone(wall);
-	calculationAreaFundament_2();
 	
 	return { point : { id : point.userData.id }, wall : wall }; 
 } 

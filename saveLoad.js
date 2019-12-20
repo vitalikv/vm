@@ -31,7 +31,6 @@ var resetPop =
 	infProjectSceneArray : function()
 	{
 		var array = { point : obj_point, wall : obj_line, window : [], door : [], room : room, ceiling : ceiling, obj : [] };
-		array.fundament = [];
 		array.lineGrid = { limit : false };
 		array.base = (infProject.start)? infProject.scene.array.base : [];	// массив клонируемых объектов
 		
@@ -760,7 +759,6 @@ function loadFilePL(arr)
 
 	
 	readyProject();
-	calculationAreaFundament_2();
 	cameraZoomTop( camera.zoom );
 	
 

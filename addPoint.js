@@ -329,14 +329,7 @@ function addPoint_4( point )
 	{ 
 		if(point.userData.point.cross == planeMath)		// 2
 		{	
-			if(crossLineOnLine_1(point)) return; 	// произошло пересечение с другой стеной
-			
-			var inf = infProject.settings.calc.fundament;
-			if(inf == 'lent' || inf == 'svai')  
-			{				
-				if(!point.w[0].userData.wall.zone) { createWallZone(point.w[0]); }
-			}
-			
+			if(crossLineOnLine_1(point)) return; 	// произошло пересечение с другой стеной			
 			
 			point.userData.point.type = null; 			
 			var point2 = createPoint( point.position, 0 );			
@@ -439,8 +432,6 @@ function addPointOption_4(point)
 	}
 	
 	clickPointUP_BSP( arrW );
-	
-	if(point.w.length > 0) { createWallZone(point.w[0]); }
 	
 	clickO.move = null;
 }
@@ -565,8 +556,6 @@ function addPoint_5( wall, point )
 	}
 
 	param_wall.wallR = point.w;
-	
-	if(point.w.length > 0) { createWallZone(point.w[0]); } 
 }
 
 

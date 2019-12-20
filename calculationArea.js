@@ -153,99 +153,11 @@ function upLabelPlan_1(arrWall, Zoom)
 			var v = wall.geometry.vertices; wall.geometry.verticesNeedUpdate = true;
 			for ( var i2 = 0; i2 < v.length; i2++ ) { wall.userData.wall.v[i2] = v[i2].clone(); }	// обновляем vertices		
 		}
-		
-		getWallAreaTop( wall );
 	}
-	
-	
-
-}
-
-
-
-// подсчитваем объем у ленточного фундамента
-function calculationAreaFundament_2(wall)
-{
-	var inf = infProject.settings.calc.fundament;
-	if(inf == 'lent' || inf == 'svai'){}
-	else { return; }
-	
-	var fundament = [];
-	for ( var i = 0; i < obj_line.length; i++ )
-	{
-		var zone = obj_line[i].userData.wall.zone;
-		
-		var exist = false;
-		
-		for ( var i2 = 0; i2 < fundament.length; i2++ )
-		{
-			if(fundament[i2] == zone) { exist = true; break; }
-		}
-		
-		if(!exist) { fundament[fundament.length] = zone; }
-	}
-	
-	infProject.scene.array.fundament = fundament;
-	
-	for ( var i = 0; i < fundament.length; i++ )
-	{
-		
-		var points = fundament[i].points;
-		var walls = fundament[i].walls;
-		var label = fundament[i].label;
-		
-		var sum = 0;
-		for ( var i2 = 0; i2 < walls.length; i2++ )
-		{
-			sum += walls[i2].userData.wall.area.top;
-		}
-		
-		sum = Math.round(sum * 100)/100;
-
-		var pos = new THREE.Vector3();
-		
-		for (i2 = 0; i2 < points.length; i2++) { pos.x += points[i2].position.x; pos.z += points[i2].position.z; }				
-		
-		label.position.set(pos.x / points.length, 0.2, pos.z / points.length);		
-		
-		upLabelArea2(label, sum, '80', 'rgba(255,255,255,1)', true);			
-	}			
 	
 }
 
 
-
-//площадь стены сверху
-function getWallAreaTop( wall ) 
-{	
-	var inf = infProject.settings.calc.fundament;
-	if(inf == 'lent' || inf == 'svai'){}
-	else { return; }
-	
-	var res = 0;
-	var v = wall.userData.wall.v; 
-	
-	var v = [v[0], v[6], v[8], v[10], v[4], v[2]];
-	
-	for (var i = 0; i < v.length - 1; i++)
-	{
-		var n1 = i - 1;
-		var n2 = i + 1;
-		
-		if(i == 0) { n1 = v.length - 1; n2 = i + 1; }
-		else if(i == v.length - 1) { n1 = i - 1; n2 = 0; }
-		
-		
-		var sum = v[i].x*(v[n1].z - v[n2].z); 
-		sum = Math.round(sum * 100) / 100;
-		res += sum;			
-	}
-	
-	res = Math.abs( res ) / 2;
-	//res = Math.round(res * 100) / 100;			
-	
-	wall.userData.wall.area.top = res;
-}
 
 
 

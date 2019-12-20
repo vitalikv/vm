@@ -538,12 +538,9 @@ function clickWallMouseUp(wall)
 	upLineYY( wall.userData.wall.p[ 0 ] );
 	upLineYY( wall.userData.wall.p[ 1 ] );
 	upLabelPlan_1( param_wall.wallR ); 
-	updateShapeFloor( param_wall.arrZone ); 
-		
+	updateShapeFloor( param_wall.arrZone ); 		
 	
 	clickPointUP_BSP(param_wall.wallR);
-	
-	calculationAreaFundament_2(wall);
 }
 
 

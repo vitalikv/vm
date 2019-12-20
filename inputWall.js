@@ -237,7 +237,7 @@ function changeWidthWall( value )
 	
 	for ( var i = 0; i < obj_point.length; i++ ) { upLineYY(obj_point[i]); }	
 	upLabelPlan_1(obj_line);
-	calculationAreaFundament_2();
+	
 	//clickPointUP_BSP(obj_line);
 	
 	renderCamera();
