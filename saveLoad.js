@@ -744,8 +744,8 @@ function loadObjFromBase(cdm)
 
 			infProject.project.load.furn[infProject.project.load.furn.length] = furn[i].id;
 			
-			if(infProject.project.load.furn.length == infProject.project.file.furn.length)
-			{
+			if(infProject.project.load.furn.length == infProject.project.file.object.length)
+			{ 
 				readyProject();
 			}
 		}
