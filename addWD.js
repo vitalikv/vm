@@ -120,8 +120,10 @@ function createEmptyFormWD_1(cdm)
 		obj.userData.door.form.size = new THREE.Vector3(dX, dY, 1);
 		
 		var h1 = (type == 'window') ? infProject.settings.wind.h1 : 0;
-		
-		obj.userData.door.h1 = h1 - obj.geometry.boundingBox.min.y;
+		 
+		obj.userData.door.h1 = h1 - obj.geometry.boundingBox.min.y; 
+
+		if(cdm.pos) { obj.userData.door.h1 = cdm.pos.y - obj.geometry.boundingBox.min.y; }
 	}
 		
 	//default vertices

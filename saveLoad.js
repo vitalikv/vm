@@ -271,6 +271,114 @@ function disposeNode(node)
 
 
 
+
+function compileJsonFile()
+{
+	var json = 
+	{
+		points : [],
+		walls : [],	
+		rooms : [],
+		height : infProject.settings.height,			
+	};	
+	
+	var points = [];
+	var walls = [];
+	var rooms = [];
+	var object = [];
+	
+	
+	var wall = infProject.scene.array.wall;
+	//var point = infProject.scene.array.point;
+	
+	for ( var i = 0; i < wall.length; i++ )
+	{			
+		var p = wall[i].userData.wall.p;
+		
+		for ( var i2 = 0; i2 < p.length; i2++ )  
+		{
+			var flag = true;
+			for ( var i3 = 0; i3 < points.length; i3++ ) { if(p[i2].userData.id == points[i3].id){ flag = false; break; } }
+			
+			if(flag) 
+			{  
+				var m = points.length;
+				points[m] = {};
+				points[m].id = p[i2].userData.id;
+				points[m].pos = new THREE.Vector3(p[i2].position.x, p[i2].position.y, p[i2].position.z);
+				points[m].type = 'w';
+			}
+		}
+	}	
+	
+	
+	
+	for ( var i = 0; i < wall.length; i++ )
+	{ 
+		var p = wall[i].userData.wall.p;
+		
+		walls[i] = { }; 
+		
+		walls[i].id = wall[i].userData.id;
+		walls[i].p = { id: [p[0].userData.id, p[1].userData.id] };
+		//walls[i].width = wall[i].userData.wall.width; 
+		//walls[i].height = wall[i].userData.wall.height_1; 
+		walls[i].size = {y: wall[i].userData.wall.height_1, z: wall[i].userData.wall.width};
+
+		// смещение стены
+		if(1==2)
+		{
+			var x1 = p[1].position.z - p[0].position.z;
+			var z1 = p[0].position.x - p[1].position.x;	
+			var dir = new THREE.Vector3(z1, 0, -x1).normalize();						// перпендикуляр стены  (перевернуты x и y)
+			dir.multiplyScalar( wall[i].userData.wall.offsetZ );
+			walls[i].startShift = new THREE.Vector3(dir.z, 0, dir.x);			
+		}
+				
+		var wd = saveWindows(wall[i]);		
+		walls[i].windows = wd.windows;
+		walls[i].doors = wd.doors;		
+	}	
+
+
+	for ( var i = 0; i < room.length; i++ )
+	{
+		rooms[i] = { contour : [] };
+		
+		rooms[i].id = room[i].userData.id;  
+		
+		rooms[i].contour = [];
+		var s = 0; for ( var i2 = room[i].p.length - 1; i2 >= 1; i2-- ) { rooms[i].contour[s] = room[i].p[i2].userData.id; s++; }  			
+	}
+	
+
+	
+	for ( var i = 0; i < infProject.scene.array.obj.length; i++ )
+	{
+		var obj = infProject.scene.array.obj[i];		
+			
+		var m = object.length;
+		object[m] = {};
+		object[m].id = Number(obj.userData.id);
+		object[m].lotid = Number(obj.userData.obj3D.lotid);
+		object[m].pos = obj.position;
+		//object[m].rot = new THREE.Vector3( THREE.Math.radToDeg(obj.rotation.x), THREE.Math.radToDeg(obj.rotation.y), THREE.Math.radToDeg(obj.rotation.z) );
+		object[m].q = {x: obj.quaternion.x, y: obj.quaternion.y, z: obj.quaternion.z, w: obj.quaternion.w};
+	}	
+	
+	
+	json.points = points;
+	json.walls = walls;
+	json.rooms = rooms;
+	json.object = object;
+	
+	return json;
+}
+
+
+
+
+
 // сохраняем окна/двери
 function saveWindows(wall)
 {
@@ -307,20 +415,16 @@ function saveWindows(wall)
 			var qt1 = quaternionDirection( new THREE.Vector3().subVectors( p[1].position, p[0].position ).normalize() );
 			var x = localTransformPoint(new THREE.Vector3().subVectors( v7, p[0].position ), qt1).z; 
 			
-			x = x / p[1].position.distanceTo( p[0].position );		// процентное соотношение от начала стены
-			
+			x = x / p[1].position.distanceTo( p[0].position );		// процентное соотношение от начала стены			
 			var y = wall.worldToLocal( wd.localToWorld(new THREE.Vector3(0, wd.geometry.boundingBox.min.y, 0)) ).y;
 			
 			
 			var arr = {};
 			
-			arr.id = wd.userData.id;						// id
-			arr.lotid  = wd.userData.door.lotid;					// lotid  
-			arr.width = dX;									// width
-			arr.height = dY;								// height		
-			arr.startPointDist = x;							// pos_start
-			arr.over_floor = y;								// over_floor		
-			//arr.options = '';
+			arr.id = wd.userData.id;							
+			arr.lotid  = wd.userData.door.lotid;				  
+			arr.size = {x: dX, y: dY};									
+			arr.pos = {x: x, y: y};								
 			
 			if(wd.userData.tag == 'window') { windows[windows.length] = arr; }
 			else if(wd.userData.tag == 'door') { doors[doors.length] = arr; }			
@@ -334,7 +438,7 @@ function saveWindows(wall)
 function saveFile(cdm) 
 { 
 	
-	var json = JSON.stringify( getJsonGeometry() );
+	var json = JSON.stringify( compileJsonFile() );
 	
 	if(cdm.json)
 	{
@@ -394,172 +498,6 @@ function saveFile(cdm)
 
 
 
-function getJsonGeometry()
-{
-	var json = 
-	{
-		floors : 
-		[
-			{ 
-				points : [],
-				walls : [],	
-				rooms : [],
-				height : infProject.settings.height,
-				version : '1'
-			}			
-		]
-	};	
-	
-	var points = [];
-	var walls = [];
-	var rooms = [];
-	var furn = [];
-	
-	
-	var wall = infProject.scene.array.wall;
-	//var point = infProject.scene.array.point;
-	
-	for ( var i = 0; i < wall.length; i++ )
-	{			
-		var p = wall[i].userData.wall.p;
-		
-		for ( var i2 = 0; i2 < p.length; i2++ )  
-		{
-			var flag = true;
-			for ( var i3 = 0; i3 < points.length; i3++ ) { if(p[i2].userData.id == points[i3].id){ flag = false; break; } }
-			
-			if(flag) 
-			{  
-				var m = points.length;
-				points[m] = {};
-				points[m].id = p[i2].userData.id;
-				points[m].pos = new THREE.Vector3(p[i2].position.x, p[i2].position.y, -p[i2].position.z); 
-			}
-		}
-	}	
-	
-	
-	
-	for ( var i = 0; i < wall.length; i++ )
-	{ 
-		var p = wall[i].userData.wall.p;
-		
-		walls[i] = { }; 
-		
-		walls[i].id = wall[i].userData.id;
-		walls[i].pointStart = p[0].userData.id;
-		walls[i].pointEnd = p[1].userData.id;
-		walls[i].width = wall[i].userData.wall.width; 
-		walls[i].height = wall[i].userData.wall.height_1; 
-
-
-		var x1 = p[1].position.z - p[0].position.z;
-		var z1 = p[0].position.x - p[1].position.x;	
-		var dir = new THREE.Vector3(z1, 0, -x1).normalize();						// перпендикуляр стены  (перевернуты x и y)
-		dir.multiplyScalar( wall[i].userData.wall.offsetZ );
-		walls[i].startShift = new THREE.Vector3(dir.z, 0, dir.x);
-				
-		var wd = saveWindows(wall[i]);		
-		walls[i].windows = wd.windows;
-		walls[i].doors = wd.doors;
-		
-
-		walls[i].colors = [];
-		var mat = wall[i].userData.material;
-		var arr = [{containerID : 'wall3d_'+wall[i].userData.id+'_p2', num : 1}, {containerID : 'wall3d_'+wall[i].userData.id+'_p1', num : 2}];				
-		
-		for ( var i2 = 0; i2 < arr.length; i2++ )
-		{
-			walls[i].colors[i2] = {  };		
-			walls[i].colors[i2].containerID = arr[i2].containerID;
-			walls[i].colors[i2].lot = { id : mat[arr[i2].num].lotid };
-
-			var color = { r : Number(mat[arr[i2].num].color.r), g : Number(mat[arr[i2].num].color.g), b : Number(mat[arr[i2].num].color.b), a : 1 };
-			
-			walls[i].colors[i2].matMod = { colorsets : [{ color : color }] };
-
-			walls[i].colors[i2].matMod.texScal = mat[arr[i2].num].scale;
-			
-			walls[i].colors[i2].matMod.mapingRotate = 0; 
-			
-			var map = wall[i].material[arr[i2].num].map;
-			if(map) 
-			{
-				walls[i].colors[i2].matMod.texOffset = map.offset;
-				walls[i].colors[i2].matMod.mapingRotate = THREE.Math.radToDeg( map.rotation ); 				 
-			}
-		}		
-	}	
-
-
-	for ( var i = 0; i < room.length; i++ )
-	{
-		rooms[i] = { pointid : [] };
-		
-		rooms[i].id = room[i].userData.id;  
-		rooms[i].name = 'Room';	
-		
-		rooms[i].pointid = [];
-		var s = 0; for ( var i2 = room[i].p.length - 1; i2 >= 1; i2-- ) { rooms[i].pointid[s] = room[i].p[i2].userData.id; s++; }  
-		
-		
-		rooms[i].colors = [];
-		var arr = [{containerID : 'floor', obj : room[i]}, {containerID : 'ceil', obj : ceiling[i]}];				
-		
-		for ( var i2 = 0; i2 < arr.length; i2++ )
-		{
-			rooms[i].colors[i2] = {  };		
-			rooms[i].colors[i2].containerID = arr[i2].containerID;
-			rooms[i].colors[i2].lot = { id : arr[i2].obj.userData.material.lotid };
-
-			var color = { r : Number(arr[i2].obj.material.color.r), g : Number(arr[i2].obj.material.color.g), b : Number(arr[i2].obj.material.color.b), a : 1 };
-			
-			rooms[i].colors[i2].matMod = { colorsets : [{ color : color }] };
-
-			rooms[i].colors[i2].matMod.texScal = arr[i2].obj.userData.material.scale;
-
-			rooms[i].colors[i2].matMod.mapingRotate = 0; 
-			
-			var map = arr[i2].obj.material.map;
-			if(map) 
-			{
-				rooms[i].colors[i2].matMod.texOffset = map.offset;
-				rooms[i].colors[i2].matMod.mapingRotate = THREE.Math.radToDeg( map.rotation ); 
-			}			
-		}	
-	}
-	
-
-	
-	for ( var i = 0; i < infProject.scene.array.obj.length; i++ )
-	{
-		var obj = infProject.scene.array.obj[i];
-		
-		var pos = new THREE.Vector3(obj.position.x, obj.position.y, -obj.position.z);
-		var rot = new THREE.Vector3( THREE.Math.radToDeg(obj.rotation.x), THREE.Math.radToDeg(obj.rotation.y), THREE.Math.radToDeg(obj.rotation.z) );
-		
-			
-		var m = furn.length;
-		furn[m] = {};
-		furn[m].id = Number(obj.userData.id);
-		furn[m].lotid = Number(obj.userData.obj3D.lotid);
-		furn[m].pos = pos;
-		furn[m].rot = rot;
-	}	
-	
-	
-	json.floors[0].points = points;
-	json.floors[0].walls = walls;
-	json.floors[0].rooms = rooms;
-	json.furn = furn;
-	
-	return json;
-}
-
-
-
-
-
 
 function loadFile(cdm) 
 {
@@ -612,13 +550,13 @@ function loadFilePL(arr)
 	
 	infProject.project = { file: arr, load: { furn: [] } };
 		
-	var point = arr.floors[0].points;
-	var walls = arr.floors[0].walls;
-	var rooms = arr.floors[0].rooms;
-	var furn = (arr.furn) ? arr.furn : [];
+	var point = arr.points;
+	var walls = arr.walls;
+	var rooms = arr.rooms;
+	var furn = (arr.object) ? arr.object : [];
 	
 	
-	changeAllHeightWall_1({ load: true, height: arr.floors[0].height, input: true, globalHeight: true });
+	changeAllHeightWall_1({ load: true, height: arr.height, input: true, globalHeight: true });
 			
 	var wall = [];
 	
@@ -628,18 +566,21 @@ function loadFilePL(arr)
 		
 		
 		wall[i].id = walls[i].id;		
-		wall[i].width = walls[i].width;
-		wall[i].offsetV = new THREE.Vector3(walls[i].startShift.z, 0, walls[i].startShift.x);   		
-		wall[i].height = walls[i].height;			
+		//wall[i].width = walls[i].width;
+		//wall[i].height = walls[i].height;
+		//wall[i].offsetV = new THREE.Vector3(walls[i].startShift.z, 0, walls[i].startShift.x);   		
+		
+		wall[i].width = walls[i].size.z;
+		wall[i].height = walls[i].size.y;		
 		
 		wall[i].points = [];
-		wall[i].points[0] = { id : walls[i].pointStart, pos : new THREE.Vector3() };
-		wall[i].points[1] = { id : walls[i].pointEnd, pos : new THREE.Vector3() };
+		wall[i].points[0] = { id : walls[i].p.id[0], pos : new THREE.Vector3() };
+		wall[i].points[1] = { id : walls[i].p.id[1], pos : new THREE.Vector3() };
 								
 		for ( var i2 = 0; i2 < point.length; i2++ ) 			 
 		{  	
-			if(wall[i].points[0].id == point[i2].id) { wall[i].points[0].pos = new THREE.Vector3(point[i2].pos.x, 0, -point[i2].pos.z); }
-			if(wall[i].points[1].id == point[i2].id) { wall[i].points[1].pos = new THREE.Vector3(point[i2].pos.x, 0, -point[i2].pos.z); }
+			if(wall[i].points[0].id == point[i2].id) { wall[i].points[0].pos = new THREE.Vector3(point[i2].pos.x, 0, point[i2].pos.z); }
+			if(wall[i].points[1].id == point[i2].id) { wall[i].points[1].pos = new THREE.Vector3(point[i2].pos.x, 0, point[i2].pos.z); }
 		}
 		
 
@@ -656,8 +597,8 @@ function loadFilePL(arr)
 			wall[i].arrO[i2] = {  }
 			
 			wall[i].arrO[i2].id = arrO[i2].id;
-			wall[i].arrO[i2].pos = new THREE.Vector3(arrO[i2].startPointDist, arrO[i2].over_floor, 0);
-			wall[i].arrO[i2].size = new THREE.Vector2(arrO[i2].width, arrO[i2].height);
+			wall[i].arrO[i2].pos = new THREE.Vector3(arrO[i2].pos.x, arrO[i2].pos.y, 0);
+			wall[i].arrO[i2].size = new THREE.Vector2(arrO[i2].size.x, arrO[i2].size.y);
 			wall[i].arrO[i2].type = arrO[i2].type;
 		} 	
 	}
@@ -709,8 +650,9 @@ function loadFilePL(arr)
 		if(point2 == null) { point2 = createPoint( wall[i].points[1].pos, wall[i].points[1].id ); }
 	
 
-		var dir = new THREE.Vector3().subVectors( point2.position, point1.position ).normalize();
-		var offsetZ = localTransformPoint(wall[i].offsetV, quaternionDirection(dir)).z;
+		//var dir = new THREE.Vector3().subVectors( point2.position, point1.position ).normalize();
+		//var offsetZ = localTransformPoint(wall[i].offsetV, quaternionDirection(dir)).z;
+		var offsetZ = 0;
 		var inf = { id: wall[i].id, p: [point1, point2], width: wall[i].width, offsetZ: -offsetZ, height: wall[i].height, load: true };
 		
 		var obj = crtW(inf); 		
@@ -750,9 +692,6 @@ function loadFilePL(arr)
 	}
 	// устанавливаем окна/двери
 	
-			
-
-
 
 	loadObjInBase({furn: furn});
 
@@ -795,12 +734,10 @@ function loadObjFromBase(cdm)
 	for ( var i = 0; i < furn.length; i++ )
 	{
 		if(Number(cdm.lotid) == Number(furn[i].lotid))
-		{
-			furn[i].pos.z *= -1;
-			
+		{			
 			if(furn[i].rot)			
 			{
-				furn[i].rot = new THREE.Vector3( THREE.Math.degToRad(furn[i].rot.x), THREE.Math.degToRad(furn[i].rot.y), THREE.Math.degToRad(furn[i].rot.z) );
+				//furn[i].rot = new THREE.Vector3( THREE.Math.degToRad(furn[i].rot.x), THREE.Math.degToRad(furn[i].rot.y), THREE.Math.degToRad(furn[i].rot.z) );
 			}
 			
 			loadObjServer(furn[i]);
@@ -835,7 +772,7 @@ function readyProject(cdm)
 	console.log('READY', countId);
 	
 	changeCamera(cameraTop);
-	//centerCamera2D();	
+	centerCamera2D();	
 }
 
 
