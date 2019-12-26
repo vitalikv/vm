@@ -1453,7 +1453,7 @@ $(document).ready(function ()
 	docReady = true; 	
 		 
 	 
-	//loadFile({json: true});  
+	loadFile({json: true});  
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(0, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 1), rot: new THREE.Vector3(0, 1, 0)});

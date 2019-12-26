@@ -2,7 +2,7 @@
 <style type="text/css">
 .background_main_menu 
 {
-	display: block;
+	display: none;
 	left: 0;
 	right: 0;
 	top: 0;

@@ -165,102 +165,120 @@ function showRulerWD_2D(wd)
 	if(camera != cameraTop) return;
 	
 	var wall = wd.userData.door.wall;
-	var boundPos = wd.userData.door.ruler.boundPos;
-	var p = [];
-	for ( var i = 0; i < arrSize.cube.length; i++ ) { p[i] = arrSize.cube[i].position; }
-	
-	var x1 = wall.userData.wall.p[1].position.z - wall.userData.wall.p[0].position.z;
-	var z1 = wall.userData.wall.p[0].position.x - wall.userData.wall.p[1].position.x;	
-	var dir = new THREE.Vector3(x1, 0, z1).normalize();						// перпендикуляр стены
-	
-	var width = Number(wall.userData.wall.width) / 2 + 0.05;	
-
-	var dz_1 = dir.clone().multiplyScalar( -width );
-	var dz_2 = dir.clone().multiplyScalar( width );
-	var dz_3 = dir.clone().multiplyScalar( -0.1 );
-	var dz_4 = dir.clone().multiplyScalar( 0.1 );	
-	
-	var dirZ = [];
-	dirZ[0] = dz_3;
-	dirZ[1] = dz_4;
-	dirZ[2] = dz_3;	
-	dirZ[3] = dz_4;
-	dirZ[4] = dz_3;
-	dirZ[5] = dz_4;
-		
-	
-	var p2 = [];	
-	p2[0] = new THREE.Vector3().addVectors(boundPos[0], dz_1);	
-	p2[1] = new THREE.Vector3().addVectors(boundPos[2], dz_2);
-	p2[2] = new THREE.Vector3().addVectors(p[1], dz_1);
-	p2[3] = new THREE.Vector3().addVectors(p[1], dz_2);
-	p2[4] = new THREE.Vector3().addVectors(p[0], dz_1);
-	p2[5] = new THREE.Vector3().addVectors(p[0], dz_2);
-
-	var w2 = [];	
-	w2[0] = p2[4];
-	w2[1] = p2[5];
-	w2[2] = new THREE.Vector3().addVectors(boundPos[1], dz_1);	
-	w2[3] = new THREE.Vector3().addVectors(boundPos[3], dz_2);
-	w2[4] = p2[2];
-	w2[5] = p2[3];	
-
-
-	var wp = [];
-	wp[0] = p2[0];
-	wp[1] = p2[1];
-	wp[2] = p2[2];
-	wp[3] = p2[3];
-	wp[4] = w2[0];
-	wp[5] = w2[1];
-	wp[6] = w2[2];
-	wp[7] = w2[3];
-	
-	for ( var i = 0; i < wp.length; i++ ) { wp[i].y = 0; }
-	for ( var i = 0; i < p2.length; i++ ) { p2[i].y = 0; }
-
-	var dir = new THREE.Vector3().subVectors( wall.userData.wall.p[1].position, wall.userData.wall.p[0].position );  		
-	var rotation = new THREE.Euler().setFromQuaternion( quaternionDirection(dir.clone().normalize()) );  // из кватерниона в rotation
-
-	var rotY2 = Math.atan2(dir.x, dir.z); 
-	if(rotY2 <= 0.001){ rotY2 -= Math.PI / 2; }
-	else { rotY2 += Math.PI / 2; }	
 	
 	var line = arrSize.format_2.line;
 	var label = arrSize.format_2.label;	
 	
-	// линейки показывающие длину
-	for ( var i = 0; i < 6; i++ )
-	{ 
-		var d = w2[i].distanceTo(p2[i]); 
-		var v = line[i].geometry.vertices; 	
-		v[3].x = v[2].x = v[5].x = v[4].x = d;
-		line[i].geometry.verticesNeedUpdate = true;
-				
-		line[i].position.copy( p2[i] );
-		line[i].rotation.set(rotation.x, rotation.y - Math.PI / 2, 0);
-		line[i].visible = true;
-				
-		var dir = new THREE.Vector3().subVectors( w2[i], p2[i] );
-		label[i].position.copy( p2[i] );	
-		label[i].position.add( dirZ[i] );
-		label[i].position.add( dir.divideScalar( 2 ) ); 
-		label[i].rotation.set( -Math.PI / 2, 0, rotY2 - Math.PI );
-		label[i].visible = true;
+	var p1 = wall.userData.wall.p[0].position;
+	var p2 = wall.userData.wall.p[1].position;
+	
+	// для label
+	var dirW = new THREE.Vector3().subVectors( p1, p2 ).normalize();
+	var ang2 = Math.atan2(dirW.x, dirW.z);
+	if(ang2 <= 0.001){ ang2 += Math.PI / 2;  }
+	else { ang2 -= Math.PI / 2; }	
+	
+	
+	// габариты wd (начало/конец) 
+	var b2 = [];
+	wd.updateMatrixWorld();
+	var bound = wd.geometry.boundingBox;
+	b2[0] = wd.localToWorld( new THREE.Vector3(bound.min.x, 0, 0) ); 
+	b2[1] = wd.localToWorld( new THREE.Vector3(bound.max.x, 0, 0) );	
+	b2[0].y = b2[1].y = p1.y;
+	
+	
+	// габариты wall (начало/конец)
+	var pw = [];
+	
+	if(1==2)	// расстояние не от одной стены, а от нескольких, если они образуют единую стену
+	{
+		pw[0] = wd.userData.door.ruler.boundPos[0]; 	// wall == v[0].x
+		pw[1] = wd.userData.door.ruler.boundPos[1]; 	// wall == v[6].x 
+		pw[2] = wd.userData.door.ruler.boundPos[2]; 	// wall == v[4].x
+		pw[3] = wd.userData.door.ruler.boundPos[3]; 	// wall == v[10].x		
+	}
+	else
+	{
+		pw[0] = wall.localToWorld( new THREE.Vector3(wall.userData.wall.v[0].x, 0, 0) ); 
+		pw[1] = wall.localToWorld( new THREE.Vector3(wall.userData.wall.v[6].x, 0, 0) ); 
+		pw[2] = wall.localToWorld( new THREE.Vector3(wall.userData.wall.v[4].x, 0, 0) ); 
+		pw[3] = wall.localToWorld( new THREE.Vector3(wall.userData.wall.v[10].x, 0, 0) );		
+	}		 	
+	
+	// смщение от центра до краев стены
+	var dirW = wall.getWorldDirection(new THREE.Vector3());
+	var offset_1 = new THREE.Vector3().addScaledVector( dirW, wall.userData.wall.v[0].z ).multiplyScalar( 1.3 );
+	var offset_2 = new THREE.Vector3().addScaledVector( dirW, wall.userData.wall.v[4].z ).multiplyScalar( 1.3 );
+
+
+	var dir = [];
+	dir[0] = new THREE.Vector3().subVectors( p2, p1 ).normalize();
+	dir[1] = new THREE.Vector3().subVectors( p1, p2 ).normalize();
+	
+	// массив с позициями начала/конца линейки, смещение от центра стены, начальное направление линейки
+	var arrP = [];
+	arrP[0] = {p1: b2[0], p2: pw[0], offset: offset_1, dir: dir[0]};
+	arrP[1] = {p1: b2[1], p2: pw[1], offset: offset_1, dir: dir[1]};
+	arrP[2] = {p1: b2[0], p2: pw[2], offset: offset_2, dir: dir[0]};
+	arrP[3] = {p1: b2[1], p2: pw[3], offset: offset_2, dir: dir[1]};			
+	arrP[4] = {p1: b2[0], p2: b2[1], offset: offset_1, dir: dir[1]};
+	arrP[5] = {p1: b2[0], p2: b2[1], offset: offset_2, dir: dir[1]};
+	
+	
+	for ( var i = 0; i < arrP.length; i++ )
+	{
+		var d = arrP[i].p1.distanceTo( arrP[i].p2 );	
 		
+		var v = line[i].geometry.vertices;
+		v[0].x = v[1].x = v[6].x = v[7].x = -d/2;
+		v[3].x = v[2].x = v[5].x = v[4].x = d/2;		
+		line[i].geometry.verticesNeedUpdate = true;			
+		
+		var pos = new THREE.Vector3().subVectors( arrP[i].p1, arrP[i].p2 ).divideScalar( 2 ).add(arrP[i].p2);	
+		
+		// если wd выходит за пределы wall, то ставим отрицательное значение в label
+		if(1==1)
+		{
+			var dir = new THREE.Vector3().subVectors( arrP[i].p1, arrP[i].p2 ).normalize();			
+			d = (dir.dot(arrP[i].dir) < - 0.99) ? -d : d;
+		}
+		
+		line[i].position.copy(pos).add(arrP[i].offset);
+		line[i].rotation.copy(wall.rotation);
+
+		label[i].position.copy(pos).add(arrP[i].offset.clone().multiplyScalar( 2 ));	 		
+		label[i].rotation.set(-Math.PI / 2, 0, ang2);
+						
 		upLabelCameraWall({label : label[i], text : Math.round(d * 100) / 100, sizeText : 85, color : 'rgba(0,0,0,1)'});
-	}	
+		
+		line[i].visible = true;	
+		label[i].visible = true;
+	}
 
 	// линейки отсечки
+	var arrP2 = [];
+	arrP2[0] = {pos: pw[0], offset: offset_1};
+	arrP2[1] = {pos: pw[1], offset: offset_1};
+	arrP2[2] = {pos: b2[0], offset: offset_1};
+	arrP2[3] = {pos: b2[1], offset: offset_1};
+	arrP2[4] = {pos: pw[2], offset: offset_2};
+	arrP2[5] = {pos: pw[3], offset: offset_2};
+	arrP2[6] = {pos: b2[0], offset: offset_2};
+	arrP2[7] = {pos: b2[1], offset: offset_2};
+	
 	var arr = arrSize.cutoff;	
-	for ( var i = 0; i < arr.length; i++ )
+	for ( var i = 0; i < arrP2.length; i++ )
 	{
-		arr[i].position.copy( wp[i] );
-		arr[i].rotation.set(rotation.x, rotation.y, 0);
+		arr[i].position.copy( arrP2[i].pos.clone().add(arrP2[i].offset) );
+		arr[i].rotation.set(wall.rotation.x, wall.rotation.y + Math.PI / 2, wall.rotation.z);
 		arr[i].material.color.set(0x222222);
 		arr[i].visible = true;
-	}	
+	}		
 }
+
+
+
 
 
 // перемещаем линейки и лайблы в режиме cameraWall 
