@@ -11,7 +11,7 @@
 		</div>		
 		
 		<div class="button1-wrap-1">
-			<div data-action ='screenshot1' class="button1 button_gradient_1"><img src="<?=$path?>/img/screenshot1.png"></div>
+			<div class="button1 button_gradient_1" nameId='butt_main_menu'>Меню</div>
 		</div>				
 	</div> 
 	

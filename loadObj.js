@@ -104,6 +104,8 @@ function loadObjServer(cdm)
 	
 	var obj = getObjFromBase({lotid: lotid});
 	
+	if(cdm.loadFromFile){ obj = null; }
+	
 	if(obj)
 	{ 
 		inf.obj = obj.clone();

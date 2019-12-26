@@ -188,7 +188,6 @@ infProject.start = true;
 
 infProject.ui = {}
 infProject.ui.list_wf = [];
-infProject.ui.main_menu = [];
 infProject.ui.right_menu = {active: ''};
 
 console.log(infProject);
@@ -1373,7 +1372,7 @@ document.body.addEventListener("keydown", function (e)
 
 	if(e.keyCode == 46) { detectDeleteObj(); }
 	
-	if(clickO.keys[18] && e.keyCode == 90) {  }		// alt + z
+	if(clickO.keys[18] && e.keyCode == 90) { loadFile({json: true}); }		// alt + z
 	if(clickO.keys[18] && e.keyCode == 72) { getConsoleRendererInfo(); }		// alt + h
 	if(clickO.keys[18] && e.keyCode == 77) { inputLoadProject(); }				// alt + m
 	if(clickO.keys[18] && e.keyCode == 84) { saveFile({json: true}); }			// alt + t
@@ -1454,7 +1453,7 @@ $(document).ready(function ()
 	docReady = true; 	
 		 
 	 
-	loadFile({json: true});  
+	//loadFile({json: true});  
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(0, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 1), rot: new THREE.Vector3(0, 1, 0)});

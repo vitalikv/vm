@@ -460,15 +460,13 @@ function saveFile(cdm)
 	
 	if(cdm.id)
 	{
-		//var preview = saveAsImagePreview();
-		var preview = null;
 		
 		// сохраняем в бд
 		$.ajax
 		({
 			url: infProject.path+'components/saveSql.php',
 			type: 'POST',
-			data: {json: json, id: cdm.id, user_id: infProject.user.id, preview: preview},
+			data: {json: json, id: cdm.id, user_id: infProject.user.id},
 			dataType: 'json',
 			success: function(json)
 			{ 			
@@ -732,15 +730,10 @@ function loadObjFromBase(cdm)
 	var furn = cdm.furn;
 	
 	for ( var i = 0; i < furn.length; i++ )
-	{
+	{  
 		if(Number(cdm.lotid) == Number(furn[i].lotid))
 		{			
-			if(furn[i].rot)			
-			{
-				//furn[i].rot = new THREE.Vector3( THREE.Math.degToRad(furn[i].rot.x), THREE.Math.degToRad(furn[i].rot.y), THREE.Math.degToRad(furn[i].rot.z) );
-			}
-			
-			loadObjServer(furn[i]);
+			loadObjServer(furn[i]);  
 
 			infProject.project.load.furn[infProject.project.load.furn.length] = furn[i].id;
 			

@@ -2,7 +2,7 @@
 <style type="text/css">
 .background_main_menu 
 {
-	display: none;
+	display: block;
 	left: 0;
 	right: 0;
 	top: 0;
@@ -16,8 +16,10 @@
 {
 	position: relative;
 	margin: auto;
-	width: 95%;
-	height: 95%;	
+	width: 900px;
+	height: 700px;	
+	min-width: 400px;
+	min-height: 400px;
 	
 	background: white;
 	border-radius: 8px;
@@ -38,8 +40,7 @@
 
 .window_main_menu_content_1_row
 {
-	display: -webkit-box;
-	display: flex;
+
 }
 
 .window_main_menu_content_1_column
@@ -82,18 +83,12 @@
 	align-items: center; /* Выравнивание текста по вертикали */
 	justify-content: center; /* Выравнивание текста по горизонтали */
 	height: 50px;
-	background-color:#f1f1f1;
 
 	font-family: arial,sans-serif;
 	font-size: 24px;
 	color: #666;	
 }
 
-.window_main_menu_content_1_wrap_1
-{
-	display: -webkit-box;
-	display: flex;	
-}
 
 
 .window_main_menu_content_block_1
@@ -102,11 +97,10 @@
 	align-items: center; /* Выравнивание текста по вертикали */
 	justify-content: center; /* Выравнивание текста по горизонтали */
 	
-	margin: 35px auto;
-	padding: 10px 0;
-	width: 45%;	
+	margin: 20px auto;
+	padding: 10px 0;	
 	max-width: 350px;
-	height: 250px;
+	height: 20px;
 	
 	font-family: arial,sans-serif;
 	font-size: 18px;
@@ -364,7 +358,8 @@ $('[nameId="act_reg_1"]').mousedown(function () { checkRegDataIU(); });
 // вход/регистрация пользователя (проверка правильности ввода данных почта/пароль)
 function checkRegDataIU()
 {
-	var pattern_1 = /^[a-z0-9_-]+@[a-z0-9-]+\.([a-z]{1,6}\.)?[a-z]{2,6}$/i;
+	//var pattern_1 = /^[a-z0-9_-]+@[a-z0-9-]+\.([a-z]{1,6}\.)?[a-z]{2,6}$/i;
+	var pattern_1 = /^[a-z0-9@_\-\.]{4,20}$/i;
 	var pattern_2 = /^[a-z0-9]{4,20}$/i;
 	var mail = $('[nameId="input_reg_mail"]');
 	var pass = $('[nameId="input_reg_pass"]');
@@ -470,8 +465,8 @@ function checkRegDataIU()
 				{
 					if(data.success)
 					{
-						inf_str_1.html("на вашу почту отправлено письмо<br>зайдите в вашу почту и подтвердите регистрацию<br>(если письмо не пришло посмотрите в папке спам)");
-						//inf_str_1.html("Вы успешно зарегистрировались");						
+						//inf_str_1.html("на вашу почту отправлено письмо<br>зайдите в вашу почту и подтвердите регистрацию<br>(если письмо не пришло посмотрите в папке спам)");
+						inf_str_1.html("Вы успешно зарегистрировались");						
 						
 						inf_block.show();
 						inf_str_1.show();
@@ -519,7 +514,7 @@ function getListProject(cdm)
 			var html_load = '';
 			var html_save = '';
 			
-			for(var i = 0; i < 2; i++)
+			for(var i = 0; i < 5; i++)
 			{
 				if(data[i]) continue;
 				
@@ -541,7 +536,7 @@ function getListProject(cdm)
 			}
 			
 			$('[nameId="wm_list_save"]').html(html_save);
-			$('[nameId="wm_list_load"]').html(html_load);
+			$('[nameId="wm_list_load"]').html(html_load); 
 	
 			
 			$('[nameId="save_pr_1"]').on('mousedown', function(){ clickButtonSaveProjectUI(this); });
@@ -590,61 +585,43 @@ function clickButtonLoadProjectUI(el)
 				<div class='modal_body_content'>
 					<div class="window_main_menu_content_1">					
 						<div class="window_main_menu_content_1_row">
-							<div class="window_main_menu_content_1_column">
-								<div class="window_main_menu_content_1_item" nameId="button_main_menu_reg_1">Учетная запись</div>
-								<a href="/" class="window_main_menu_content_1_item">Главная страница</a>
-								<div class="window_main_menu_content_1_item" nameId="reset_scene_1">Пустой проект</div>
-								<div class="window_main_menu_content_1_item" nameId="button_load_1">Загрузить</div>
-								<div class="window_main_menu_content_1_item" nameId="button_save_1">Сохранить</div>								
-								<div class="window_main_menu_content_1_item" nameId="button_contact">Контакты</div>
-							</div>
-							<div class="window_main_menu_content_1_column">
-								
-								<div wwm_1="button_load_1" list_ui="window_main_menu_content" style="display: none;"> 
-									<div class="window_main_menu_content_1_h1">
-										Загрузить
-									</div>
-									<div class="window_main_menu_content_1_wrap_1" nameId="wm_list_load">
-										<div class="wm_reg_13 wm_reg_border_1 wm_reg_text_1">
-											Чтобы  сохранить или загрузить проект, вам нужно авторизоваться. 
-										
-											<div style="max-width: 350px; margin: auto;">
-												<div class="window_main_menu_button_reg_1 button_gradient_1" nameId="button_main_menu_reg_1">
-													Авторизоваться
-												</div>	
-											</div>	
-										</div>										
-									</div>
-								</div>
-								
-								<div wwm_1="button_save_1" list_ui="window_main_menu_content" style="display: none;">
-									<div class="window_main_menu_content_1_h1">
-										Сохранить
-									</div>
-									<div class="window_main_menu_content_1_wrap_1" nameId="wm_list_save">
-										<div class="wm_reg_13 wm_reg_border_1 wm_reg_text_1">
-											Чтобы  сохранить или загрузить проект, вам нужно авторизоваться.
 
-											<div style="max-width: 350px; margin: auto;">
-												<div class="window_main_menu_button_reg_1 button_gradient_1" nameId="button_main_menu_reg_1">
-													Авторизоваться
-												</div>	
-											</div>											
-										</div>										
-									</div>
-								</div>
+							<div class="window_main_menu_content_1_column">
+								
 								
 								<div wwm_1="button_main_menu_reg_1" list_ui="window_main_menu_content" style="display: block;">
 								
+																
 									<div nameId="reg_content_1" style="display: none;">
 									
-										<div class="window_main_menu_content_1_h1">
+										<div class="window_main_menu_content_1_h1" nameId="menu_content_1_h1">
 											Вход выполнен
 										</div>									
-									
-										<div class="wm_reg_13 wm_reg_border_1 wm_reg_text_1">
-											Вы авторизовались.<br><br>Теперь вам доступно сохранение и загрузка проектов. 
-										</div>									
+																
+										<div class="flex_1" style="width: 400px; margin: 50px auto 20px auto;">
+											<div class="window_main_menu_content_1_item" nameId="button_load_1" style="display: block;">Загрузить</div>
+											<div class="window_main_menu_content_1_item" nameId="button_save_1" style="display: block;">Сохранить</div>	
+										</div>
+										
+
+										<div wwm_1="button_load_1" list_ui="window_main_menu_content" style="display: none;"> 
+											<div class="window_main_menu_content_1_h1">
+												Загрузить
+											</div>
+											<div nameId="wm_list_load">
+										
+											</div>
+										</div>
+										
+										<div wwm_1="button_save_1" list_ui="window_main_menu_content" style="display: none;">
+											<div class="window_main_menu_content_1_h1">
+												Сохранить
+											</div>
+											<div nameId="wm_list_save">
+										
+											</div>
+										</div>
+										
 									
 									</div>
 								
@@ -706,9 +683,6 @@ function clickButtonLoadProjectUI(el)
 								</div>																					
 								
 							</div>							
-						</div>
-						<div class="window_main_menu_content_1_row">
-						
 						</div>						
 					</div>
 					
