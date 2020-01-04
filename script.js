@@ -35,7 +35,7 @@ cameraTop.updateProjectionMatrix();
 
 
 //----------- camera3D
-var camera3D = new THREE.PerspectiveCamera( 65, w_w / w_h, 0.2, 1000 );  
+var camera3D = new THREE.PerspectiveCamera( 65, w_w / w_h, 0.01, 1000 );  
 camera3D.rotation.order = 'YZX';		//'ZYX'
 camera3D.position.set(5, 7, 5);
 camera3D.lookAt(scene.position);
@@ -271,10 +271,9 @@ function backgroundPlane()
 	var geometry = new THREE.PlaneGeometry( 1000, 1000 );
 	var material = new THREE.MeshLambertMaterial( {color: 0xffffff, side: THREE.DoubleSide } );
 	var planeMath = new THREE.Mesh( geometry, material );
-	planeMath.position.y = -0.01;
+	planeMath.position.y = -0.02;
 	planeMath.rotation.set(-Math.PI/2, 0, 0);
 	scene.add( planeMath );	
-	
 	
 	
 	var cdm = {};
