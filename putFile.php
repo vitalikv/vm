@@ -35,9 +35,9 @@ substrate.js
 autoBuilding.js
 ';
 
-
+$arrF = array();
 $arr = explode(".js", $list);
-
+$file2 = '';
 
 for ($i = 0; $i < count($arr); $i++)
 {
@@ -56,12 +56,72 @@ for ($i = 0; $i < count($arr)-1; $i++)
 	$file = file_get_contents($arr[$i]);
 	
 	$file = preg_replace("|console.log\((.*)\);|i","",$file);
+	$file2 .= $file;
+	//getFunct($file);
+	
+	{
+		preg_match_all('|function\s*(\w+)\s*\((.*)\)|Usi', $file, $arr2); 
+		
+		for ($i2 = 0; $i2 < count($arr2[1]); $i2++)
+		{
+			$arrF[] = $arr2[1][$i2];
+		}
+
+		//getFunct($arr2[1]);
+	}
 	
 	fwrite($newFile, $file);	
 }
 
 // Закрывает открытый файл
 fclose($newFile);
+
+
+
+//getFunct($arrF);
+
+
+echo '<br><br>--------<br><br>';
+
+
+$file2 = preg_replace('#(\/\/(.*?)(\n|$|\r|(\r\n)))|(\/\*(.*?)\*\/)#i','',$file2);	// удаляем комменты
+
+
+
+
+for ($i = 0; $i < count($arrF); $i++)
+{
+	//preg_match_all('|'.$arrF[$i].'|Usi', $file2, $str);
+	//print_r($str[0]);	
+	//echo $str[0][0].' '.count($str[0]).'<br>';	
+	
+	//echo 'fname_s_0'.($i+1).'|'.$arrF[$i].'<br>';
+	
+	$file2 = preg_replace('#\b'.$arrF[$i].'\b#Us','fname_s_0'.($i+1),$file2);		
+}
+
+echo $file2;
+
+$newFile = fopen('t/test.js', 'w');
+fwrite($newFile, $file2);
+fclose($newFile);
+
+
+
+// показываем список названий функций 
+function getFunct($text) 
+{	
+	echo '<br>';
+	
+	for ($i = 0; $i < count($text); $i++)
+	{
+		echo $text[$i].'<br>';
+	}			
+	
+	echo '<br>';
+}
+
+
 
 
 echo 11;
