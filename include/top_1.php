@@ -2,7 +2,6 @@
 
 
 
-<noindex>
 <div class="flex_1 top_panel_2">	
 	
 	<div class="toolbar" data-action ='top_panel_1'>
@@ -25,5 +24,4 @@
 	</div>
 	
 </div>
-</noindex>
 

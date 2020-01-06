@@ -197,6 +197,258 @@ $('[data-action="modal_window_close_1"]').mousedown(function ()
 
 
 
+//  modal_wind_3 --->
+
+$('[nameId="background_main_menu"]').mousedown(function () 
+{	 
+	$('[nameId="background_main_menu"]').css({"display":"none"}); 
+});
+
+			
+$('[nameId="button_close_main_menu"]').mousedown(function () 
+{  
+	$('[nameId="background_main_menu"]').css({"display":"none"}); 
+});
+
+$('[nameId="window_main_menu"]').mousedown(function (e) { e.stopPropagation(); });
+	
+	
+
+$('[nameId="button_check_reg_1"]').mousedown(function () { changeMainMenuRegistMenuUI({el: this}); });
+$('[nameId="button_check_reg_2"]').mousedown(function () { changeMainMenuRegistMenuUI({el: this}); });	
+
+
+// переключаем в главном меню в форме регистрация кнопки: вход/регистрация
+function changeMainMenuRegistMenuUI(cdm)
+{
+	var inf_block = $('[nameId="info_reg_1"]');
+	var inf_str_1 = $('[nameId="info_reg_1_1"]');
+	var inf_str_2 = $('[nameId="info_reg_1_2"]');
+	
+	inf_block.hide();
+	inf_str_1.hide();
+	inf_str_2.hide();		
+
+	if(cdm.el.attributes.nameId.value == "button_check_reg_1") 
+	{
+		$('[nameId="act_reg_1"]').text('Войти');
+		$('[nameId="act_reg_1"]').attr("b_type", "reg_1"); 
+	}
+	if(cdm.el.attributes.nameId.value == "button_check_reg_2") 
+	{
+		$('[nameId="act_reg_1"]').text('Зарегистрироваться');
+		$('[nameId="act_reg_1"]').attr("b_type", "reg_2");
+	}	
+}
+
+
+	
+
+$('[nameId="act_reg_1"]').mousedown(function () { checkRegDataIU(); });
+
+
+// вход/регистрация пользователя (проверка правильности ввода данных почта/пароль)
+function checkRegDataIU()
+{
+	//var pattern_1 = /^[a-z0-9_-]+@[a-z0-9-]+\.([a-z]{1,6}\.)?[a-z]{2,6}$/i;
+	var pattern_1 = /^[a-z0-9@_\-\.]{4,20}$/i;
+	var pattern_2 = /^[a-z0-9]{4,20}$/i;
+	var mail = $('[nameId="input_reg_mail"]');
+	var pass = $('[nameId="input_reg_pass"]');
+	
+	var inf_block = $('[nameId="info_reg_1"]');
+	var inf_str_1 = $('[nameId="info_reg_1_1"]');
+	var inf_str_2 = $('[nameId="info_reg_1_2"]');
+	
+	inf_block.hide();
+	inf_str_1.hide();
+	inf_str_2.hide();
+	
+	var flag_1 = false;
+	var flag_2 = false;
+	
+	mail.val(mail.val().trim());	// удаляем пробелы  
+	pass.val(pass.val().trim());	// удаляем пробелы 
+	
+	// проверка почты
+	if(mail.val() != '')
+	{
+		if(pattern_1.test(mail.val()))
+		{
+			flag_1 = true;
+		}
+		else
+		{
+			inf_str_1.show();
+			inf_str_1.text('Не верно указанна почта');			
+		}
+	}
+	else
+	{		
+		inf_str_1.show();
+		inf_str_1.text('Укажите e-mail');
+	}
+	
+	
+	// проверка пароля
+	if(pass.val() != '')
+	{
+		if(pattern_2.test(pass.val()))
+		{
+			flag_2 = true;
+		}
+		else
+		{
+			inf_str_2.show();
+			inf_str_2.html('Не верно указан пароль<br>(Только цифры и латинские буквы от 4 до 20 знаков)');			
+		}
+	}		
+	else
+	{		
+		inf_str_2.show();
+		inf_str_2.text('Укажите пароль');
+	}
+	
+	
+	// данные введены верно
+	if(flag_1 && flag_2)
+	{ 
+		inf_block.hide();
+		
+		//console.log();
+		var type = $('[nameId="act_reg_1"]').attr("b_type");
+		
+		$.ajax
+		({
+			type: "POST",					
+			url: infProject.path+'components/regUser.php',
+			data: {"type": type, "mail": mail.val(), "pass": pass.val()},
+			dataType: 'json',
+			success: function(data)
+			{  
+				if(type=='reg_1')	// авторизация пользователя
+				{
+					if(data.success)
+					{
+						infProject.user.id = data.info.id;
+						infProject.user.mail = data.info.mail;
+						infProject.user.pass = data.info.pass;
+
+						$('[nameId="reg_content_1"]').show();
+						$('[nameId="reg_content_2"]').hide();
+
+						getListProject({id: infProject.user.id});
+					}
+					else
+					{
+						if(data.err.desc)
+						{
+							console.log(data.err.desc);
+							inf_str_1.html(data.err.desc);
+							
+							inf_block.show();
+							inf_str_1.show();
+							inf_str_1.show();
+							inf_str_2.hide();													
+						}
+					}
+				}
+				else if(type=='reg_2')	// регистрация нового пользователя
+				{
+					if(data.success)
+					{
+						//inf_str_1.html("на вашу почту отправлено письмо<br>зайдите в вашу почту и подтвердите регистрацию<br>(если письмо не пришло посмотрите в папке спам)");
+						inf_str_1.html("Вы успешно зарегистрировались");						
+						
+						inf_block.show();
+						inf_str_1.show();
+						inf_str_1.show();
+						inf_str_2.hide();												
+					}
+					else
+					{						
+						if(data.err.desc)
+						{
+							console.log(data.err.desc);
+							inf_str_1.html(data.err.desc);
+							
+							inf_block.show();
+							inf_str_1.show();
+							inf_str_1.show();
+							inf_str_2.hide();													
+						}						
+					}
+				}				
+			}
+		});		
+	}
+	else	// данные введены НЕ верно
+	{  
+		inf_block.show();
+	}
+};
+
+//  <--- modal_wind_3 
+
+
+
+
+//  right_panel --->
+
+$('[nameId="button_show_panel_catalog"]').mousedown(function () { showHideCatalogMenuUI({show: true}); });
+$('[nameId="button_catalog_close"]').mousedown(function () { showHideCatalogMenuUI({show: false}); });
+
+
+// скрываем/показываем правое меню UI
+function showHideCatalogMenuUI(cdm)
+{
+	var show = cdm.show;
+	
+	var block = $('[nameId="panel_catalog_1"]');
+	var button = $('[nameId="button_show_panel_catalog"]');
+	
+	if(show) { block.show(); button.hide(); }
+	else { block.hide(); button.show(); }
+}
+
+
+//  substrate
+$('#load_substrate_1').change(readURL);	
+$('[nameId="assign_size_substrate"]').mousedown(function () { assignSizeSubstrate(); });
+$('[nameId="button_delete_substrate"]').mousedown(function () { deleteSubstrate(); }); 
+
+$('[nameId="input_rotate_substrate_45"]').mousedown(function () { setRotateSubstrate({angle: 45}); });
+$('[nameId="input_rotate_substrate_90"]').mousedown(function () { setRotateSubstrate({angle: 90}); });
+
+
+$('[nameId="input_transparency_substrate"]').on("input", function() { setTransparencySubstrate({value: $(this).val()}); }); 
+
+
+// загрузка img  с компьютера
+function readURL(e) 
+{
+	if (this.files[0]) 
+	{		
+		if (this.files[0].type == "image/png" || this.files[0].type == "image/jpeg")
+		{
+			var reader = new FileReader();
+			reader.onload = function (e) 
+			{
+				$('#substrate_img').attr('src', e.target.result);						
+				
+				setImgCompSubstrate({image: e.target.result});					
+			}				
+
+			reader.readAsDataURL(this.files[0]);  					
+		}				
+	}
+}	 
+//  substrate
+
+
+//  <--- right_panel
+
+
 });
 
 

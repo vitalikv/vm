@@ -240,4 +240,67 @@ function upRightPlaneInput_1(cdm)
 
 
 
+// получаем с сервера список проектов принадлежащих пользователю
+function getListProject(cdm)
+{  
+	$.ajax
+	({
+		type: "POST",					
+		url: infProject.path+'components/loadListProject.php',
+		data: {"id": cdm.id },
+		dataType: 'json',
+		success: function(data)
+		{  
+			var html_load = '';
+			var html_save = '';
+			
+			for(var i = 0; i < 5; i++)
+			{
+				if(data[i]) continue;
+				
+				data[i] = {id: 0, name: 'Пустой проект'}
+			}
+			
+			for(var i = 0; i < data.length; i++)
+			{				
+				if(data[i].preview) 
+				{
+					html_save += '<div class="window_main_menu_content_block_1" projectId="'+data[i].id+'" nameId="save_pr_1"><img src="'+data[i].preview+'"></div>';
+					html_load += '<div class="window_main_menu_content_block_1" projectId="'+data[i].id+'" nameId="load_pr_1"><img src="'+data[i].preview+'"></div>';
+				}
+				else
+				{
+					html_save += '<div class="window_main_menu_content_block_1" projectId="'+data[i].id+'" nameId="save_pr_1">'+data[i].name+'</div>';
+					html_load += '<div class="window_main_menu_content_block_1" projectId="'+data[i].id+'" nameId="load_pr_1">'+data[i].name+'</div>';					
+				}
+			}
+			
+			$('[nameId="wm_list_save"]').html(html_save);
+			$('[nameId="wm_list_load"]').html(html_load); 
+	
+			
+			$('[nameId="save_pr_1"]').on('mousedown', function(){ clickButtonSaveProjectUI(this); });
+			$('[nameId="load_pr_1"]').on('mousedown', function(){ clickButtonLoadProjectUI(this); });
+		}
+	});	
+}
+
+// кликнули на кнопку сохранить проекта
+function clickButtonSaveProjectUI(el)
+{
+	saveFile({id: el.attributes.projectid.value, upUI: true}); 
+	
+	$('[nameId="background_main_menu"]').hide();
+}
+
+
+
+// кликнули на кнопку загрузки проекта
+function clickButtonLoadProjectUI(el)
+{
+	loadFile({id: el.attributes.projectid.value}); 
+	
+	$('[nameId="background_main_menu"]').hide();
+}
+
 

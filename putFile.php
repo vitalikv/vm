@@ -97,7 +97,7 @@ for ($i = 0; $i < count($arrF); $i++)
 	
 	//echo 'fname_s_0'.($i+1).'|'.$arrF[$i].'<br>';
 	
-	$file2 = preg_replace('#\b'.$arrF[$i].'\b#Us','fname_s_0'.($i+1),$file2);		
+	$file2 = preg_replace('#\b'.$arrF[$i].'\b#Us','fname_s_0'.($i+1),$file2);	// 	\b - границы слова	
 }
 
 echo $file2;

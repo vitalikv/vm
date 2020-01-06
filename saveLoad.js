@@ -477,20 +477,6 @@ function saveFile(cdm)
 			error: function(json){ console.log(json); }
 		});			
 	}
-	
-	
-	if(1==2)
-	{
-		var csv = JSON.stringify( txt );	
-		var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);	
-		
-		var link = document.createElement('a');
-		document.body.appendChild(link);
-		link.href = csvData;
-		link.target = '_blank';
-		link.download = 'filename.json';
-		link.click();			
-	}
 }
 
 

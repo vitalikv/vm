@@ -1776,7 +1776,7 @@ function fname_s_050( cdm )
 		
 	if(obj.userData.door.lotid)
 	{
-		fname_s_0266({type: 'wd', wd: obj, lotid: obj.userData.door.lotid});
+		fname_s_0270({type: 'wd', wd: obj, lotid: obj.userData.door.lotid});
 	}
 
  	
@@ -1910,7 +1910,7 @@ function fname_s_053()
 		}
 		else if(obj.userData.tag == 'obj')
 		{
-			fname_s_0251(obj); 
+			fname_s_0255(obj); 
 		}		
 
 		clickO = resetPop.clickO();
@@ -2099,22 +2099,22 @@ function fname_s_056(cdm)
 	if(cdm.type == 'down')
 	{  
 		if(fname_s_049(clickO.move)) { flag = false; }
-		else if( tag == 'substrate_tool' && camera == cameraTop ) { fname_s_0295({intersect: rayhit}); }
-		else if( tag == 'pivot' ) { fname_s_0244( rayhit ); }
-		else if( tag == 'gizmo' ) { fname_s_0259( rayhit ); } 
+		else if( tag == 'substrate_tool' && camera == cameraTop ) { fname_s_0302({intersect: rayhit}); }
+		else if( tag == 'pivot' ) { fname_s_0248( rayhit ); }
+		else if( tag == 'gizmo' ) { fname_s_0263( rayhit ); } 
 		else if( tag == 'wall' && camera == cameraTop ) { fname_s_0113( rayhit ); }
 		else if( tag == 'wall' && camera == cameraWall ) { fname_s_0190( rayhit ); }
 		else if( tag == 'point' ) { fname_s_096( rayhit ); }
 		else if( tag == 'window' ) { fname_s_0122( rayhit ); }
 		else if( tag == 'door' ) { fname_s_0122( rayhit ); }
 		else if( tag == 'controll_wd' ) { fname_s_092( rayhit ); }
-		else if( tag == 'obj' && camera == cameraTop ) { fname_s_0250( obj ); }
+		else if( tag == 'obj' && camera == cameraTop ) { fname_s_0254( obj ); }
 		else { flag = false; }
 	}
 	else if(cdm.type == 'up')
 	{		
 		if( tag == 'wall' && camera == camera3D ) {  }
-		else if( tag == 'obj' && camera == camera3D ) { fname_s_0250( obj ); }
+		else if( tag == 'obj' && camera == camera3D ) { fname_s_0254( obj ); }
 		else { flag = false; }
 	}	
 	else 
@@ -2165,9 +2165,9 @@ function fname_s_057( event )
 	{
 		var tag = obj.userData.tag;
 			
-		if ( tag == 'substrate_tool' ) { fname_s_0296(event); }	
-		else if ( tag == 'pivot' ) { fname_s_0245( event ); }
-		else if ( tag == 'gizmo' ) { fname_s_0261( event ); }
+		if ( tag == 'substrate_tool' ) { fname_s_0303(event); }	
+		else if ( tag == 'pivot' ) { fname_s_0249( event ); }
+		else if ( tag == 'gizmo' ) { fname_s_0265( event ); }
 		else if ( tag == 'wall' ) { fname_s_0116( event, obj ); }
 		else if ( tag == 'window' ) { fname_s_0126( event, obj ); }
 		else if ( tag == 'door' ) { fname_s_0126( event, obj ); }
@@ -2175,7 +2175,7 @@ function fname_s_057( event )
 		else if ( tag == 'point' ) { fname_s_098( event, obj ); }
 		else if ( tag == 'room' ) { fname_s_072( event ); }		
 		else if ( tag == 'free_dw' ) { fname_s_048( event, obj ); }
-		else if ( tag == 'obj' ) { fname_s_0248( event ); }
+		else if ( tag == 'obj' ) { fname_s_0252( event ); }
 	}
 	else 
 	{
@@ -2216,7 +2216,7 @@ function fname_s_058( event )
 		else if(tag == 'wall') { fname_s_0121(obj); }
 		else if(tag == 'window' || obj.userData.tag == 'door') { fname_s_0131(obj); }	
 		else if(tag == 'controll_wd') { fname_s_095(obj); } 
-		else if(tag == 'obj') { fname_s_0249(obj); }
+		else if(tag == 'obj') { fname_s_0253(obj); }
 		
 		if(tag == 'free_dw') {  }
 		else if (tag == 'point') 
@@ -2259,7 +2259,7 @@ function fname_s_059( o )
 			case 'point': fname_s_062(o);  break;
 			case 'door': fname_s_0128(o); fname_s_062(o); break;
 			case 'window': fname_s_0128(o); fname_s_062(o); break;
-			case 'obj': fname_s_0252(o); break;
+			case 'obj': fname_s_0256(o); break;
 		}
 	}
 	
@@ -2274,7 +2274,7 @@ function fname_s_060( o )
 	{  		
 		switch ( o.userData.tag ) 
 		{
-			case 'obj': fname_s_0252(o); break;
+			case 'obj': fname_s_0256(o); break;
 		}
 	}
 }
@@ -2321,10 +2321,10 @@ function fname_s_062(obj)
 	
 	var tag = obj.userData.tag;
 	
-	if(tag == 'wall') { fname_s_0273(); }
-	else if(tag == 'point') { fname_s_0273(); }
-	else if(tag == 'window') { fname_s_0273(); }
-	else if(tag == 'door') { fname_s_0273(); }	
+	if(tag == 'wall') { fname_s_0277(); }
+	else if(tag == 'point') { fname_s_0277(); }
+	else if(tag == 'window') { fname_s_0277(); }
+	else if(tag == 'door') { fname_s_0277(); }	
 }
 
 
@@ -2398,9 +2398,9 @@ function fname_s_064(cam)
 		fname_s_080( camera.zoom );
 		if(infProject.scene.grid.show) infProject.scene.grid.obj.visible = true;
 
-		fname_s_0280();	
+		fname_s_0287();	
 		
-		fname_s_0272({current: true});
+		fname_s_0276({current: true});
 	}
 	else if(camera == camera3D)
 	{	
@@ -2412,10 +2412,10 @@ function fname_s_064(cam)
 		if(infProject.scene.grid.show) infProject.scene.grid.obj.visible = true;
 		
 		
-		fname_s_0278();
-		fname_s_0279();
+		fname_s_0285();
+		fname_s_0286();
 		
-		fname_s_0272({current: true});
+		fname_s_0276({current: true});
 	}
 	else if(camera == cameraWall)
 	{  
@@ -2784,9 +2784,9 @@ function fname_s_072( event )
 			
 			var gizmo = infProject.tools.gizmo;
 			
-			if(gizmo.visible) fname_s_0258(gizmo.userData.gizmo.obj);
+			if(gizmo.visible) fname_s_0262(gizmo.userData.gizmo.obj);
 			
-			fname_s_0279();
+			fname_s_0286();
 		}
 		if ( isMouseDown3 )    
 		{
@@ -2797,7 +2797,7 @@ function fname_s_072( event )
 			camera.position.add( offset );
 			infProject.camera.d3.targetPos.add( offset );
 			
-			fname_s_0279();
+			fname_s_0286();
 		}
 	}
 	else if ( camera3D.userData.camera.type == 'first' )
@@ -2967,7 +2967,7 @@ function fname_s_077( e )
 		if ( k < 1 ) fname_s_078();				
 	}
 	
-	fname_s_0246();
+	fname_s_0250();
 	
 	fname_s_0205();
 }
@@ -3877,7 +3877,7 @@ function fname_s_096( intersect )
 		}		 			
 	}
 
-	fname_s_0273({obj: obj}); 	
+	fname_s_0277({obj: obj}); 	
 }
 
 
@@ -4486,7 +4486,7 @@ function fname_s_0113( intersect )
 	
 	if(camera == cameraTop)
 	{
-		fname_s_0273({obj: obj}); 	
+		fname_s_0277({obj: obj}); 	
 	}
 }
 
@@ -5028,7 +5028,7 @@ function fname_s_0122( intersect )
 		fname_s_089( obj ); 	
 		fname_s_0129( obj );		
 		
-		fname_s_0273({obj: obj}); 	
+		fname_s_0277({obj: obj}); 	
 	}
 }
 
@@ -5410,7 +5410,7 @@ function fname_s_0132()
 	if ( tag == 'wall' ) { fname_s_0133( obj ).room; }
 	else if ( tag == 'point' ) { if(obj.p.length == 2) { fname_s_0137( obj ); } }
 	else if ( tag == 'window' || tag == 'door' ) { fname_s_0138( obj ); }
-	else if ( tag == 'obj' ) { fname_s_0251(obj); }
+	else if ( tag == 'obj' ) { fname_s_0255(obj); }
 	
 	 fname_s_0205();
 }
@@ -6784,7 +6784,7 @@ function fname_s_0168(cdm)
 	fname_s_07( wallR );		
 	fname_s_0145( fname_s_0115(wall) );  				 			
 	
-	fname_s_0273({obj: wall});
+	fname_s_0277({obj: wall});
 
 	fname_s_05(wallR);
 }
@@ -8543,24 +8543,10 @@ function fname_s_0198(cdm)
 			{ 			
 				
 				
-				if(cdm.upUI) { getListProject({id: infProject.user.id}); }		
+				if(cdm.upUI) { fname_s_0282({id: infProject.user.id}); }		
 			},
 			error: function(json){  }
 		});			
-	}
-	
-	
-	if(1==2)
-	{
-		var csv = JSON.stringify( txt );	
-		var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);	
-		
-		var link = document.createElement('a');
-		document.body.appendChild(link);
-		link.href = csvData;
-		link.target = '_blank';
-		link.download = 'filename.json';
-		link.click();			
 	}
 }
 
@@ -8790,7 +8776,7 @@ function fname_s_0201(cdm)
 	
 	for ( var i = 0; i < lotid.length; i++ )
 	{
-		fname_s_0266({lotid: lotid[i], loadFromFile: true, furn: furn});
+		fname_s_0270({lotid: lotid[i], loadFromFile: true, furn: furn});
 	}	
 }
 
@@ -8804,7 +8790,7 @@ function fname_s_0202(cdm)
 	{  
 		if(Number(cdm.lotid) == Number(furn[i].lotid))
 		{			
-			fname_s_0266(furn[i]);  
+			fname_s_0270(furn[i]);  
 
 			infProject.project.load.furn[infProject.project.load.furn.length] = furn[i].id;
 			
@@ -9025,10 +9011,10 @@ infProject.geometry.cone = [fname_s_0218()];
 infProject.geometry.labelWall = fname_s_0211(0.25 * 2, 0.125 * 2);
 infProject.geometry.labelFloor = fname_s_0211(1.0 * kof_rd, 0.25 * kof_rd);
 infProject.scene.substrate = { ruler: [], floor: [], active: null };
-infProject.scene.substrate.ruler = fname_s_0282(); 
-infProject.tools = { pivot: fname_s_0241(), gizmo: fname_s_0257(), cutWall: [], point: fname_s_0219(), axis: fname_s_0215() } 
+infProject.scene.substrate.ruler = fname_s_0289(); 
+infProject.tools = { pivot: fname_s_0245(), gizmo: fname_s_0261(), cutWall: [], point: fname_s_0219(), axis: fname_s_0215() } 
 
-infProject.catalog = fname_s_0264();  
+infProject.catalog = fname_s_0268();  
 infProject.listColor = resetPop.listColor(); 
 infProject.start = true; 
 
@@ -9099,12 +9085,12 @@ if(1==1)
 
 
 fname_s_0209();
-fname_s_0285({ pos: {y: 0.01} }); 	
+fname_s_0292({ pos: {y: 0.01} }); 	
 fname_s_071({radious: 15, theta: 90, phi: 35});		
-fname_s_0270();	
-fname_s_0272({name: 'button_wrap_img'});	
+fname_s_0274();	
+fname_s_0276({name: 'button_wrap_img'});	
 
-fname_s_0276({});	
+fname_s_0280({});	
 
 
 
@@ -9875,14 +9861,14 @@ function fname_s_0225( event )
 		}			
 		else if(clickO.button == 'add_lotid')
 		{
-			fname_s_0266({lotid: clickO.options, cursor: true});
+			fname_s_0270({lotid: clickO.options, cursor: true});
 		}		
 	}
 	else if(camera == camera3D)
 	{
 		if(clickO.button == 'add_lotid')
 		{
-			fname_s_0266({lotid: clickO.options, cursor: true});
+			fname_s_0270({lotid: clickO.options, cursor: true});
 		}		
 	}
 	else if(camera == cameraWall)
@@ -10355,11 +10341,11 @@ function fname_s_0238(cdm)
 }
 
 
-$('[nameId="button_wrap_img"]').mousedown(function () { fname_s_0272({el: this}); });
-$('[nameId="button_wrap_catalog"]').mousedown(function () { fname_s_0272({el: this}); });
-$('[nameId="button_wrap_list_obj"]').mousedown(function () { fname_s_0272({el: this}); });
-$('[nameId="button_wrap_object"]').mousedown(function () { fname_s_0272({el: this}); });
-$('[nameId="button_wrap_plan"]').mousedown(function () { fname_s_0272({el: this}); });
+$('[nameId="button_wrap_img"]').mousedown(function () { fname_s_0276({el: this}); });
+$('[nameId="button_wrap_catalog"]').mousedown(function () { fname_s_0276({el: this}); });
+$('[nameId="button_wrap_list_obj"]').mousedown(function () { fname_s_0276({el: this}); });
+$('[nameId="button_wrap_object"]').mousedown(function () { fname_s_0276({el: this}); });
+$('[nameId="button_wrap_plan"]').mousedown(function () { fname_s_0276({el: this}); });
 
 
 
@@ -10369,12 +10355,12 @@ $('[nameId="button_wrap_plan"]').mousedown(function () { fname_s_0272({el: this}
 $('[nameId="showHideWall_1"]').on('mousedown', function(e) { fname_s_069(); });
 
 	
-$('[nameId="select_pivot"]').mousedown(function () { fname_s_0253({mode:'pivot'}); });
-$('[nameId="select_gizmo"]').mousedown(function () { fname_s_0253({mode:'gizmo'}); });
+$('[nameId="select_pivot"]').mousedown(function () { fname_s_0257({mode:'pivot'}); });
+$('[nameId="select_gizmo"]').mousedown(function () { fname_s_0257({mode:'gizmo'}); });
 
-$('[nameId="obj_rotate_reset"]').mousedown(function () { fname_s_0256(); });	
-$('[nameId="button_copy_obj"]').mousedown(function () { fname_s_0255(); });
-$('[nameId="button_delete_obj"]').mousedown(function () { fname_s_0251(clickO.last_obj); });
+$('[nameId="obj_rotate_reset"]').mousedown(function () { fname_s_0260(); });	
+$('[nameId="button_copy_obj"]').mousedown(function () { fname_s_0259(); });
+$('[nameId="button_delete_obj"]').mousedown(function () { fname_s_0255(clickO.last_obj); });
 
 
 $('[data-action="wall"]').mousedown(function () { fname_s_0226({button:'point_1'}); });
@@ -10430,27 +10416,27 @@ function fname_s_0240(cdm)
 	}
 	else if(infProject.activeInput == 'rp_wall_width_1')
 	{
-		fname_s_0277({ el: infProject.activeInput_2.el });
+		fname_s_0281({ el: infProject.activeInput_2.el });
 	}
 	else if(infProject.activeInput == 'rp_door_length_1')
 	{
-		fname_s_0277({ el: infProject.activeInput_2.el });
+		fname_s_0281({ el: infProject.activeInput_2.el });
 	}
 	else if(infProject.activeInput == 'rp_door_height_1')
 	{
-		fname_s_0277({ el: infProject.activeInput_2.el });
+		fname_s_0281({ el: infProject.activeInput_2.el });
 	}
 	else if(infProject.activeInput == 'rp_wind_length_1')
 	{
-		fname_s_0277({ el: infProject.activeInput_2.el });
+		fname_s_0281({ el: infProject.activeInput_2.el });
 	}
 	else if(infProject.activeInput == 'rp_wind_height_1')
 	{
-		fname_s_0277({ el: infProject.activeInput_2.el });
+		fname_s_0281({ el: infProject.activeInput_2.el });
 	}
 	else if(infProject.activeInput == 'rp_wind_above_floor_1')
 	{
-		fname_s_0277({ el: infProject.activeInput_2.el });
+		fname_s_0281({ el: infProject.activeInput_2.el });
 	}	
 }
 
@@ -10519,6 +10505,237 @@ $('[data-action="modal_window_close_1"]').mousedown(function ()
 
 
 
+
+$('[nameId="background_main_menu"]').mousedown(function () 
+{	 
+	$('[nameId="background_main_menu"]').css({"display":"none"}); 
+});
+
+			
+$('[nameId="button_close_main_menu"]').mousedown(function () 
+{  
+	$('[nameId="background_main_menu"]').css({"display":"none"}); 
+});
+
+$('[nameId="window_main_menu"]').mousedown(function (e) { e.stopPropagation(); });
+	
+	
+
+$('[nameId="button_check_reg_1"]').mousedown(function () { fname_s_0241({el: this}); });
+$('[nameId="button_check_reg_2"]').mousedown(function () { fname_s_0241({el: this}); });	
+
+
+function fname_s_0241(cdm)
+{
+	var inf_block = $('[nameId="info_reg_1"]');
+	var inf_str_1 = $('[nameId="info_reg_1_1"]');
+	var inf_str_2 = $('[nameId="info_reg_1_2"]');
+	
+	inf_block.hide();
+	inf_str_1.hide();
+	inf_str_2.hide();		
+
+	if(cdm.el.attributes.nameId.value == "button_check_reg_1") 
+	{
+		$('[nameId="act_reg_1"]').text('Войти');
+		$('[nameId="act_reg_1"]').attr("b_type", "reg_1"); 
+	}
+	if(cdm.el.attributes.nameId.value == "button_check_reg_2") 
+	{
+		$('[nameId="act_reg_1"]').text('Зарегистрироваться');
+		$('[nameId="act_reg_1"]').attr("b_type", "reg_2");
+	}	
+}
+
+
+	
+
+$('[nameId="act_reg_1"]').mousedown(function () { fname_s_0242(); });
+
+
+function fname_s_0242()
+{
+		var pattern_1 = /^[a-z0-9@_\-\.]{4,20}$/i;
+	var pattern_2 = /^[a-z0-9]{4,20}$/i;
+	var mail = $('[nameId="input_reg_mail"]');
+	var pass = $('[nameId="input_reg_pass"]');
+	
+	var inf_block = $('[nameId="info_reg_1"]');
+	var inf_str_1 = $('[nameId="info_reg_1_1"]');
+	var inf_str_2 = $('[nameId="info_reg_1_2"]');
+	
+	inf_block.hide();
+	inf_str_1.hide();
+	inf_str_2.hide();
+	
+	var flag_1 = false;
+	var flag_2 = false;
+	
+	mail.val(mail.val().trim());		pass.val(pass.val().trim());		
+		if(mail.val() != '')
+	{
+		if(pattern_1.test(mail.val()))
+		{
+			flag_1 = true;
+		}
+		else
+		{
+			inf_str_1.show();
+			inf_str_1.text('Не верно указанна почта');			
+		}
+	}
+	else
+	{		
+		inf_str_1.show();
+		inf_str_1.text('Укажите e-mail');
+	}
+	
+	
+		if(pass.val() != '')
+	{
+		if(pattern_2.test(pass.val()))
+		{
+			flag_2 = true;
+		}
+		else
+		{
+			inf_str_2.show();
+			inf_str_2.html('Не верно указан пароль<br>(Только цифры и латинские буквы от 4 до 20 знаков)');			
+		}
+	}		
+	else
+	{		
+		inf_str_2.show();
+		inf_str_2.text('Укажите пароль');
+	}
+	
+	
+		if(flag_1 && flag_2)
+	{ 
+		inf_block.hide();
+		
+				var type = $('[nameId="act_reg_1"]').attr("b_type");
+		
+		$.ajax
+		({
+			type: "POST",					
+			url: infProject.path+'components/regUser.php',
+			data: {"type": type, "mail": mail.val(), "pass": pass.val()},
+			dataType: 'json',
+			success: function(data)
+			{  
+				if(type=='reg_1')					{
+					if(data.success)
+					{
+						infProject.user.id = data.info.id;
+						infProject.user.mail = data.info.mail;
+						infProject.user.pass = data.info.pass;
+
+						$('[nameId="reg_content_1"]').show();
+						$('[nameId="reg_content_2"]').hide();
+
+						fname_s_0282({id: infProject.user.id});
+					}
+					else
+					{
+						if(data.err.desc)
+						{
+							
+							inf_str_1.html(data.err.desc);
+							
+							inf_block.show();
+							inf_str_1.show();
+							inf_str_1.show();
+							inf_str_2.hide();													
+						}
+					}
+				}
+				else if(type=='reg_2')					{
+					if(data.success)
+					{
+												inf_str_1.html("Вы успешно зарегистрировались");						
+						
+						inf_block.show();
+						inf_str_1.show();
+						inf_str_1.show();
+						inf_str_2.hide();												
+					}
+					else
+					{						
+						if(data.err.desc)
+						{
+							
+							inf_str_1.html(data.err.desc);
+							
+							inf_block.show();
+							inf_str_1.show();
+							inf_str_1.show();
+							inf_str_2.hide();													
+						}						
+					}
+				}				
+			}
+		});		
+	}
+	else		{  
+		inf_block.show();
+	}
+};
+
+
+
+
+
+
+$('[nameId="button_show_panel_catalog"]').mousedown(function () { fname_s_0243({show: true}); });
+$('[nameId="button_catalog_close"]').mousedown(function () { fname_s_0243({show: false}); });
+
+
+function fname_s_0243(cdm)
+{
+	var show = cdm.show;
+	
+	var block = $('[nameId="panel_catalog_1"]');
+	var button = $('[nameId="button_show_panel_catalog"]');
+	
+	if(show) { block.show(); button.hide(); }
+	else { block.hide(); button.show(); }
+}
+
+
+$('#load_substrate_1').change(fname_s_0244);	
+$('[nameId="assign_size_substrate"]').mousedown(function () { fname_s_0309(); });
+$('[nameId="button_delete_substrate"]').mousedown(function () { fname_s_0312(); }); 
+
+$('[nameId="input_rotate_substrate_45"]').mousedown(function () { fname_s_0310({angle: 45}); });
+$('[nameId="input_rotate_substrate_90"]').mousedown(function () { fname_s_0310({angle: 90}); });
+
+
+$('[nameId="input_transparency_substrate"]').on("input", function() { fname_s_0311({value: $(this).val()}); }); 
+
+
+function fname_s_0244(e) 
+{
+	if (this.files[0]) 
+	{		
+		if (this.files[0].type == "image/png" || this.files[0].type == "image/jpeg")
+		{
+			var reader = new FileReader();
+			reader.onload = function (e) 
+			{
+				$('#substrate_img').attr('src', e.target.result);						
+				
+				fname_s_0300({image: e.target.result});					
+			}				
+
+			reader.readAsDataURL(this.files[0]);  					
+		}				
+	}
+}	 
+
+
+
+
 });
 
 
@@ -10532,7 +10749,7 @@ $('[data-action="modal_window_close_1"]').mousedown(function ()
 
 
 
-function fname_s_0241()
+function fname_s_0245()
 {
 	var pivot = new THREE.Object3D();
 	pivot.userData.pivot = {};
@@ -10549,7 +10766,7 @@ function fname_s_0241()
 	
 	for ( var i = 0; i < param.length; i++ )
 	{
-		var geometry = fname_s_0242(param[i].size_1.x, param[i].size_1.y, param[i].size_1.z);
+		var geometry = fname_s_0246(param[i].size_1.x, param[i].size_1.y, param[i].size_1.z);
 		
 		var obj = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial({ color: param[i].color, transparent: true, opacity: param[i].opacity, depthTest: false }) );
 		obj.userData.tag = 'pivot';
@@ -10563,16 +10780,16 @@ function fname_s_0241()
 		
 		if(param[i].size_2)
 		{
-			var axis = new THREE.Mesh( fname_s_0242(0.6, 0.02, 0.02), new THREE.MeshPhongMaterial({ color: param[i].color, depthTest: false, transparent: true, lightMap: lightMap_1 }) );	
+			var axis = new THREE.Mesh( fname_s_0246(0.6, 0.02, 0.02), new THREE.MeshPhongMaterial({ color: param[i].color, depthTest: false, transparent: true, lightMap: lightMap_1 }) );	
 			axis.renderOrder = 2;
 			
 			obj.add( axis );					
 		}
 	}	
 		
-	pivot.add( fname_s_0243({axis: 'z', pos: new THREE.Vector3(0,0,-0.6), rot: new THREE.Vector3(-Math.PI/2,0,0), color: 0x0000ff}) );
-	pivot.add( fname_s_0243({axis: 'x', pos: new THREE.Vector3(0.6,0,0), rot: new THREE.Vector3(0,0,-Math.PI/2), color: 0xff0000}) );
-	pivot.add( fname_s_0243({axis: 'y', pos: new THREE.Vector3(0,0.6,0), rot: new THREE.Vector3(0,0,0), color: 0x00ff00}) );
+	pivot.add( fname_s_0247({axis: 'z', pos: new THREE.Vector3(0,0,-0.6), rot: new THREE.Vector3(-Math.PI/2,0,0), color: 0x0000ff}) );
+	pivot.add( fname_s_0247({axis: 'x', pos: new THREE.Vector3(0.6,0,0), rot: new THREE.Vector3(0,0,-Math.PI/2), color: 0xff0000}) );
+	pivot.add( fname_s_0247({axis: 'y', pos: new THREE.Vector3(0,0.6,0), rot: new THREE.Vector3(0,0,0), color: 0x00ff00}) );
 	
 	scene.add( pivot );
 
@@ -10584,7 +10801,7 @@ function fname_s_0241()
 
 
 
-function fname_s_0242(x, y, z)
+function fname_s_0246(x, y, z)
 {
 	var geometry = new THREE.Geometry();
 	y /= 2;
@@ -10638,7 +10855,7 @@ function fname_s_0242(x, y, z)
 
 
 
-function fname_s_0243(cdm)
+function fname_s_0247(cdm)
 {	
 	var n = 0;
 	var v = [];
@@ -10678,7 +10895,7 @@ function fname_s_0243(cdm)
 
 
 
-function fname_s_0244( intersect )
+function fname_s_0248( intersect )
 {
 	var obj = clickO.move = intersect.object;  
 	
@@ -10737,7 +10954,7 @@ function fname_s_0244( intersect )
 
 
 
-function fname_s_0245( event )
+function fname_s_0249( event )
 {	
 	var intersects = fname_s_0223( event, planeMath, 'one' ); 
 	
@@ -10773,7 +10990,7 @@ function fname_s_0245( event )
 
 
 
-function fname_s_0246()
+function fname_s_0250()
 {
 	var pivot = infProject.tools.pivot;
 	var gizmo = infProject.tools.gizmo;
@@ -10814,7 +11031,7 @@ function fname_s_0246()
 
 
 
-function fname_s_0247( obj, intersect )
+function fname_s_0251( obj, intersect )
 {	
 	var obj = clickO.move = intersect.object;  
 	
@@ -10827,7 +11044,7 @@ function fname_s_0247( obj, intersect )
 
 
 
-function fname_s_0248( event )
+function fname_s_0252( event )
 {	
 	var intersects = fname_s_0223( event, planeMath, 'one' ); 
 	
@@ -10849,7 +11066,7 @@ function fname_s_0248( event )
 
 
 
-function fname_s_0249(obj)
+function fname_s_0253(obj)
 {
 	if(clickO.actMove)
 	{		
@@ -10862,7 +11079,7 @@ function fname_s_0249(obj)
 
 
 
-function fname_s_0250( obj )
+function fname_s_0254( obj )
 {
 	
 	obj.updateMatrixWorld();
@@ -10925,14 +11142,14 @@ function fname_s_0250( obj )
 
 		gizmo.quaternion.copy( qt );
 		
-		fname_s_0263(obj);
+		fname_s_0267(obj);
 		
-		fname_s_0258(obj); 		
+		fname_s_0262(obj); 		
 	}		
 	
-	fname_s_0246();
+	fname_s_0250();
 	
-	fname_s_0273({obj: obj});	
+	fname_s_0277({obj: obj});	
 }
 
 
@@ -10942,13 +11159,13 @@ function fname_s_0250( obj )
 	
 
 
-function fname_s_0251(obj)
+function fname_s_0255(obj)
 { 
 	if(obj.userData.tag != 'obj') return;
 	
 	clickO = resetPop.clickO(); 
 	
-	fname_s_0252(obj);
+	fname_s_0256(obj);
 	
 	var arr = [];
 	
@@ -10957,7 +11174,7 @@ function fname_s_0251(obj)
 	for(var i = 0; i < arr.length; i++)
 	{	
 		fname_s_0139({arr : infProject.scene.array.obj, o : arr[i]});
-		fname_s_0271({uuid: arr[i].uuid, type: 'delete'});
+		fname_s_0275({uuid: arr[i].uuid, type: 'delete'});
 		fname_s_0195(arr[i]);
 		scene.remove(arr[i]); 
 	}
@@ -10968,7 +11185,7 @@ function fname_s_0251(obj)
 
 
 
-function fname_s_0252(obj)
+function fname_s_0256(obj)
 {
 	if(!obj) return;
 	if(!obj.userData.tag) return;	
@@ -10999,7 +11216,7 @@ function fname_s_0252(obj)
 	
 	clickO.last_obj = null;
 	
-	fname_s_0273(); 	
+	fname_s_0277(); 	
 	
 	fname_s_0208();
 }
@@ -11011,9 +11228,9 @@ function fname_s_0252(obj)
 
 
 
-function fname_s_0253(cdm)
+function fname_s_0257(cdm)
 {
-	var obj = fname_s_0254();
+	var obj = fname_s_0258();
 	
 	if(!obj) return;			
 	
@@ -11028,12 +11245,12 @@ function fname_s_0253(cdm)
 	infProject.tools.pivot.userData.pivot.obj = null;
 	infProject.tools.gizmo.userData.gizmo.obj = null;
 
-	fname_s_0250( obj ); 
+	fname_s_0254( obj ); 
 }
 
 
 
-function fname_s_0254(cdm)
+function fname_s_0258(cdm)
 {
 	var obj = null;
 	var pivot = infProject.tools.pivot;
@@ -11050,9 +11267,9 @@ function fname_s_0254(cdm)
 
 
 
-function fname_s_0255(cdm) 
+function fname_s_0259(cdm) 
 {
-	var obj = fname_s_0254();
+	var obj = fname_s_0258();
 	
 	if(!obj) return;	
 		
@@ -11068,21 +11285,21 @@ function fname_s_0255(cdm)
 		infProject.scene.array.obj[infProject.scene.array.obj.length] = clone; 
 		scene.add( clone );	
 
-		fname_s_0271({o: clone, type: 'add'});	
+		fname_s_0275({o: clone, type: 'add'});	
 	}	
 	 
 	
-	fname_s_0252(obj);
+	fname_s_0256(obj);
 	
-	fname_s_0250( arr2[0] );
+	fname_s_0254( arr2[0] );
 }
 
 
 
 
-function fname_s_0256(cdm)
+function fname_s_0260(cdm)
 {
-	var obj = fname_s_0254();
+	var obj = fname_s_0258();
 	
 	if(!obj) return;
 
@@ -11125,7 +11342,7 @@ function fname_s_0256(cdm)
  
 
 
-function fname_s_0257()
+function fname_s_0261()
 {
 	var count = 68; 
 	var circle = [];
@@ -11201,7 +11418,7 @@ function fname_s_0257()
 
 
 
-function fname_s_0258( objPop ) 
+function fname_s_0262( objPop ) 
 {
 	var plane = new THREE.Plane();	
 	
@@ -11240,7 +11457,7 @@ function fname_s_0258( objPop )
 
 
 
-function fname_s_0259( intersect )
+function fname_s_0263( intersect )
 {			
 	var gizmo = infProject.tools.gizmo;
 	
@@ -11281,11 +11498,11 @@ function fname_s_0259( intersect )
 	}
 	else
 	{
-		fname_s_0260(obj, dr, rotY, false);
+		fname_s_0264(obj, dr, rotY, false);
 	}
 	
 	
-	function fname_s_0260(obj, dr, rotY, global)
+	function fname_s_0264(obj, dr, rotY, global)
 	{
 		if(global)	
 		{
@@ -11308,7 +11525,7 @@ function fname_s_0259( intersect )
 
 
 
-function fname_s_0261( event )
+function fname_s_0265( event )
 {	
 	var intersects = fname_s_0223( event, planeMath, 'one' );	 	 
 	if(intersects.length == 0) return;
@@ -11336,11 +11553,11 @@ function fname_s_0261( event )
 	}
 	else 
 	{ 		
-		fname_s_0262({obj: [obj], dr: dr, rotY: rotY, centerO: obj});		 
+		fname_s_0266({obj: [obj], dr: dr, rotY: rotY, centerO: obj});		 
 	}		
 	
 	
-	function fname_s_0262(cdm)
+	function fname_s_0266(cdm)
 	{
 		var centerO = cdm.centerO;
 		var arr = cdm.obj;
@@ -11373,14 +11590,14 @@ function fname_s_0261( event )
 	}
 	
 	
-	fname_s_0263(obj);
+	fname_s_0267(obj);
 }
 
 
 
 
 
-function fname_s_0263(obj) 
+function fname_s_0267(obj) 
 {				
 	$('[nameId="object_rotate_X"]').val( Math.round( THREE.Math.radToDeg(obj.rotation.x) ) );
 	$('[nameId="object_rotate_Y"]').val( Math.round( THREE.Math.radToDeg(obj.rotation.y) ) );
@@ -11391,7 +11608,7 @@ function fname_s_0263(obj)
 
 
 
-function fname_s_0264()
+function fname_s_0268()
 {
 	var arr = [];		
 	
@@ -11458,7 +11675,7 @@ function fname_s_0264()
 }
 
 
-function fname_s_0265(cdm)
+function fname_s_0269(cdm)
 {
 	var lotid = cdm.lotid;
 	
@@ -11476,7 +11693,7 @@ function fname_s_0265(cdm)
 
 
 
-function fname_s_0266(cdm)
+function fname_s_0270(cdm)
 { 
 			
 	
@@ -11484,10 +11701,10 @@ function fname_s_0266(cdm)
 	
 	var lotid = cdm.lotid;
 	
-	var inf = fname_s_0265({lotid: lotid});
+	var inf = fname_s_0269({lotid: lotid});
 
 	if(!inf) return;		
-	var obj = fname_s_0267({lotid: lotid});
+	var obj = fname_s_0271({lotid: lotid});
 	
 	if(cdm.loadFromFile){ obj = null; }
 	
@@ -11495,7 +11712,7 @@ function fname_s_0266(cdm)
 	{ 
 		inf.obj = obj.clone();
 		
-		if(obj) { fname_s_0269(inf, cdm); }
+		if(obj) { fname_s_0273(inf, cdm); }
 	}
 	else
 	{
@@ -11506,7 +11723,7 @@ function fname_s_0266(cdm)
 						
 			var obj = object.children[0];
 			
-			var obj = fname_s_0268({lotid: lotid, obj: obj});
+			var obj = fname_s_0272({lotid: lotid, obj: obj});
 			
 			if(cdm.loadFromFile)				{
 				fname_s_0202({lotid: lotid, furn: cdm.furn});
@@ -11514,7 +11731,7 @@ function fname_s_0266(cdm)
 			else								{
 				inf.obj = obj;
 				
-				fname_s_0269(inf, cdm);							
+				fname_s_0273(inf, cdm);							
 			}
 		});
 	
@@ -11527,7 +11744,7 @@ function fname_s_0266(cdm)
 
 
 
-function fname_s_0267(cdm)
+function fname_s_0271(cdm)
 {
 	var lotid = cdm.lotid;									var arrObj = infProject.scene.array.base;			
 	for(var i = 0; i < arrObj.length; i++)
@@ -11544,7 +11761,7 @@ function fname_s_0267(cdm)
 
 
 
-function fname_s_0268(cdm)
+function fname_s_0272(cdm)
 {
 	var lotid = cdm.lotid;									var obj = cdm.obj;
 	var base = infProject.scene.array.base;				
@@ -11581,7 +11798,7 @@ function fname_s_0268(cdm)
 
 
 
-function fname_s_0269(inf, cdm)
+function fname_s_0273(inf, cdm)
 {
 		if(cdm.wd)
 	{  
@@ -11620,7 +11837,7 @@ function fname_s_0269(inf, cdm)
 
 	scene.add( obj );
 	 
-	fname_s_0271({o: obj, type: 'add'});		
+	fname_s_0275({o: obj, type: 'add'});		
 	if(cdm.cursor) { clickO.move = obj; } 
 	
 	fname_s_0205();
@@ -11636,7 +11853,7 @@ function fname_s_0269(inf, cdm)
 
 
 
-function fname_s_0270(cdm)
+function fname_s_0274(cdm)
 {
 	
 	for(var i = 0; i < infProject.catalog.length; i++)
@@ -11659,7 +11876,7 @@ function fname_s_0270(cdm)
 
 
 
-function fname_s_0271(cdm)
+function fname_s_0275(cdm)
 {
 	if(cdm.type == 'add')
 	{
@@ -11698,7 +11915,7 @@ function fname_s_0271(cdm)
 
 
 
-function fname_s_0272(cdm)
+function fname_s_0276(cdm)
 {
 	$('[nameId="wrap_img"]').hide();
 	$('[nameId="wrap_catalog"]').hide();
@@ -11707,7 +11924,7 @@ function fname_s_0272(cdm)
 	$('[nameId="wrap_plan"]').hide();
 	
 	infProject.scene.substrate.active = null;
-	fname_s_0290({visible: false});
+	fname_s_0297({visible: false});
 	
 	var name = '';
 	
@@ -11722,7 +11939,7 @@ function fname_s_0272(cdm)
 		$('[nameId="wrap_img"]').show();
 		fname_s_0227();
 		infProject.scene.substrate.active = infProject.scene.substrate.floor[0].plane;
-		fname_s_0290({visible: true});
+		fname_s_0297({visible: true});
 	}	
 	if(name == "button_wrap_catalog") 
 	{
@@ -11746,7 +11963,7 @@ function fname_s_0272(cdm)
 
 
 
-function fname_s_0273(cdm) 
+function fname_s_0277(cdm) 
 {
 	$('[nameId="wrap_object_1"]').hide();
 	
@@ -11793,7 +12010,7 @@ function fname_s_0273(cdm)
 
 
 
-function fname_s_0274(cdm)
+function fname_s_0278(cdm)
 {
 	if(!cdm) { cdm = {}; }	
 	if(!cdm.obj) return;
@@ -11806,7 +12023,7 @@ function fname_s_0274(cdm)
 
 
 
-function fname_s_0275(cdm)
+function fname_s_0279(cdm)
 {
 	var obj = cdm.obj;
 	var nameId = cdm.nameId;
@@ -11826,7 +12043,7 @@ function fname_s_0275(cdm)
 
 
 
-function fname_s_0276(cdm)
+function fname_s_0280(cdm)
 {
 	
 	$('[nameId="rp_wall_width_1"]').val(infProject.settings.wall.width);
@@ -11843,7 +12060,7 @@ function fname_s_0276(cdm)
 
 
 
-function fname_s_0277(cdm) 
+function fname_s_0281(cdm) 
 {
 	var el = cdm.el;
 	var value = el.val();
@@ -11874,12 +12091,75 @@ function fname_s_0277(cdm)
 
 
 
+function fname_s_0282(cdm)
+{  
+	$.ajax
+	({
+		type: "POST",					
+		url: infProject.path+'components/loadListProject.php',
+		data: {"id": cdm.id },
+		dataType: 'json',
+		success: function(data)
+		{  
+			var html_load = '';
+			var html_save = '';
+			
+			for(var i = 0; i < 5; i++)
+			{
+				if(data[i]) continue;
+				
+				data[i] = {id: 0, name: 'Пустой проект'}
+			}
+			
+			for(var i = 0; i < data.length; i++)
+			{				
+				if(data[i].preview) 
+				{
+					html_save += '<div class="window_main_menu_content_block_1" projectId="'+data[i].id+'" nameId="save_pr_1"><img src="'+data[i].preview+'"></div>';
+					html_load += '<div class="window_main_menu_content_block_1" projectId="'+data[i].id+'" nameId="load_pr_1"><img src="'+data[i].preview+'"></div>';
+				}
+				else
+				{
+					html_save += '<div class="window_main_menu_content_block_1" projectId="'+data[i].id+'" nameId="save_pr_1">'+data[i].name+'</div>';
+					html_load += '<div class="window_main_menu_content_block_1" projectId="'+data[i].id+'" nameId="load_pr_1">'+data[i].name+'</div>';					
+				}
+			}
+			
+			$('[nameId="wm_list_save"]').html(html_save);
+			$('[nameId="wm_list_load"]').html(html_load); 
+	
+			
+			$('[nameId="save_pr_1"]').on('mousedown', function(){ fname_s_0283(this); });
+			$('[nameId="load_pr_1"]').on('mousedown', function(){ fname_s_0284(this); });
+		}
+	});	
+}
+
+
+function fname_s_0283(el)
+{
+	fname_s_0198({id: el.attributes.projectid.value, upUI: true}); 
+	
+	$('[nameId="background_main_menu"]').hide();
+}
+
+
+
+
+function fname_s_0284(el)
+{
+	fname_s_0199({id: el.attributes.projectid.value}); 
+	
+	$('[nameId="background_main_menu"]').hide();
+}
+
+
 
 
 var wallVisible = [];
 
 
-function fname_s_0278()
+function fname_s_0285()
 {
 	wallVisible = [];
 	var wall = infProject.scene.array.wall;
@@ -11905,7 +12185,7 @@ function fname_s_0278()
 
 
 
-function fname_s_0279()
+function fname_s_0286()
 { 
 	var camPos = camera.getWorldDirection(new THREE.Vector3());
 	
@@ -11921,7 +12201,7 @@ function fname_s_0279()
 		if ( res > 0.5 )  
 		{ 	
 			wall.renderOrder = Math.abs(res);
-			fname_s_0281({obj: wall, value: 1 - Math.abs(res)});
+			fname_s_0288({obj: wall, value: 1 - Math.abs(res)});
 			
 			for ( var i2 = 0; i2 < wall.userData.wall.arrO.length; i2++ ) 
 			{
@@ -11931,7 +12211,7 @@ function fname_s_0279()
 		else
 		{
 			wall.renderOrder = 0;
-			fname_s_0281({obj: wall, value: 1});
+			fname_s_0288({obj: wall, value: 1});
 			
 			for ( var i2 = 0; i2 < wall.userData.wall.arrO.length; i2++ ) 
 			{
@@ -11942,14 +12222,14 @@ function fname_s_0279()
 }
 
 
-function fname_s_0280()
+function fname_s_0287()
 {		
 	for ( var i = 0; i < wallVisible.length; i++ ) 
 	{ 
 		var wall = wallVisible[i].wall;
 
 		wall.renderOrder = 0;
-		fname_s_0281({obj: wall, value: 1});
+		fname_s_0288({obj: wall, value: 1});
 		
 		for ( var i2 = 0; i2 < wall.userData.wall.arrO.length; i2++ ) 
 		{
@@ -11959,7 +12239,7 @@ function fname_s_0280()
 }
 
 
-function fname_s_0281(cdm)
+function fname_s_0288(cdm)
 {
 	var obj = cdm.obj;
 	
@@ -11993,7 +12273,7 @@ function fname_s_0281(cdm)
 
 
 
-function fname_s_0282()
+function fname_s_0289()
 {	
 	var ruler = [];
 	
@@ -12035,7 +12315,7 @@ function fname_s_0282()
 	ruler[1].userData.subtool.line = line;
 	 	 
 	
-	fname_s_0283({ruler: ruler});
+	fname_s_0290({ruler: ruler});
 
 	return ruler;
 }
@@ -12043,7 +12323,7 @@ function fname_s_0282()
 
 
 
-function fname_s_0283(cdm)
+function fname_s_0290(cdm)
 {
 	var ruler = cdm.ruler;
 	var line = ruler[0].userData.subtool.line;
@@ -12073,7 +12353,7 @@ function fname_s_0283(cdm)
 
 
 
-function fname_s_0284()
+function fname_s_0291()
 {
 	var plane = infProject.scene.substrate.active;
 	if(!plane) return;
@@ -12082,12 +12362,12 @@ function fname_s_0284()
 	ruler[0].position.set(plane.position.x + 0.5, plane.position.y + 0.01, plane.position.z);
 	ruler[1].position.set(plane.position.x - 0.5, plane.position.y + 0.01, plane.position.z);
 
-	fname_s_0283({ruler: ruler});	
+	fname_s_0290({ruler: ruler});	
 }
 
 
 
-function fname_s_0285(cdm)
+function fname_s_0292(cdm)
 {
 	if(!cdm) { cdm = {}; }
 	
@@ -12097,7 +12377,7 @@ function fname_s_0285(cdm)
 	obj.userData.tag = "substrate";
 	obj.userData.substrate = { p: [], active: false, img: false };
 	obj.visible = false;
-	fname_s_0292({obj: obj, img: 'img/UV_Grid_Sm.jpg'}); 
+	fname_s_0299({obj: obj, img: 'img/UV_Grid_Sm.jpg'}); 
 	scene.add( obj );	
 	
 	if(cdm.pos)
@@ -12107,7 +12387,7 @@ function fname_s_0285(cdm)
 		if(cdm.pos.z) obj.position.z = cdm.pos.z;
 	}
 		
-	var p = fname_s_0286({plane: obj});
+	var p = fname_s_0293({plane: obj});
 	
 	p[0].userData.subpoint = {plane: obj, x: p[1], z: p[3], p2: p[2], dir: new THREE.Vector3(), qt: new THREE.Quaternion()};
 	p[1].userData.subpoint = {plane: obj, x: p[0], z: p[2], p2: p[3], dir: new THREE.Vector3(), qt: new THREE.Quaternion()};
@@ -12125,11 +12405,11 @@ function fname_s_0285(cdm)
 
 
 
-function fname_s_0286(cdm)
+function fname_s_0293(cdm)
 {	
 	var plane = cdm.plane;
 	
-	function fname_s_0287()
+	function fname_s_0294()
 	{
 		var count = 48;
 		var circle = [];
@@ -12147,7 +12427,7 @@ function fname_s_0286(cdm)
 		return circle;
 	}
 	
-	var circle = fname_s_0287();
+	var circle = fname_s_0294();
 	
 	var n = 0;
 	var v = [];
@@ -12194,7 +12474,7 @@ function fname_s_0286(cdm)
 
 
 
-function fname_s_0288(cdm)
+function fname_s_0295(cdm)
 {
 	var plane = cdm.plane;
 	var point = plane.userData.substrate.p;
@@ -12237,7 +12517,7 @@ function fname_s_0288(cdm)
 
 
 
-function fname_s_0289(cdm)
+function fname_s_0296(cdm)
 {
 	if(!infProject.scene.substrate.active) return;
 	 	
@@ -12257,14 +12537,14 @@ function fname_s_0289(cdm)
 	
 	plane.visible = visible;
 	
-	fname_s_0290({visible: visible});
+	fname_s_0297({visible: visible});
 	
 	fname_s_0205();
 }
 
 
 
-function fname_s_0290(cdm)
+function fname_s_0297(cdm)
 {
 	var visible = cdm.visible;
 	var plane = infProject.scene.substrate.active;
@@ -12283,7 +12563,7 @@ function fname_s_0290(cdm)
 
 
 
-function fname_s_0291(cdm)
+function fname_s_0298(cdm)
 {
 	if(!cdm) return;
 
@@ -12307,8 +12587,8 @@ function fname_s_0291(cdm)
 	ruler[0].position.y = plane.position.y + 0.01;
 	ruler[1].position.y = plane.position.y + 0.01;
 
-	fname_s_0283({ruler: ruler});
-	fname_s_0288({plane: plane});
+	fname_s_0290({ruler: ruler});
+	fname_s_0295({plane: plane});
 	
 	fname_s_0205();	
 }
@@ -12316,7 +12596,7 @@ function fname_s_0291(cdm)
 
 
 
-function fname_s_0292(cdm)
+function fname_s_0299(cdm)
 {
 	
 	
@@ -12342,18 +12622,18 @@ function fname_s_0292(cdm)
 		
 		if(cdm.scale)
 		{
-			fname_s_0301({obj: obj, size: {x: cdm.scale/2 * ratioImg, z: cdm.scale/2}});
+			fname_s_0308({obj: obj, size: {x: cdm.scale/2 * ratioImg, z: cdm.scale/2}});
 		}
 		else
 		{
-			fname_s_0301({obj: obj, size: {x: ratioImg * 2.5, z: 2.5}});
+			fname_s_0308({obj: obj, size: {x: ratioImg * 2.5, z: 2.5}});
 		}		
 				
 		var x = (Math.abs(obj.geometry.boundingBox.max.x) + Math.abs(obj.geometry.boundingBox.min.x));
 		
 		var z = (Math.abs(obj.geometry.boundingBox.max.z) + Math.abs(obj.geometry.boundingBox.min.z));		
 		
-		fname_s_0288({plane: obj});
+		fname_s_0295({plane: obj});
 		
 		fname_s_0220( obj );		
 		
@@ -12376,7 +12656,7 @@ function fname_s_0292(cdm)
 
 
 
-function fname_s_0293(cdm)
+function fname_s_0300(cdm)
 {
 	
 	
@@ -12403,7 +12683,7 @@ function fname_s_0293(cdm)
 		
 		var ratioImg = texture.image.width/texture.image.height;
 
-		fname_s_0301({obj: obj, size: {x: ratioImg * 2.5, z: 2.5}});
+		fname_s_0308({obj: obj, size: {x: ratioImg * 2.5, z: 2.5}});
 		
 		var x = (Math.abs(obj.geometry.boundingBox.max.x) + Math.abs(obj.geometry.boundingBox.min.x));
 		
@@ -12412,10 +12692,10 @@ function fname_s_0293(cdm)
 		
 		if(camera == cameraTop)
 		{
-			fname_s_0284();			
+			fname_s_0291();			
 		}
 
-		fname_s_0288({plane: obj});	
+		fname_s_0295({plane: obj});	
 		
 		fname_s_0220( obj );
 		
@@ -12431,9 +12711,9 @@ function fname_s_0293(cdm)
 		material.lightMap = lightMap_1;
 		material.needsUpdate = true; 					
 		
-		fname_s_0304({value: 100});
+		fname_s_0311({value: 100});
 		
-		fname_s_0289({visible: true});
+		fname_s_0296({visible: true});
 		
 		fname_s_0205();
 	};
@@ -12476,7 +12756,7 @@ function fname_s_0220( obj )
 
 
 
-function fname_s_0295(cdm)
+function fname_s_0302(cdm)
 {	
 	var intersect = cdm.intersect;
 	var obj = clickO.move = cdm.intersect.object;  
@@ -12490,7 +12770,7 @@ function fname_s_0295(cdm)
 
 
 
-function fname_s_0296( event ) 
+function fname_s_0303( event ) 
 {	
 	var intersects = fname_s_0223( event, planeMath, 'one' ); 
 	
@@ -12507,14 +12787,14 @@ function fname_s_0296( event )
 	
 	if(1==1)
 	{
-		fname_s_0283({ruler: infProject.scene.substrate.ruler});	
+		fname_s_0290({ruler: infProject.scene.substrate.ruler});	
 	}
 }
 
 
 
 
-function fname_s_0297(cdm)
+function fname_s_0304(cdm)
 {	
 	var intersect = cdm.intersect;
 	var obj = clickO.move = cdm.intersect.object;  
@@ -12528,7 +12808,7 @@ function fname_s_0297(cdm)
 
 
 
-function fname_s_0298( event ) 
+function fname_s_0305( event ) 
 {	
 	var intersects = fname_s_0223( event, planeMath, 'one' ); 
 	
@@ -12560,7 +12840,7 @@ function fname_s_0298( event )
 
 
 
-function fname_s_0299(cdm)
+function fname_s_0306(cdm)
 {	
 	var intersect = cdm.intersect;
 	var obj = clickO.move = cdm.intersect.object;  
@@ -12574,7 +12854,7 @@ function fname_s_0299(cdm)
 
 
 
-function fname_s_0300( event ) 
+function fname_s_0307( event ) 
 {	
 	var intersects = fname_s_0223( event, planeMath, 'one' ); 
 	
@@ -12631,7 +12911,7 @@ function fname_s_0300( event )
 		var x = new THREE.Vector3().subVectors( ps3, ps1 ).x;
 		var z = new THREE.Vector3().subVectors( ps2, ps1 ).z;
 		
-		fname_s_0301({obj: plane, size: {x: x/2, z: z/2}});
+		fname_s_0308({obj: plane, size: {x: x/2, z: z/2}});
 		
 		plane.position.add( pos2.clone().divideScalar( 2 ) );
 	}
@@ -12642,7 +12922,7 @@ function fname_s_0300( event )
 
 
 
-function fname_s_0301(cdm)
+function fname_s_0308(cdm)
 {
 	var obj = cdm.obj; 
 	var size = cdm.size;
@@ -12668,7 +12948,7 @@ function fname_s_0301(cdm)
 
 
 
-function fname_s_0302()
+function fname_s_0309()
 {
 	var size = $('[nameId="input_size_substrate"]').val();
 	var value = fname_s_0237({ value: size, unit: 1, abs: true, limit: {min: 0.01, max: 1000} });
@@ -12696,7 +12976,7 @@ function fname_s_0302()
 	x /= 2;
 	z /= 2;
 	
-	fname_s_0301({obj: plane, size: {x: x*ratio, z: z*ratio}});
+	fname_s_0308({obj: plane, size: {x: x*ratio, z: z*ratio}});
 		
 	
 	if(1==1)
@@ -12715,12 +12995,12 @@ function fname_s_0302()
 		ruler[1].position.x = v2.x;
 		ruler[1].position.z = v2.z;	
 
-		fname_s_0283({ruler: ruler});
+		fname_s_0290({ruler: ruler});
 	}
 	
 	$('[nameId="input_size_substrate"]').val( value.num );
 	
-	fname_s_0288({plane: plane});
+	fname_s_0295({plane: plane});
 	
 	fname_s_0205();
 }
@@ -12728,7 +13008,7 @@ function fname_s_0302()
 
 
 
-function fname_s_0303(cdm)
+function fname_s_0310(cdm)
 {
 	if(!cdm) return;
 
@@ -12759,7 +13039,7 @@ function fname_s_0303(cdm)
 
 	$('[nameId="input_rotate_substrate"]').val( rot );
 	
-	fname_s_0288({plane: plane});
+	fname_s_0295({plane: plane});
 	
 	fname_s_0205();
 }
@@ -12768,7 +13048,7 @@ function fname_s_0303(cdm)
 
 
 
-function fname_s_0304(cdm)
+function fname_s_0311(cdm)
 {
 	var value = cdm.value;
 	
@@ -12786,7 +13066,7 @@ function fname_s_0304(cdm)
 
 
 
-function fname_s_0305(cdm)
+function fname_s_0312(cdm)
 {
 	if(!cdm) cdm = {}; 
 	
@@ -12794,7 +13074,7 @@ function fname_s_0305(cdm)
 	var plane = infProject.scene.substrate.active;	
 	if(!plane) return;		
 	
-	fname_s_0289({visible: false});	
+	fname_s_0296({visible: false});	
 	
 	
 	plane.userData.substrate.img = false;
@@ -12810,7 +13090,7 @@ function fname_s_0305(cdm)
 
 
 
-function fname_s_0306()
+function fname_s_0313()
 {
 	$.ajax
 	({
@@ -12819,14 +13099,14 @@ function fname_s_0306()
 		dataType: 'json',
 		success: function(json)
 		{ 
-			fname_s_0307({json: json});
+			fname_s_0314({json: json});
 		},
 	});	
 }
 
 
 
-function fname_s_0307(cdm)
+function fname_s_0314(cdm)
 {
 	var rooms = cdm.json.rooms;
 	

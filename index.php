@@ -26,9 +26,7 @@
 	
     <script src="<?=$path?>js/three.min.js?<?=$vrs?>"></script>
     <script src="<?=$path?>js/jquery.js"></script>
-    <script src="<?=$path?>js/ThreeCSG.js"></script>       
-	<script src="<?=$path?>js/OBJLoader.js"></script>
-	<script src="<?=$path?>js/MTLLoader.js"></script>   
+    <script src="<?=$path?>js/ThreeCSG.js"></script>         
 	
 	<script src="<?=$path?>js/dp/EffectComposer.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>js/dp/CopyShader.js?<?=$vrs?>"></script>
@@ -54,12 +52,8 @@
 		<div class="flex_1 height100">
 			
 			<div style="flex-grow:1; position: relative;">
-				<? require_once("include/top_1.php"); ?>
-				
-				<noindex>		 				
-				<? require_once("include/bottom_panel_1.php"); ?>	
+				<? require_once("include/top_1.php"); ?>										 					
 				<? require_once("include/modal_window_3.php"); ?>		
-				</noindex>
 			</div>
 			
 			<? require_once("include/right_panel_1.php"); ?>
