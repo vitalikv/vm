@@ -1925,10 +1925,10 @@ function fname_s_054( event )
 {
 	
 
-	if (window.location.hostname == 'vm'){} 
-	else if (window.location.hostname == 'remstok'){} 
-	else if (window.location.hostname == 'remstok.ru'){} 
-	else { return; }
+	
+	
+	
+	
  
 	long_click = false;
 	lastClickTime = new Date().getTime();
@@ -10284,7 +10284,7 @@ $(document).ready(function ()
 	docReady = true; 	
 		 
 	 
-	fname_s_0199({json: true});  
+	
 	
 	
 	
