@@ -175,7 +175,14 @@ function resetScene()
 	
 	var line = arrSize.format_2.line;
 	var label = arrSize.format_2.label;
-	for ( var i = 0; i < line.length; i++ ) { line[i].visible = false; }
+	for ( var i = 0; i < line.length; i++ ) 
+	{ 
+		line[i].visible = false; 
+		for ( var i2 = 0; i2 < line[i].userData.rulerwd.cone.length; i2++ )
+		{
+			line[i].userData.rulerwd.cone[i2].visible = false; 
+		}
+	}
 	for ( var i = 0; i < label.length; i++ ) { label[i].visible = false; }
 	
 	

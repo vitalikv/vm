@@ -249,7 +249,15 @@ function hideSizeWD( obj )
 	}
 	
 	for ( var i = 0; i < arrSize.cube.length; i++ ) { arrSize.cube[i].visible = false; }
-	for ( var i = 0; i < arrSize.format_2.line.length; i++ ) { arrSize.format_2.line[i].visible = false; }
+	for ( var i = 0; i < arrSize.format_2.line.length; i++ ) 
+	{ 
+		var line = arrSize.format_2.line[i];
+		line.visible = false; 
+		for ( var i2 = 0; i2 < line.userData.rulerwd.cone.length; i2++ )
+		{
+			line.userData.rulerwd.cone[i2].visible = false; 
+		}	
+	}
 	for ( var i = 0; i < arrSize.format_2.label.length; i++ ){ arrSize.format_2.label[i].visible = false; }
   	for ( var i = 0; i < arrSize.cutoff.length; i++ ){ arrSize.cutoff[i].visible = false; }
 }

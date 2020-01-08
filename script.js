@@ -35,7 +35,7 @@ cameraTop.updateProjectionMatrix();
 
 
 //----------- camera3D
-var camera3D = new THREE.PerspectiveCamera( 65, w_w / w_h, 0.01, 1000 );  
+var camera3D = new THREE.PerspectiveCamera( 65, w_w / w_h, 0.03, 1000 );  
 camera3D.rotation.order = 'YZX';		//'ZYX'
 camera3D.position.set(5, 7, 5);
 camera3D.lookAt(scene.position);
@@ -175,7 +175,7 @@ infProject.scene.block = { key : { scroll : false } };		// блокировка 
 infProject.scene.block.click = {wall: false, point: false, door: false, window: false, room: false, tube: false, controll_wd: false, obj: false};
 infProject.scene.block.hover = {wall: false, point: false, door: false, window: false, room: false, tube: false, controll_wd: false, obj: false};
 infProject.geometry = { circle : createCircleSpline() }
-infProject.geometry.cone = [createGeometryCone_1()];
+infProject.geometry.cone = [createGeometryCone_1({r: 0.03, h: 0.25}), createGeometryCone_1({r: 0.04, h: 0.1})];
 infProject.geometry.labelWall = createGeometryPlan(0.25 * 2, 0.125 * 2);
 infProject.geometry.labelFloor = createGeometryPlan(1.0 * kof_rd, 0.25 * kof_rd);
 infProject.scene.substrate = { ruler: [], floor: [], active: null };
@@ -662,20 +662,23 @@ function createCircleSpline()
 
 
 // создаем Geometry конуса для рулеток
-function createGeometryCone_1()
+function createGeometryCone_1(cdm)
 {	
 	var n = 0;
 	var v = [];
 	var circle = infProject.geometry.circle;
 	
+	var r = cdm.r;
+	var h = cdm.h;
+	
 	for ( var i = 0; i < circle.length; i++ )
 	{
-		v[n] = new THREE.Vector3().addScaledVector( circle[i].clone().normalize(), 0.03 );
-		v[n].y = -0.25;		
+		v[n] = new THREE.Vector3().addScaledVector( circle[i].clone().normalize(), r );
+		v[n].y = -h;		
 		n++;		
 		
 		v[n] = new THREE.Vector3();
-		v[n].y = -0.25;
+		v[n].y = -h;
 		n++;
 		
 		v[n] = new THREE.Vector3().addScaledVector( circle[i].clone().normalize(), 0.003 );
@@ -820,7 +823,6 @@ function crtW( cdm )
 	{
 		for( var i = 0; i < cdm.color.length; i++ )
 		{
-			console.log(cdm.color[i]);
 			for( var i2 = 0; i2 < materials.length; i2++ )
 			{
 				if(cdm.color[i].index == i2) { materials[i2].color = new THREE.Color( cdm.color[i].o ); break; }
@@ -891,6 +893,9 @@ function crtW( cdm )
 	
 	upUvs_1( wall );
 	
+	cdm.texture = [];
+	cdm.texture[0] = { img: "img/load/beton.jpg", index:1 };
+	cdm.texture[1] = { img: "img/load/beton.jpg", index:2 };
 	if(cdm.texture)
 	{ 
 		var m = cdm.texture;
@@ -1125,7 +1130,7 @@ function deActiveSelected()
 
 
 function upUvs_1( obj )
-{ return;
+{ 
 	obj.updateMatrixWorld();
 	var geometry = obj.geometry;
 	
@@ -1452,7 +1457,7 @@ $(document).ready(function ()
 	docReady = true; 	
 		 
 	 
-	//loadFile({json: true});  
+	loadFile({json: true});  
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(0, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 1), rot: new THREE.Vector3(0, 1, 0)});

@@ -3524,6 +3524,24 @@ function fname_s_090(wd)
 		
 		line[i].visible = true;	
 		label[i].visible = true;
+		
+		line[i].updateMatrixWorld();
+		
+		for ( var i2 = 0; i2 < line[i].userData.rulerwd.cone.length; i2++ )
+		{
+			var cone = line[i].userData.rulerwd.cone[i2];
+			
+			var xp = v[0].x;
+			var zr = -Math.PI/2;
+			
+			if(i2 == 1) { xp = v[3].x; zr = Math.PI/2; }
+			
+			var pos = line[i].localToWorld( new THREE.Vector3(xp, 0, 0) );
+			cone.position.copy(pos);
+			cone.rotation.set(-Math.PI/2, 0, wall.rotation.y-zr);
+			
+			cone.visible = true;
+		}
 	}
 
 	
@@ -5240,7 +5258,15 @@ function fname_s_0128( obj )
 	}
 	
 	for ( var i = 0; i < arrSize.cube.length; i++ ) { arrSize.cube[i].visible = false; }
-	for ( var i = 0; i < arrSize.format_2.line.length; i++ ) { arrSize.format_2.line[i].visible = false; }
+	for ( var i = 0; i < arrSize.format_2.line.length; i++ ) 
+	{ 
+		var line = arrSize.format_2.line[i];
+		line.visible = false; 
+		for ( var i2 = 0; i2 < line.userData.rulerwd.cone.length; i2++ )
+		{
+			line.userData.rulerwd.cone[i2].visible = false; 
+		}	
+	}
 	for ( var i = 0; i < arrSize.format_2.label.length; i++ ){ arrSize.format_2.label[i].visible = false; }
   	for ( var i = 0; i < arrSize.cutoff.length; i++ ){ arrSize.cutoff[i].visible = false; }
 }
@@ -5791,14 +5817,12 @@ function fname_s_0142(cdm)
 	ceiling[n].visible = false;
 
 	
+	infProject.settings.floor.material = { img: "img/load/floor_1.jpg" };
 	if(infProject.settings.floor.material)
 	{	
 		var m = infProject.settings.floor.material;
 		
-		for ( var i = 0; i < m.length; i++ )
-		{
-			fname_s_0224({obj:room[n], material:m[i]});
-		}	
+		fname_s_0224({obj:room[n], material:m});	
 	}
 	
 	if(infProject.settings.floor.o)
@@ -7068,11 +7092,13 @@ function fname_s_0172(cdm)
 	
 	var material = new THREE.LineBasicMaterial( mat );
 	
+	
 	for ( var i = 0; i < cdm.count; i++ )
 	{
 		arr[i] = new THREE.Mesh( fname_s_0213(1, 0.025, 0.025), material );
 		var v = arr[i].geometry.vertices; 
-		v[0].x = v[1].x = v[6].x = v[7].x = 0;
+		v[0].x = v[1].x = v[6].x = v[7].x = -0.5;
+		v[3].x = v[2].x = v[5].x = v[4].x = 0.5;
 		
 		v[0].y = v[3].y = v[4].y = v[7].y = -0.025/2;
 		v[1].y = v[2].y = v[5].y = v[6].y = 0.025/2;
@@ -7080,7 +7106,17 @@ function fname_s_0172(cdm)
 		arr[i].geometry.verticesNeedUpdate = true;			
 		arr[i].visible = false;	 
 		arr[i].renderOrder = 1;
+		arr[i].userData = {rulerwd: {cone:[]}};
 		scene.add( arr[i] );
+		
+		for ( var i2 = 0; i2 < cdm.count; i2++ )
+		{
+			var cone = new THREE.Mesh(infProject.geometry.cone[1], material); 
+			cone.visible = false;
+			scene.add( cone );	
+			
+			arr[i].userData.rulerwd.cone[i2] = cone;			
+		}
 	}
 	
 	return arr;
@@ -8246,7 +8282,14 @@ function fname_s_0192()
 	
 	var line = arrSize.format_2.line;
 	var label = arrSize.format_2.label;
-	for ( var i = 0; i < line.length; i++ ) { line[i].visible = false; }
+	for ( var i = 0; i < line.length; i++ ) 
+	{ 
+		line[i].visible = false; 
+		for ( var i2 = 0; i2 < line[i].userData.rulerwd.cone.length; i2++ )
+		{
+			line[i].userData.rulerwd.cone[i2].visible = false; 
+		}
+	}
 	for ( var i = 0; i < label.length; i++ ) { label[i].visible = false; }
 	
 	
@@ -9007,7 +9050,7 @@ infProject.scene.block = { key : { scroll : false } };
 infProject.scene.block.click = {wall: false, point: false, door: false, window: false, room: false, tube: false, controll_wd: false, obj: false};
 infProject.scene.block.hover = {wall: false, point: false, door: false, window: false, room: false, tube: false, controll_wd: false, obj: false};
 infProject.geometry = { circle : fname_s_0217() }
-infProject.geometry.cone = [fname_s_0218()];
+infProject.geometry.cone = [fname_s_0218({r: 0.03, h: 0.25}), fname_s_0218({r: 0.04, h: 0.1})];
 infProject.geometry.labelWall = fname_s_0211(0.25 * 2, 0.125 * 2);
 infProject.geometry.labelFloor = fname_s_0211(1.0 * kof_rd, 0.25 * kof_rd);
 infProject.scene.substrate = { ruler: [], floor: [], active: null };
@@ -9494,20 +9537,23 @@ function fname_s_0217()
 
 
 
-function fname_s_0218()
+function fname_s_0218(cdm)
 {	
 	var n = 0;
 	var v = [];
 	var circle = infProject.geometry.circle;
 	
+	var r = cdm.r;
+	var h = cdm.h;
+	
 	for ( var i = 0; i < circle.length; i++ )
 	{
-		v[n] = new THREE.Vector3().addScaledVector( circle[i].clone().normalize(), 0.03 );
-		v[n].y = -0.25;		
+		v[n] = new THREE.Vector3().addScaledVector( circle[i].clone().normalize(), r );
+		v[n].y = -h;		
 		n++;		
 		
 		v[n] = new THREE.Vector3();
-		v[n].y = -0.25;
+		v[n].y = -h;
 		n++;
 		
 		v[n] = new THREE.Vector3().addScaledVector( circle[i].clone().normalize(), 0.003 );
@@ -9957,7 +10003,7 @@ function fname_s_0227()
 
 
 function fname_s_0228( obj )
-{ return;
+{ 
 	obj.updateMatrixWorld();
 	var geometry = obj.geometry;
 	
@@ -10284,7 +10330,7 @@ $(document).ready(function ()
 	docReady = true; 	
 		 
 	 
-	
+	fname_s_0199({json: true});  
 	
 	
 	

@@ -254,6 +254,24 @@ function showRulerWD_2D(wd)
 		
 		line[i].visible = true;	
 		label[i].visible = true;
+		
+		line[i].updateMatrixWorld();
+		
+		for ( var i2 = 0; i2 < line[i].userData.rulerwd.cone.length; i2++ )
+		{
+			var cone = line[i].userData.rulerwd.cone[i2];
+			
+			var xp = v[0].x;
+			var zr = -Math.PI/2;
+			
+			if(i2 == 1) { xp = v[3].x; zr = Math.PI/2; }
+			
+			var pos = line[i].localToWorld( new THREE.Vector3(xp, 0, 0) );
+			cone.position.copy(pos);
+			cone.rotation.set(-Math.PI/2, 0, wall.rotation.y-zr);
+			
+			cone.visible = true;
+		}
 	}
 
 	// линейки отсечки

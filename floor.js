@@ -27,7 +27,7 @@ function createFloor(cdm)
 	
 	if(infProject.settings.floor.color){ color = infProject.settings.floor.color; }
 	
-	var material =new THREE.MeshLambertMaterial( { color : color, lightMap : lightMap_1 } );
+	var material =new THREE.MeshPhongMaterial( { color : color, lightMap : lightMap_1 } );
 	
 	room[n] = new THREE.Mesh( new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, depth: infProject.settings.floor.height } ), material ); 
 	
@@ -46,7 +46,7 @@ function createFloor(cdm)
 	room[n].userData.room.height = infProject.settings.floor.height;
 	room[n].userData.material = room[n].material.clone();		
 	
-	ceiling[n] = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color : 0xffffff, lightMap : lightMap_1 } ) );			
+	ceiling[n] = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1 } ) );			
 	ceiling[n].position.set( 0, arrP[0].position.y + infProject.settings.floor.height, 0 );
 	ceiling[n].rotation.set( Math.PI / 2, 0, 0 );		
 	ceiling[n].userData.tag = 'ceiling';
@@ -55,14 +55,12 @@ function createFloor(cdm)
 	ceiling[n].visible = false;
 
 	
+	infProject.settings.floor.material = { img: "img/load/floor_1.jpg" };
 	if(infProject.settings.floor.material)
 	{	
 		var m = infProject.settings.floor.material;
 		
-		for ( var i = 0; i < m.length; i++ )
-		{
-			setTexture({obj:room[n], material:m[i]});
-		}	
+		setTexture({obj:room[n], material:m});	
 	}
 	
 	if(infProject.settings.floor.o)
