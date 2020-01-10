@@ -5789,7 +5789,7 @@ function fname_s_0142(cdm)
 	
 	if(infProject.settings.floor.color){ color = infProject.settings.floor.color; }
 	
-	var material =new THREE.MeshLambertMaterial( { color : color, lightMap : lightMap_1 } );
+	var material =new THREE.MeshPhongMaterial( { color : color, lightMap : lightMap_1 } );
 	
 	room[n] = new THREE.Mesh( new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, depth: infProject.settings.floor.height } ), material ); 
 	
@@ -5808,7 +5808,7 @@ function fname_s_0142(cdm)
 	room[n].userData.room.height = infProject.settings.floor.height;
 	room[n].userData.material = room[n].material.clone();		
 	
-	ceiling[n] = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color : 0xffffff, lightMap : lightMap_1 } ) );			
+	ceiling[n] = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1 } ) );			
 	ceiling[n].position.set( 0, arrP[0].position.y + infProject.settings.floor.height, 0 );
 	ceiling[n].rotation.set( Math.PI / 2, 0, 0 );		
 	ceiling[n].userData.tag = 'ceiling';
@@ -8910,7 +8910,7 @@ cameraTop.updateProjectionMatrix();
 
 
 
-var camera3D = new THREE.PerspectiveCamera( 65, w_w / w_h, 0.01, 1000 );  
+var camera3D = new THREE.PerspectiveCamera( 65, w_w / w_h, 0.03, 1000 );  
 camera3D.rotation.order = 'YZX';		
 camera3D.position.set(5, 7, 5);
 camera3D.lookAt(scene.position);
@@ -9036,7 +9036,7 @@ var obj_point = [];
 var room = [];
 var ceiling = [];
 var arrWallFront = [];
-var lightMap_1 = new THREE.TextureLoader().load(infProject.path+'/img/lightMap_1.png');
+var lightMap_1 = new THREE.TextureLoader().load(infProject.path+'img/lightMap_1.png');
 
 var clickO = resetPop.clickO();
 infProject.project = null;
@@ -9152,7 +9152,7 @@ function fname_s_0209()
 	
 	
 	var cdm = {};
-	var img = infProject.path+'/img/f1.png';
+	var img = infProject.path+'img/f1.png';
 	
 	new THREE.TextureLoader().load(img, function ( image )  
 	{
@@ -9698,7 +9698,6 @@ function fname_s_0222( cdm )
 	{
 		for( var i = 0; i < cdm.color.length; i++ )
 		{
-			
 			for( var i2 = 0; i2 < materials.length; i2++ )
 			{
 				if(cdm.color[i].index == i2) { materials[i2].color = new THREE.Color( cdm.color[i].o ); break; }
@@ -9769,6 +9768,9 @@ function fname_s_0222( cdm )
 	
 	fname_s_0228( wall );
 	
+	cdm.texture = [];
+	cdm.texture[0] = { img: "img/load/beton.jpg", index:1 };
+	cdm.texture[1] = { img: "img/load/beton.jpg", index:2 };
 	if(cdm.texture)
 	{ 
 		var m = cdm.texture;

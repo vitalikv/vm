@@ -161,7 +161,7 @@ var obj_point = [];
 var room = [];
 var ceiling = [];
 var arrWallFront = [];
-var lightMap_1 = new THREE.TextureLoader().load(infProject.path+'/img/lightMap_1.png');
+var lightMap_1 = new THREE.TextureLoader().load(infProject.path+'img/lightMap_1.png');
 
 var clickO = resetPop.clickO();
 infProject.project = null;
@@ -277,7 +277,7 @@ function backgroundPlane()
 	
 	
 	var cdm = {};
-	var img = infProject.path+'/img/f1.png';
+	var img = infProject.path+'img/f1.png';
 	
 	new THREE.TextureLoader().load(img, function ( image )  
 	{
