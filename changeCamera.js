@@ -11,6 +11,7 @@ function changeCamera(cam)
 	camera = cam;
 	renderPass.camera = cam;
 	outlinePass.renderCamera = cam;
+	if(saoPass) saoPass.camera = cam;
 	
 	
 	if(camera == cameraTop)

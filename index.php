@@ -33,6 +33,11 @@
 	<script src="<?=$path?>js/dp/RenderPass.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>js/dp/ShaderPass.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>js/dp/OutlinePass.js?<?=$vrs?>"></script>
+	<script src="<?=$path?>js/dp/FXAAShader.js?<?=$vrs?>"></script>
+	<script src="<?=$path?>js/dp/SAOPass.js?<?=$vrs?>"></script>
+	<script src="<?=$path?>js/dp/SAOShader.js?<?=$vrs?>"></script>
+	<script src="<?=$path?>js/dp/DepthLimitedBlurShader.js?<?=$vrs?>"></script>
+	<script src="<?=$path?>js/dp/UnpackDepthRGBAShader.js?<?=$vrs?>"></script>	
 	
 	<script src="<?=$path?>js/loader/inflate.min.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>js/loader/FBXLoader.js?<?=$vrs?>"></script>

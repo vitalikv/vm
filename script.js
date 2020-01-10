@@ -217,15 +217,43 @@ var offset = new THREE.Vector3();
 
 
 // outline render
-if(1==1)
 {
 	var composer = new THREE.EffectComposer( renderer );
 	var renderPass = new THREE.RenderPass( scene, cameraTop );
-	var outlinePass = new THREE.OutlinePass( new THREE.Vector2( w_w, w_h ), scene, cameraTop );
+	var outlinePass = new THREE.OutlinePass( new THREE.Vector2( w_w, w_h ), scene, cameraTop );	
+	
 	composer.setSize( w_w, w_h );
 	composer.addPass( renderPass );
 	composer.addPass( outlinePass );
 
+
+	if(infProject.settings.shader.saoPass)
+	{
+		var saoPass = new THREE.SAOPass(scene, camera, true, true);	
+		//saoPass.resolution.set(8192, 8192);
+		saoPass['params']['output'] = THREE.SAOPass.OUTPUT.Default;
+		saoPass['params']['saoBias'] = 1;
+		saoPass['params']['saoIntensity'] = .05;
+		saoPass['params']['saoScale'] = 100;
+		saoPass['params']['saoKernelRadius'] = 5;
+		saoPass['params']['saoMinResolution'] = 0;
+		saoPass['params']['saoBlur'] = true;
+		saoPass['params']['saoBlurRadius'] = 8;
+		saoPass['params']['saoBlurStdDev'] = 4;
+		saoPass['params']['saoBlurDepthCutoff'] = .01;
+		
+		composer.addPass( saoPass );		
+	}
+	
+	if(infProject.settings.shader.fxaaPass)
+	{
+		var fxaaPass = new THREE.ShaderPass( THREE.FXAAShader );	
+		fxaaPass.material.uniforms[ 'resolution' ].value.x = 1 / ( w_w * window.devicePixelRatio );
+		fxaaPass.material.uniforms[ 'resolution' ].value.y = 1 / ( w_h * window.devicePixelRatio );	
+
+		composer.addPass( fxaaPass ); 		
+	}	
+	
 
 	outlinePass.visibleEdgeColor.set( '#25db00' );
 	outlinePass.hiddenEdgeColor.set( '#25db00' );
@@ -1382,6 +1410,16 @@ document.body.addEventListener("keydown", function (e)
 	if(clickO.keys[18] && e.keyCode == 84) { saveFile({json: true}); }			// alt + t
 	if(clickO.keys[18] && e.keyCode == 86) { console.log(infProject); }
 	if(clickO.keys[18] && e.keyCode == 86) { console.log(clickO); }  		// alt + v
+	if(clickO.keys[18] && e.keyCode == 66) 	// alt + b
+	{ 
+		if(infProject.settings.shader.saoPass)
+		{
+			saoPass['params']['output'] = (saoPass['params']['output']==THREE.SAOPass.OUTPUT.Default)? THREE.SAOPass.OUTPUT.Beauty : THREE.SAOPass.OUTPUT.Default;
+			console.log(saoPass['params']['output']);
+			renderCamera();			
+		}
+	}  		
+	
 } );
 
 document.body.addEventListener("keydown", function (e) { clickO.keys[e.keyCode] = true; });

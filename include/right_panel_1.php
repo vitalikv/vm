@@ -299,10 +299,10 @@
 				
 					<div class="flex_1 w_1">						
 						<div class="button1 button_gradient_1" nameId="select_pivot">
-							<img src="<?=$path?>/img/move_1.png">	
+							<img src="<?=$path?>img/move_1.png">	
 						</div>	
 						<div class="button1 button_gradient_1" nameId="select_gizmo">
-							<img src="<?=$path?>/img/rotate_1.png">		
+							<img src="<?=$path?>img/rotate_1.png">		
 						</div>							
 					</div>
 
