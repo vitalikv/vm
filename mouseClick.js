@@ -168,7 +168,7 @@ function clickRayHit(event)
 
 	if(!infProject.scene.block.click.controll_wd)
 	{
-		var ray = rayIntersect( event, arrSize.cube, 'arr' );
+		var ray = rayIntersect( event, infProject.tools.controllWD, 'arr' );
 		if(!rayhit) { if(ray.length > 0) { rayhit = ray[0]; } }		
 	}
 	

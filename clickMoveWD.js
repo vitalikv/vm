@@ -201,12 +201,10 @@ function moveWD_2( wd, pos )
 	wd.position.copy( pos );	
 
 	wd.userData.door.h1 += pos2.y;
-	//UI('window_above_floor_1').val(Math.round(wd.userData.door.h1 * 100) * 10);
 	
-	for ( var i = 0; i < arrSize.cube.length; i++ ) { arrSize.cube[i].position.add( pos2 ); } 	// меняем расположение контроллеров
+	for ( var i = 0; i < infProject.tools.controllWD.length; i++ ) { infProject.tools.controllWD[i].position.add( pos2 ); } 	// меняем расположение контроллеров
 	
 	showRulerWD_2D(wd); 	// перемещаем линейки и лайблы
-	showRulerWD_3D(wd);
 }
 
 
@@ -248,18 +246,17 @@ function hideSizeWD( obj )
 		}
 	}
 	
-	for ( var i = 0; i < arrSize.cube.length; i++ ) { arrSize.cube[i].visible = false; }
-	for ( var i = 0; i < arrSize.format_2.line.length; i++ ) 
+	for ( var i = 0; i < infProject.tools.controllWD.length; i++ ) { infProject.tools.controllWD[i].visible = false; }
+	for ( var i = 0; i < infProject.scene.size.wd_1.line.length; i++ ) 
 	{ 
-		var line = arrSize.format_2.line[i];
+		var line = infProject.scene.size.wd_1.line[i];
 		line.visible = false; 
 		for ( var i2 = 0; i2 < line.userData.rulerwd.cone.length; i2++ )
 		{
 			line.userData.rulerwd.cone[i2].visible = false; 
 		}	
 	}
-	for ( var i = 0; i < arrSize.format_2.label.length; i++ ){ arrSize.format_2.label[i].visible = false; }
-  	for ( var i = 0; i < arrSize.cutoff.length; i++ ){ arrSize.cutoff[i].visible = false; }
+	for ( var i = 0; i < infProject.scene.size.wd_1.label.length; i++ ){ infProject.scene.size.wd_1.label[i].visible = false; }
 }
 
 

@@ -17,7 +17,7 @@ function activeHover2D( event )
 	
 	var rayhit = null;
 		
-	var ray = rayIntersect( event, arrSize.cube, 'arr' );
+	var ray = rayIntersect( event, infProject.tools.controllWD, 'arr' );
 	if(!rayhit) { if(ray.length > 0) { rayhit = ray[0]; } }			
 
 	if(!infProject.scene.block.hover.door)

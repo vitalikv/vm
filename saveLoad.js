@@ -164,17 +164,11 @@ function resetScene()
 	countId = 2;
 	
 	// прячем размеры и линейки
-	var line = arrSize.format_1.line;
-	var label = arrSize.format_1.label;
-	var cube = arrSize.cube;
-	var cutoff = arrSize.cutoff;
-	for ( var i = 0; i < line.length; i++ ) { line[i].visible = false; }
-	for ( var i = 0; i < label.length; i++ ) { label[i].visible = false; }
+	var cube = infProject.tools.controllWD;
 	for ( var i = 0; i < cube.length; i++ ) { cube[i].visible = false; }
-	for ( var i = 0; i < cutoff.length; i++ ) { cutoff[i].visible = false; }
 	
-	var line = arrSize.format_2.line;
-	var label = arrSize.format_2.label;
+	var line = infProject.scene.size.wd_1.line;
+	var label = infProject.scene.size.wd_1.label;
 	for ( var i = 0; i < line.length; i++ ) 
 	{ 
 		line[i].visible = false; 

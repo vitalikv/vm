@@ -88,7 +88,7 @@ function showControllWD( wall, obj )
 		p[3] = obj.localToWorld( new THREE.Vector3(center.x, bound.max.y, center.z) );		
 	}
 
-	var arr = arrSize.cube;
+	var arr = infProject.tools.controllWD;
 	for ( var i = 0; i < arr.length; i++ )
 	{		
 		arr[i].position.copy( p[i] );	
@@ -154,7 +154,6 @@ function showRulerWD(obj)
 	}	 
 	
 	showRulerWD_2D(obj);  
-	showRulerWD_3D(obj);
 }
 
 
@@ -166,8 +165,8 @@ function showRulerWD_2D(wd)
 	
 	var wall = wd.userData.door.wall;
 	
-	var line = arrSize.format_2.line;
-	var label = arrSize.format_2.label;	
+	var line = infProject.scene.size.wd_1.line;
+	var label = infProject.scene.size.wd_1.label;	
 	
 	var p1 = wall.userData.wall.p[0].position;
 	var p2 = wall.userData.wall.p[1].position;
@@ -273,102 +272,10 @@ function showRulerWD_2D(wd)
 			cone.visible = true;
 		}
 	}
-
-	// линейки отсечки
-	var arrP2 = [];
-	arrP2[0] = {pos: pw[0], offset: offset_1};
-	arrP2[1] = {pos: pw[1], offset: offset_1};
-	arrP2[2] = {pos: b2[0], offset: offset_1};
-	arrP2[3] = {pos: b2[1], offset: offset_1};
-	arrP2[4] = {pos: pw[2], offset: offset_2};
-	arrP2[5] = {pos: pw[3], offset: offset_2};
-	arrP2[6] = {pos: b2[0], offset: offset_2};
-	arrP2[7] = {pos: b2[1], offset: offset_2};
-	
-	var arr = arrSize.cutoff;	
-	for ( var i = 0; i < arrP2.length; i++ )
-	{
-		arr[i].position.copy( arrP2[i].pos.clone().add(arrP2[i].offset) );
-		arr[i].rotation.set(wall.rotation.x, wall.rotation.y + Math.PI / 2, wall.rotation.z);
-		arr[i].material.color.set(0x222222);
-		arr[i].visible = true;
-	}		
+		
 }
 
 
-
-
-
-// перемещаем линейки и лайблы в режиме cameraWall 
-function showRulerWD_3D(wd)
-{
-	if(camera != cameraWall) return;
-	
-	var wall = wd.userData.door.wall;
-	var boundPos = wd.userData.door.ruler.boundPos;
-	var index = wd.userData.door.ruler.faceIndex;
-	var rt = 0;
-	
-	var p = [];
-	for ( var i = 0; i < arrSize.cube.length; i++ ) { p[i] = arrSize.cube[i].position; }
-	
-	//for ( var i = 0; i < arrSize.cube.length; i++ ) { arrSize.cube[i].visible = true; }
-	
-	if(wd.userData.door.topMenu)
-	{
-		for ( var i = 0; i < arrSize.cube.length; i++ ) { arrSize.cube[i].visible = true; }
-	}	
-	
-	var w2 = [];
-	if(index > 0.98) 
-	{
-		w2[0] = new THREE.Vector3(boundPos[0].x, p[0].y, boundPos[0].z); 
-		w2[1] = new THREE.Vector3(boundPos[1].x, p[1].y, boundPos[1].z);		
-	}
-	else if(index < -0.98) 	
-	{
-		w2[0] = new THREE.Vector3(boundPos[0].x, p[0].y, boundPos[0].z); 
-		w2[1] = new THREE.Vector3(boundPos[1].x, p[1].y, boundPos[1].z);
-		rt = Math.PI;
-	}
-	
-	w2[2] = new THREE.Vector3(p[2].x, arrWallFront.bounds.min.y.y, p[2].z);
-	w2[3] = new THREE.Vector3(p[3].x, arrWallFront.bounds.max.y.y, p[3].z);
-
-	
-	var line = arrSize.format_2.line;
-	var label = arrSize.format_2.label;	
-	
-	// линейки показывающие длину
-	for ( var i = 0; i < p.length; i++ )
-	{
-		var d = w2[i].distanceTo(p[i]); 
-		var v = line[i].geometry.vertices; 	
-		v[3].x = v[2].x = v[5].x = v[4].x = d;
-		line[i].geometry.verticesNeedUpdate = true;		
-		
-		line[i].position.copy( p[i] );
-		line[i].visible = true;
-				
-		var dir = new THREE.Vector3().subVectors( w2[i], p[i] );  		
-		var rotation = new THREE.Euler().setFromQuaternion( quaternionDirection(dir.clone().normalize()) );  // из кватерниона в rotation
-		line[i].rotation.set(rotation.x, rotation.y - Math.PI / 2, 0);
-		
-		
-		label[i].position.copy( p[i] );
-		label[i].position.add( dir.divideScalar( 2 ) );	
-		
-		label[i].rotation.set( 0, wall.rotation.y + rt, 0 );    
-		label[i].visible = true;			
-		upLabelCameraWall({label : label[i], text : Math.round(d * 100) / 100, sizeText : 85, color : 'rgba(0,0,0,1)'});
-	}
-	
-	// боковые отсечки для линейки
-	var arr = [];
-	for ( var i = 0; i < p.length; i++ ) { arr[i] = { p1 : p[i], p2 : w2[i] }; }		
-	showSizeCutoff(arr);	
-}
- 
 
 
 
@@ -426,7 +333,7 @@ function clickToggleChangeWin( intersect, cdm )
 	wd.userData.door.wall.controll.offset = offset;
 	
 	var ps = [];
-	var arr = arrSize.cube;
+	var arr = infProject.tools.controllWD;
 	ps[ps.length] = wall.worldToLocal( arr[0].position.clone() );
 	ps[ps.length] = wall.worldToLocal( arr[1].position.clone() );
 	ps[ps.length] = wall.worldToLocal( arr[2].position.clone() );
@@ -526,9 +433,8 @@ function moveToggleChangeWin( event, controll )
 	controll.position.copy( v1 ); 	
 
 	// обновляем форму окна/двери и с новыми размерами вырезаем отверстие в стене
-	if(1==1)
 	{
-		var arr = arrSize.cube;
+		var arr = infProject.tools.controllWD;
 		
 		var x = arr[0].position.distanceTo(arr[1].position);
 		var y = arr[2].position.distanceTo(arr[3].position);
@@ -539,7 +445,7 @@ function moveToggleChangeWin( event, controll )
 	}
 	
 	// устанавливаем второстепенные контроллеры, в правильное положение
-	var arr = arrSize.cube;	
+	var arr = infProject.tools.controllWD;	
 	if(controll.userData.controll_wd.id == 0 || controll.userData.controll_wd.id == 1)
 	{ 
 		arr[2].position.add( pos2.clone().divideScalar( 2 ) );
@@ -555,7 +461,6 @@ function moveToggleChangeWin( event, controll )
 	showTableWD(wd);
 	
 	showRulerWD_2D(wd);
-	showRulerWD_3D(wd);
 }
 
 

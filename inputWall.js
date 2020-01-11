@@ -62,8 +62,6 @@ function inputChangeWall_1(cdm)
 	
 	inputLengthWall_1(cdm);	// меняем только длину стены 
 	
-	showRuleCameraWall();	// обновляем размеры стены
-	
 	renderCamera();
 }
 

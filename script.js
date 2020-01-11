@@ -175,12 +175,17 @@ infProject.scene.block = { key : { scroll : false } };		// блокировка 
 infProject.scene.block.click = {wall: false, point: false, door: false, window: false, room: false, tube: false, controll_wd: false, obj: false};
 infProject.scene.block.hover = {wall: false, point: false, door: false, window: false, room: false, tube: false, controll_wd: false, obj: false};
 infProject.geometry = { circle : createCircleSpline() }
-infProject.geometry.cone = [createGeometryCone_1({r: 0.03, h: 0.25}), createGeometryCone_1({r: 0.04, h: 0.1})];
+infProject.geometry.cone = [createGeometryCone_1({r1: 0.003, r2: 0.03, h: 0.25}), createGeometryCone_1({r1: 0.001, r2: 0.04, h: 0.1})];
 infProject.geometry.labelWall = createGeometryPlan(0.25 * 2, 0.125 * 2);
 infProject.geometry.labelFloor = createGeometryPlan(1.0 * kof_rd, 0.25 * kof_rd);
+infProject.geometry.labelWD = createGeometryPlan2(0.25 * kof_rd, 0.125 * kof_rd);
 infProject.scene.substrate = { ruler: [], floor: [], active: null };
 infProject.scene.substrate.ruler = createToolRulerSubstrate(); 
-infProject.tools = { pivot: createPivot(), gizmo: createGizmo360(), cutWall: [], point: createToolPoint(), axis: createLineAxis() } 
+infProject.scene.size = { wd_1: {} };	// wd_1 линейки для окон/мебели
+infProject.scene.size.wd_1.line = createRulerWin({count : 6, color : 0x616161});	
+infProject.scene.size.wd_1.label = createLabelCameraWall({ count: 6, text: 0, size: 50, ratio: {x:256*2, y:256}, border: 'border line', geometry: infProject.geometry.labelWD, opacity : 0.5 });
+// controllWD контроллеры для изменения ширины/длины wd
+infProject.tools = { pivot: createPivot(), gizmo: createGizmo360(), cutWall: [], point: createToolPoint(), axis: createLineAxis(), controllWD: createControllWD() } 
 
 infProject.catalog = infoListObj();  
 infProject.listColor = resetPop.listColor(); 
@@ -193,17 +198,6 @@ infProject.ui.right_menu = {active: ''};
 console.log(infProject);
 
 
-
-// cutoff боковые отсечки для линеек
-// format_1 линейки для отображения длины/высоты стены в режиме cameraWall
-// format_2 линейки для окон/мебели
-// format_3 нижние размеры между мебелью в режиме cameraWall 
-// cube контроллеры для изменения ширины/длины wd
-var arrSize = { cutoff : createRulerCutoff(), format_1 : {}, format_2 : {}, format_3 : {line : [], label : []}, cube : createControllWD() };
-var labelGeometry_1 = createGeometryPlan2(0.25 * kof_rd, 0.125 * kof_rd); 
-arrSize.format_1 = { line : createRulerWin({count : 6, color : 0xcccccc, material : 'standart'}), label : createLabelCameraWall({ count : 2, text : 0, size : 50, ratio : {x:256*2, y:256}, border : 'white', geometry : labelGeometry_1 }) };
-arrSize.format_2 = { line : createRulerWin({count : 6, color : 0x000000}), label : createLabelCameraWall({ count : 6, text : 0, size : 50, ratio : {x:256*2, y:256}, border : 'border line', geometry : labelGeometry_1 }) };
-arrSize.numberTexture = { line : createRulerWin({count : 6, color : 0x000000, material : 'standart'}), label : createLabelCameraWall({ count : 6, text : [1,2,3,4,5,6], materialTop : 'no', size : 85, ratio : {x:256, y:256}, geometry : createGeometryPlan(0.25, 0.25) }) };
 
 
 
@@ -696,12 +690,13 @@ function createGeometryCone_1(cdm)
 	var v = [];
 	var circle = infProject.geometry.circle;
 	
-	var r = cdm.r;
+	var r2 = cdm.r2;
 	var h = cdm.h;
+	var r1 = cdm.r1;
 	
 	for ( var i = 0; i < circle.length; i++ )
 	{
-		v[n] = new THREE.Vector3().addScaledVector( circle[i].clone().normalize(), r );
+		v[n] = new THREE.Vector3().addScaledVector( circle[i].clone().normalize(), r2 );
 		v[n].y = -h;		
 		n++;		
 		
@@ -709,7 +704,7 @@ function createGeometryCone_1(cdm)
 		v[n].y = -h;
 		n++;
 		
-		v[n] = new THREE.Vector3().addScaledVector( circle[i].clone().normalize(), 0.003 );
+		v[n] = new THREE.Vector3().addScaledVector( circle[i].clone().normalize(), r1 );
 		v[n].y = 0.001;
 		n++;	
 		
