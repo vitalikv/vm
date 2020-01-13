@@ -39,11 +39,55 @@ function addTextureInCatalogUI_1(cdm)
 			<img src="'+o.url+'" nameId="">\
 		</div>';
 		 
-		$('[list_ui="catalog_texture"]').append(str);
-	}
-	
+		$('[list_ui="catalog_texture_1"]').append(str);
+	}	
 }
 
+function addTextureInCatalogUI_2(cdm)
+{
+	
+	for(var i = 0; i < infProject.catalog.texture.length; i++)
+	{
+		var o = infProject.catalog.texture[i];
+		o.name = 'img';
+		var str = 
+		'<div class="right_panel_1_1_list_item rp_list_item_texture" add_texture="'+o.url+'">\
+			<img src="'+o.url+'" nameId="">\
+		</div>';
+		 
+		$('[list_ui="catalog_texture_2"]').append(str);
+	}	
+}
+
+// показываем/скрываем кнопки/список текстур для стен
+function showHideMenuTexture_1(cdm)
+{
+	if(cdm.type == 1)
+	{
+		$('[nameId="rp_catalog_texture_1"]').hide(); 
+		$('[nameId="rp_block_wall_texture_1"]').show(); 		
+	}
+	else
+	{
+		$('[nameId="rp_catalog_texture_1"]').show(); 
+		$('[nameId="rp_block_wall_texture_1"]').hide(); 		
+	}
+}
+
+// показываем/скрываем кнопки/список текстур для пола/потолка
+function showHideMenuTexture_2(cdm)
+{
+	if(cdm.type == 1)
+	{
+		$('[nameId="rp_catalog_texture_2"]').hide(); 
+		$('[nameId="rp_block_room_texture_1"]').show();  		
+	}
+	else
+	{
+		$('[nameId="rp_catalog_texture_2"]').show(); 
+		$('[nameId="rp_block_room_texture_1"]').hide(); 		
+	}
+}
 
 
 // добавляем/обновляем/удаляем в список материалов новый объект, который добавляем в сцену UI
@@ -160,6 +204,7 @@ function activeObjRightPanelUI_1(cdm)
 		$('[nameId="rp_menu_wall"]').show();
 		$('[nameId="size_wall_width_1"]').val(obj.userData.wall.width);
 		
+		showHideMenuTexture_1({type: 1});
 		changeTextureWall_UI_1({obj: obj});
 		
 		upLabelCameraWall({label : obj.label[1], text : "A", sizeText : 85, color : 'rgba(0,0,0,1)', str: true});
@@ -182,6 +227,7 @@ function activeObjRightPanelUI_1(cdm)
 	{
 		$('[nameId="rp_menu_room"]').show();
 		
+		showHideMenuTexture_2({type: 1});
 		changeTextureRoom_UI_1({obj: obj});
 	}		
 

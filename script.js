@@ -279,6 +279,7 @@ createSubstrate({ pos: {y: 0.01} }); 	// подложка
 startPosCamera3D({radious: 15, theta: 90, phi: 35});		// стартовое положение 3D камеры
 addObjInCatalogUI_1();			// наполняем каталог объектов UI
 addTextureInCatalogUI_1();		// наполняем каталог текстур UI
+addTextureInCatalogUI_2();
 changeRightMenuUI_1({name: 'button_wrap_object'});	// назначаем первоначальную вкладку , которая будет включена
 //changeRightMenuUI_1({name: 'button_wrap_img'});	
 //changeRightMenuUI_1({name: 'button_wrap_plan'});
