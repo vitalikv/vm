@@ -159,6 +159,22 @@ function upLabelPlan_1(arrWall, Zoom)
 
 
 
+function getCalcWall(cdm)
+{
+	var wall = cdm.wall;
+	
+	var label_2 = wall.label[0];
+	var label_1 = wall.label[1];	
+	
+	var v = wall.userData.wall.v;
+	//var v = wall.geometry.vertices;
+	var d1 = Math.abs( v[6].x - v[0].x );		
+	var d2 = Math.abs( v[10].x - v[4].x );
+
+	upLabelCameraWall({label : label_1, text : Math.round(d1 * 100) / 100, sizeText : 85, color : 'rgba(0,0,0,1)'});
+	upLabelCameraWall({label : label_2, text : Math.round(d2 * 100) / 100, sizeText : 85, color : 'rgba(0,0,0,1)'});	
+}
+
 
 
 //площадь помещения ( номер зон получаем из массива )

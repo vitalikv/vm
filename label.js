@@ -142,14 +142,21 @@ function upLabelCameraWall(cdm)
 		ctx.fillRect(0, 0, canvs.width, canvs.height);		
 	}
 	
-	var str = '';
-	var value = cdm.text * infProject.settings.unit.wall;
-	if(infProject.settings.unit.wall == 1) { str = ' м'; } 
+	
+	if(cdm.str)
+	{
+		var value = cdm.text;		
+	}
+	else 
+	{
+		var value = cdm.text * infProject.settings.unit.wall;
+		if(infProject.settings.unit.wall == 1) { value += ' м'; } 		
+	}
 	
 	ctx.fillStyle = cdm.color;
 	ctx.textAlign = "center";
 	ctx.textBaseline = "middle";
-	ctx.fillText(value + str, canvs.width / 2, canvs.height / 2 );
+	ctx.fillText(value, canvs.width / 2, canvs.height / 2 );
 	
 	cdm.label.material.map.needsUpdate = true;
 }

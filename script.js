@@ -187,7 +187,7 @@ infProject.scene.size.wd_1.label = createLabelCameraWall({ count: 6, text: 0, si
 // controllWD контроллеры для изменения ширины/длины wd
 infProject.tools = { pivot: createPivot(), gizmo: createGizmo360(), cutWall: [], point: createToolPoint(), axis: createLineAxis(), controllWD: createControllWD() } 
 
-infProject.catalog = infoListObj();  
+infProject.catalog = { obj: infoListObj(), texture: infoListTexture() }; 
 infProject.listColor = resetPop.listColor(); 
 infProject.start = true; 
 
@@ -277,8 +277,10 @@ var offset = new THREE.Vector3();
 backgroundPlane();
 createSubstrate({ pos: {y: 0.01} }); 	// подложка
 startPosCamera3D({radious: 15, theta: 90, phi: 35});		// стартовое положение 3D камеры
-addObjInCatalogUI_1();	// каталог UI
-changeRightMenuUI_1({name: 'button_wrap_img'});	// назначаем первоначальную вкладку , которая будет включена
+addObjInCatalogUI_1();			// наполняем каталог объектов UI
+addTextureInCatalogUI_1();		// наполняем каталог текстур UI
+changeRightMenuUI_1({name: 'button_wrap_object'});	// назначаем первоначальную вкладку , которая будет включена
+//changeRightMenuUI_1({name: 'button_wrap_img'});	
 //changeRightMenuUI_1({name: 'button_wrap_plan'});
 startRightPlaneInput({});	
 
@@ -907,24 +909,24 @@ function crtW( cdm )
 	for ( var i = 0; i < v.length; i++ ) { wall.userData.wall.v[i] = v[i].clone(); }
 	
 	wall.userData.material = [];
-	wall.userData.material[0] = { color : wall.material[0].color, scale : new THREE.Vector2(1,1), };	// top
-	wall.userData.material[1] = { color : wall.material[1].color, scale : new THREE.Vector2(1,1), };	// left
-	wall.userData.material[2] = { color : wall.material[2].color, scale : new THREE.Vector2(1,1), };	// right
-	wall.userData.material[3] = { color : wall.material[3].color, scale : new THREE.Vector2(1,1), };
+	wall.userData.material[0] = { color : wall.material[0].color, scale : new THREE.Vector2(1,1), img: '' };	// top
+	wall.userData.material[1] = { color : wall.material[1].color, scale : new THREE.Vector2(1,1), img: '' };	// left
+	wall.userData.material[2] = { color : wall.material[2].color, scale : new THREE.Vector2(1,1), img: '' };	// right
+	wall.userData.material[3] = { color : wall.material[3].color, scale : new THREE.Vector2(1,1), img: '' };
 	// --------------
 
 	
 	upUvs_1( wall );
 	
 	cdm.texture = [];
-	cdm.texture[0] = { img: "img/load/beton.jpg", index:1 };
-	cdm.texture[1] = { img: "img/load/beton.jpg", index:2 };
+	cdm.texture[0] = { img: infProject.path+"img/load/beton.jpg", index:1 };
+	cdm.texture[1] = { img: infProject.path+"img/load/beton.jpg", index:2 };
 	if(cdm.texture)
 	{ 
 		var m = cdm.texture;
 		
 		for ( var i = 0; i < m.length; i++ )
-		{
+		{			
 			setTexture({obj:wall, material:m[i]});
 		}	
 	}
@@ -975,8 +977,8 @@ function setTexture(cdm)
 {
 	//if(!cdm.img) return;
 	
-	var img = infProject.path+cdm.material.img;
-	var material = (cdm.material.index) ? cdm.obj.material[cdm.material.index] : cdm.obj.material;
+	var img = cdm.material.img;
+	var material = (cdm.obj.userData.tag == "wall") ? cdm.obj.material[cdm.material.index] : cdm.obj.material;
 	
 	new THREE.TextureLoader().load(img, function ( image )  
 	{
@@ -1000,7 +1002,28 @@ function setTexture(cdm)
 		
 		material.map = texture; 
 		material.lightMap = lightMap_1;
-		material.needsUpdate = true; 					
+		material.needsUpdate = true; 
+
+
+		if(cdm.obj.userData.tag == "wall")
+		{
+			cdm.obj.userData.material[cdm.material.index].img = img;
+			
+			if(cdm.ui)
+			{
+				changeTextureWall_UI_1({obj: cdm.obj});
+			}
+		}
+		
+		if(cdm.obj.userData.tag == "room" || cdm.obj.userData.tag == "ceiling")
+		{
+			cdm.obj.userData.material.img = img;
+			
+			if(cdm.ui)
+			{
+				changeTextureRoom_UI_1({obj: cdm.obj});
+			}
+		}		
 		
 		renderCamera();
 	});			

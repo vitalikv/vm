@@ -44,18 +44,18 @@ function createFloor(cdm)
 	room[n].userData.id = id;
 	room[n].userData.room = { areaTxt : 0, p : arrP, w : arrW, s : arrS, outline : null };
 	room[n].userData.room.height = infProject.settings.floor.height;
-	room[n].userData.material = room[n].material.clone();		
+	room[n].userData.material = {img: ''};		
 	
 	ceiling[n] = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1 } ) );			
-	ceiling[n].position.set( 0, arrP[0].position.y + infProject.settings.floor.height, 0 );
+	ceiling[n].position.set( 0, arrP[0].position.y + infProject.settings.height, 0 );  console.log('ceiling[n].position', ceiling[n].position);
 	ceiling[n].rotation.set( Math.PI / 2, 0, 0 );		
 	ceiling[n].userData.tag = 'ceiling';
 	ceiling[n].userData.id = id;
-	ceiling[n].userData.material = ceiling[n].material.clone();
-	ceiling[n].visible = false;
+	ceiling[n].userData.material = {img: ''};
+	//ceiling[n].visible = false;
 
 	
-	infProject.settings.floor.material = { img: "img/load/floor_1.jpg" };
+	infProject.settings.floor.material = { img: infProject.path+"img/load/floor_1.jpg" };
 	if(infProject.settings.floor.material)
 	{	
 		var m = infProject.settings.floor.material;
@@ -187,6 +187,36 @@ function findNumberInArrRoom(arr)
 	}	
 	
 	return arrN;
+}
+
+
+
+// находим пол потолок, который соответсвует одной комнате
+function findNumberInArrRoom_2(cdm) 
+{
+	var result = null;
+	var obj = cdm.obj;
+	
+	if(obj.userData.tag == 'room')
+	{
+		for ( var i2 = 0; i2 < room.length; i2++ )
+		{
+			if(room[i2] == obj) { result = { floor: room[i2], ceiling: ceiling[i2] }; break; }
+		}		
+	}
+	else if(obj.userData.tag == 'ceiling')
+	{
+		for ( var i2 = 0; i2 < ceiling.length; i2++ )
+		{
+			if(ceiling[i2] == obj) { result = { floor: room[i2], ceiling: ceiling[i2] }; break; }
+		}			
+	}
+	else 
+	{
+		return;
+	}	
+	
+	return result;
 }
 
 

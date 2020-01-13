@@ -69,17 +69,66 @@ function infoListObj()
 }
 
 
+
+function infoListTexture()
+{
+	var arr = [];	 	
+	
+	arr[0] =
+	{
+		url : infProject.path+'img/load/floor_1.jpg', 
+	}
+	
+	arr[1] =
+	{
+		url : infProject.path+'img/load/w1.jpg', 
+	}
+
+	arr[2] =
+	{
+		url : infProject.path+'img/load/kirpich.jpg', 
+	}
+
+	arr[3] =
+	{
+		url : infProject.path+'img/load/beton.jpg', 
+	}	
+
+	arr[4] =
+	{
+		url : infProject.path+'img/load/w2.jpg', 
+	}
+
+	arr[5] =
+	{
+		url : infProject.path+'img/load/f1.jpg', 
+	}
+
+	arr[6] =
+	{
+		url : infProject.path+'img/load/f2.jpeg', 
+	}
+
+	arr[7] =
+	{
+		url : infProject.path+'img/load/f3.jpg', 
+	}	
+	
+	return arr;
+}
+
+
 // получаем параметры объекта из базы
 function getInfoObj(cdm)
 {
 	var lotid = cdm.lotid;
 	
 	
-	for(var i = 0; i < infProject.catalog.length; i++)
+	for(var i = 0; i < infProject.catalog.obj.length; i++)
 	{
-		if(lotid == infProject.catalog[i].lotid)
+		if(lotid == infProject.catalog.obj[i].lotid)
 		{  
-			return infProject.catalog[i];
+			return infProject.catalog.obj[i];
 		}
 	}
 	

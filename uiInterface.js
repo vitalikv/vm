@@ -6,9 +6,9 @@
 function addObjInCatalogUI_1(cdm)
 {
 	
-	for(var i = 0; i < infProject.catalog.length; i++)
+	for(var i = 0; i < infProject.catalog.obj.length; i++)
 	{
-		var o = infProject.catalog[i];
+		var o = infProject.catalog.obj[i];
 		
 		if(o.stopUI) continue;
 		
@@ -23,6 +23,27 @@ function addObjInCatalogUI_1(cdm)
 	}
 	
 }
+
+
+
+// добавляем текстыры в каталог UI 
+function addTextureInCatalogUI_1(cdm)
+{
+	
+	for(var i = 0; i < infProject.catalog.texture.length; i++)
+	{
+		var o = infProject.catalog.texture[i];
+		o.name = 'img';
+		var str = 
+		'<div class="right_panel_1_1_list_item rp_list_item_texture" add_texture="'+o.url+'">\
+			<img src="'+o.url+'" nameId="">\
+		</div>';
+		 
+		$('[list_ui="catalog_texture"]').append(str);
+	}
+	
+}
+
 
 
 // добавляем/обновляем/удаляем в список материалов новый объект, который добавляем в сцену UI
@@ -122,6 +143,7 @@ function activeObjRightPanelUI_1(cdm)
 	$('[nameId="rp_menu_point"]').hide();
 	$('[nameId="rp_item_wd_h1"]').hide();
 	$('[nameId="rp_menu_wd"]').hide();
+	$('[nameId="rp_menu_room"]').hide();
 	
 	if(!cdm) { cdm = {}; }  
 	
@@ -137,6 +159,11 @@ function activeObjRightPanelUI_1(cdm)
 	{
 		$('[nameId="rp_menu_wall"]').show();
 		$('[nameId="size_wall_width_1"]').val(obj.userData.wall.width);
+		
+		changeTextureWall_UI_1({obj: obj});
+		
+		upLabelCameraWall({label : obj.label[1], text : "A", sizeText : 85, color : 'rgba(0,0,0,1)', str: true});
+		upLabelCameraWall({label : obj.label[0], text : "B", sizeText : 85, color : 'rgba(0,0,0,1)', str: true});
 	}
 	else if(obj.userData.tag == 'door')
 	{
@@ -151,7 +178,12 @@ function activeObjRightPanelUI_1(cdm)
 	{
 		$('[nameId="bl_object_3d"]').show();
 	}	
-	
+	else if(obj.userData.tag == 'room')
+	{
+		$('[nameId="rp_menu_room"]').show();
+		
+		changeTextureRoom_UI_1({obj: obj});
+	}		
 
 	$('[nameId="wrap_object_1"]').show(); 	
 	
@@ -237,6 +269,25 @@ function upRightPlaneInput_1(cdm)
 	inf.json[inf.name] = res.num; 
 }
 
+
+
+// показываем текстыру у стены в правой панели
+function changeTextureWall_UI_1(cdm) 
+{
+	$('[nameId="wall_texture_1img"]').attr('src', cdm.obj.userData.material[1].img);  
+	$('[nameId="wall_texture_2img"]').attr('src', cdm.obj.userData.material[2].img);
+}
+
+
+
+// показываем текстыру у пола/потолка в правой панели
+function changeTextureRoom_UI_1(cdm) 
+{
+	var res = findNumberInArrRoom_2({obj: cdm.obj});
+	
+	$('[nameId="wall_texture_1img"]').attr('src', res.floor.userData.material.img);  
+	if(res.ceiling.userData.material) { $('[nameId="wall_texture_2img"]').attr('src', res.ceiling.userData.material.img); }
+}
 
 
 

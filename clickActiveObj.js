@@ -123,7 +123,7 @@ function objDeActiveColor_2D()
 		if(clickO.rayhit.object.userData.tag == 'controll_wd'){ if(clickO.rayhit.object.userData.controll_wd.obj == o) { return; } }      		
 	}
 	 
-	if(o.userData.tag == 'wall'){ o.material[3].color = o.userData.material[3].color; }	
+	if(o.userData.tag == 'wall'){ o.material[3].color = o.userData.material[3].color; getCalcWall({wall: o}); }	
 	else if(o.userData.tag == 'point'){ o.material.color = o.userData.point.color; }	
 	else if(o.userData.tag == 'window'){ o.material.color = new THREE.Color(infProject.listColor.window2D); }
 	else if(o.userData.tag == 'door'){ o.material.color = new THREE.Color(infProject.listColor.door2D); }	

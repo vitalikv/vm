@@ -54,7 +54,7 @@
 					</label>
 
 					<div class="prew_substrate">
-						<img src="#" id="substrate_img" alt=""/>
+						<img src="img/f0.png" id="substrate_img" alt=""/>
 					</div>
 					
 					<div style="display: none;">
@@ -241,13 +241,62 @@
 						
 						<div>
 							<div class="button1 button_gradient_1" nameId="rp_button_apply">Применить</div>
-						</div>
-						
-						<div>
-							<div class="button1 button_gradient_1" data-action="deleteObj">Удалить</div>
 						</div>						
-					</div>	
+					</div>
+
+					<div class="flex_column_1">
+						<div class="right_panel_1_1_h">
+							Текстура
+						</div>
+						<div class="flex_1 texture_wall">
+							<div class="button1 button_gradient_1 texture_wall_2" nameId="rp_button_wall_texture_1">
+								<div class="texture_wall_2_text">A</div>							
+								<img src="<?=$path?>img/load/kirpich.jpg" nameId="wall_texture_1img">	
+							</div>
+							<div class="button1 button_gradient_1 texture_wall_2" nameId="rp_button_wall_texture_2">
+								<div class="texture_wall_2_text">B</div>
+								<img src="<?=$path?>img/load/kirpich.jpg" nameId="wall_texture_2img">	
+							</div>							
+						</div>
+					</div>
+
+					<div class="rp_1_1_list">
+						<div class="rp_1_2_list" list_ui="catalog_texture">
+							
+						</div>				 							
+					</div>						
+					
+					<div>
+						<div class="button1 button_gradient_1" style="margin-top: 20px;" data-action="deleteObj">Удалить</div>
+					</div>			 	
+					
 				</div>
+				
+				
+				
+				<div nameId="rp_menu_room" style="display: none;"> 
+					<div class="flex_column_1">
+						<div class="right_panel_1_1_h">
+							Текстура
+						</div>
+						<div class="flex_1 texture_wall">
+							<div class="button1 button_gradient_1 texture_wall_2" nameId="rp_button_room_texture_1">
+								<div class="texture_wall_2_text">Пол</div>							
+								<img src="<?=$path?>img/load/kirpich.jpg" nameId="wall_texture_1img">	
+							</div>
+							<div class="button1 button_gradient_1 texture_wall_2" nameId="rp_button_room_texture_2">
+								<div class="texture_wall_2_text">Потолок</div>
+								<img src="#" nameId="wall_texture_2img">	
+							</div>							
+						</div>
+					</div>
+
+					<div class="rp_1_1_list">
+						<div class="rp_1_2_list" list_ui="catalog_texture">
+							
+						</div>				 							
+					</div>					
+				</div>					
 				
 
 				<div class="flex_column_1" nameId="rp_menu_wd" style="display: none;">

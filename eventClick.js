@@ -166,6 +166,14 @@ $('[nameId="rp_button_apply"]').mousedown(function ()
 
 
 
+
+$('[nameId="rp_button_wall_texture_1"]').mousedown(function () { clickO.click.side_wall = 1; clickO.click.o = clickO.last_obj; });
+$('[nameId="rp_button_wall_texture_2"]').mousedown(function () { clickO.click.side_wall = 2; clickO.click.o = clickO.last_obj; });
+$('[nameId="rp_button_room_texture_1"]').mousedown(function () { clickO.click.o = clickO.last_obj; });
+$('[nameId="rp_button_room_texture_2"]').mousedown(function () { clickO.click.o = findNumberInArrRoom_2({obj: clickO.last_obj}).ceiling; });
+$('[add_texture]').mousedown(function () { setTexture({obj: clickO.click.o, material: {img: this.attributes.add_texture.value, index: clickO.click.side_wall}, ui: true} ); }); 
+
+
 $('[data-action="modal_window"]').mousedown(function (e) { e.stopPropagation(); });		
 
 

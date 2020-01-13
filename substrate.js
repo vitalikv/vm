@@ -809,7 +809,7 @@ function deleteSubstrate(cdm)
 	//infProject.scene.substrate.active = null;	// деактивируем активный этаж
 	plane.userData.substrate.img = false;
 	
-	$('#substrate_img').attr('src', '#');
+	$('#substrate_img').attr('src', 'img/f0.png');
 	$('[nameid="input_size_substrate"]').val(1);
 }
 

@@ -214,6 +214,12 @@ function clickRayHit(event)
 		}			
 	}
 	
+	if(!rayhit)
+	{
+		var ray = rayIntersect( event, infProject.scene.array.room, 'arr' );
+		if(ray.length > 0) { rayhit = ray[0]; }			
+	}	
+	
 	
 	return rayhit;
 }
@@ -242,6 +248,7 @@ function clickMouseActive(cdm)
 		else if( tag == 'door' ) { clickWD( rayhit ); }
 		else if( tag == 'controll_wd' ) { clickToggleChangeWin( rayhit ); }
 		else if( tag == 'obj' && camera == cameraTop ) { clickObject3D( obj ); }
+		else if( tag == 'room' && camera == cameraTop ) { clickO.last_obj = obj; activeObjRightPanelUI_1({obj: obj}); }
 		else { flag = false; }
 	}
 	else if(cdm.type == 'up')
@@ -393,6 +400,7 @@ function hideMenuObjUI_2D( o )
 			case 'door': hideSizeWD(o); hideMenuUI(o); break;
 			case 'window': hideSizeWD(o); hideMenuUI(o); break;
 			case 'obj': hidePivotGizmo(o); break;
+			case 'room': hideMenuUI(o);  break;
 		}
 	}
 	
@@ -457,7 +465,8 @@ function hideMenuUI(obj)
 	if(tag == 'wall') { activeObjRightPanelUI_1(); }
 	else if(tag == 'point') { activeObjRightPanelUI_1(); }
 	else if(tag == 'window') { activeObjRightPanelUI_1(); }
-	else if(tag == 'door') { activeObjRightPanelUI_1(); }	
+	else if(tag == 'door') { activeObjRightPanelUI_1(); }
+	else if(tag == 'room') { activeObjRightPanelUI_1(); }
 }
 
 
