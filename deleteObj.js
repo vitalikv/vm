@@ -29,8 +29,6 @@ function detectDeleteObj()
 
 function deleteWall_1( wall )
 {	
-	//hideMenuObjUI_2D(wall);
-
 	hideMenuUI(wall);
 	
 	var points = wall.userData.wall.p;

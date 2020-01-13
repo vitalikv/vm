@@ -106,10 +106,6 @@ function onDocumentMouseDown( event )
 	clickO.obj = null; 	
 	clickO.actMove = false;	
 	clickO.rayhit = clickRayHit(event); 
-
-	if ( camera == cameraTop ) { hideMenuObjUI_2D( clickO.last_obj ); }
-	else if ( camera == camera3D ) {  }
-	else if ( camera == cameraWall ) { hideMenuObjUI_Wall(clickO.last_obj); }
 	
 	clickMouseActive({type: 'down'});
 	
@@ -227,7 +223,9 @@ function clickRayHit(event)
 
 function clickMouseActive(cdm)
 {
-	if(!clickO.rayhit) return;
+	hideMenuObjUI_2D(cdm);
+	
+	if(!clickO.rayhit) return; 
 
 	var obj = clickO.obj = clickO.rayhit.object;
 	
@@ -247,20 +245,17 @@ function clickMouseActive(cdm)
 		else if( tag == 'window' ) { clickWD( rayhit ); }
 		else if( tag == 'door' ) { clickWD( rayhit ); }
 		else if( tag == 'controll_wd' ) { clickToggleChangeWin( rayhit ); }
-		else if( tag == 'obj' && camera == cameraTop ) { clickObject3D( obj ); }
-		else if( tag == 'room' && camera == cameraTop ) { clickO.last_obj = obj; activeObjRightPanelUI_1({obj: obj}); }
+		else if( tag == 'obj' && camera == cameraTop ) { clickObject3D( obj ); }		
 		else { flag = false; }
 	}
 	else if(cdm.type == 'up')
-	{		
+	{	
 		if( tag == 'wall' && camera == camera3D ) {  }
 		else if( tag == 'obj' && camera == camera3D ) { clickObject3D( obj ); }
+		else if( tag == 'room' && camera == cameraTop ) { clickO.last_obj = obj; activeObjRightPanelUI_1({obj: obj}); }
 		else { flag = false; }
 	}	
-	else 
-	{ 
-		flag = false; 
-	}
+
 	
 	if(flag) 
 	{
@@ -334,12 +329,10 @@ function onDocumentMouseMove( event )
 function onDocumentMouseUp( event )  
 {
 
-	if(!long_click && camera == camera3D) 
+	if(!long_click) 
 	{ 
-		hideMenuObjUI_3D( clickO.last_obj ); 
 		clickMouseActive({type: 'up'}); 
-	}
-	
+	}	
 	
 	var obj = clickO.move;	
 	
@@ -387,69 +380,49 @@ function onDocumentMouseUp( event )
 
 
 
-function hideMenuObjUI_2D( o )
+function hideMenuObjUI_2D(cdm)
 {
-	if(o)
+	var obj = clickO.last_obj;
+	if(!cdm) { cdm = {type: ''}; }
+	
+	var flag = true;
+	
+	if(obj)
 	{ 
 		objDeActiveColor_2D(); 
-		console.log(o.userData.tag);
-		switch ( o.userData.tag ) 
-		{  
-			case 'wall': hideMenuUI(o);  break;
-			case 'point': hideMenuUI(o);  break;
-			case 'door': hideSizeWD(o); hideMenuUI(o); break;
-			case 'window': hideSizeWD(o); hideMenuUI(o); break;
-			case 'obj': hidePivotGizmo(o); break;
-			case 'room': hideMenuUI(o);  break;
-		}
-	}
-	
-	clickO.last_obj = null;
-}
+		console.log(obj.userData.tag);
 
-
-
-function hideMenuObjUI_3D( o )
-{
-	if ( o )
-	{  		
-		switch ( o.userData.tag ) 
-		{
-			case 'obj': hidePivotGizmo(o); break;
-		}
-	}
-}
-
-
-
-
-// скрываем меню (cameraWall)
-function hideMenuObjUI_Wall(o)
-{  
-	if(!o) return;
-	if(clickO.last_obj == clickO.obj) return;
-	
-	
-	if(clickO.obj)
-	{
-		if(clickO.obj.userData.tag == 'controll_wd')
-		{ 			
-			if(clickO.obj.userData.controll_wd.obj == clickO.last_obj) { return; } 
-		} 
-	}	
-	
-	if(o.userData.tag)
-	{
-		var tag = o.userData.tag;
+		var tag = obj.userData.tag;
 		
-		if(tag == 'wall') { hideMenuUI(o); }
-		else if(tag == 'window') { hideSizeWD(o); hideMenuUI(o); }
-		else if(tag == 'door') { hideSizeWD(o); hideMenuUI(o); }	
+		if(cdm.type == 'down')
+		{
+			if(tag == 'wall' && camera == cameraTop) { hideMenuUI(obj); }
+			else if(tag == 'point' && camera == cameraTop) { hideMenuUI(obj); }
+			else if(tag == 'window' && camera == cameraTop) { hideSizeWD(obj); hideMenuUI(obj); }
+			else if(tag == 'door' && camera == cameraTop) { hideSizeWD(obj); hideMenuUI(obj); }
+			else if(tag == 'obj' && camera == cameraTop) { hidePivotGizmo(obj); }
+			else { flag = false; }
+		}
+		else if(cdm.type == 'up')
+		{
+			if(tag == 'room' && camera == cameraTop) { hideMenuUI(obj); }
+			else if(tag == 'obj' && camera == camera3D) { hidePivotGizmo(obj); }
+			else { flag = false; }
+		}
+		else
+		{
+			if(tag == 'wall') { hideMenuUI(obj); }
+			else if(tag == 'point') { hideMenuUI(obj); }
+			else if(tag == 'window') { hideSizeWD(obj); hideMenuUI(obj); }
+			else if(tag == 'door') { hideSizeWD(obj); hideMenuUI(obj); }
+			else if(tag == 'room') { hideMenuUI(obj); }
+			else if(tag == 'obj') { hidePivotGizmo(obj); }
+			else { flag = false; }
+		}
 	}
 	
-	clickO.last_obj = null;
+	if(flag) clickO.last_obj = null;
 }
-
 
 
 

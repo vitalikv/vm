@@ -1168,9 +1168,7 @@ function deActiveSelected()
 	clickO.obj = null;
 	clickO.rayhit = null;
 	
-	if ( camera == cameraTop ) { hideMenuObjUI_2D( clickO.last_obj ); }
-	else if ( camera == camera3D ) { hideMenuObjUI_3D( clickO.last_obj ); }
-	else if ( camera == cameraWall ) { hideMenuObjUI_Wall(clickO.last_obj); }		
+	hideMenuObjUI_2D();		
 }
 
 
