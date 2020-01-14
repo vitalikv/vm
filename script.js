@@ -831,31 +831,22 @@ function crtW( cdm )
 	var p2 = point2.position;	
 	var d = p1.distanceTo( p2 );
 	
-	var color = [0x7d7d7d, 0x696969]; 
-	
-	
-	if(infProject.settings.wall.color) 
-	{  
-		if(infProject.settings.wall.color.front) color[0] = infProject.settings.wall.color.front; 
-		if(infProject.settings.wall.color.top) color[1] = infProject.settings.wall.color.top; 
-	}	
-	
-	var material = new THREE.MeshPhongMaterial({ color : color[0], transparent: true, opacity: 1, lightMap : lightMap_1 });
-	var materialTop = new THREE.MeshPhongMaterial( { color: color[1], transparent: true, opacity: 1, lightMap : lightMap_1 } );
-	
-	var materials = [ material.clone(), material.clone(), material.clone(), materialTop ];
-	
-	if(cdm.color)
+	// default material
 	{
-		for( var i = 0; i < cdm.color.length; i++ )
-		{
-			for( var i2 = 0; i2 < materials.length; i2++ )
-			{
-				if(cdm.color[i].index == i2) { materials[i2].color = new THREE.Color( cdm.color[i].o ); break; }
-			}
-		}
+		var color = [0x7d7d7d, 0x696969]; 	
+		
+		if(infProject.settings.wall.color) 
+		{  
+			if(infProject.settings.wall.color.front) color[0] = infProject.settings.wall.color.front; 
+			if(infProject.settings.wall.color.top) color[1] = infProject.settings.wall.color.top; 
+		}	
+		
+		var material = new THREE.MeshPhongMaterial({ color : color[0], transparent: true, opacity: 1, lightMap : lightMap_1 });
+		var materialTop = new THREE.MeshPhongMaterial({ color: color[1], transparent: true, opacity: 1, lightMap : lightMap_1 });
+		
+		var materials = [ material.clone(), material.clone(), material.clone(), materialTop ];	
 	}
-
+	
 	
 	var geometry = createGeometryWall(d, height, width, offsetZ);	
 	var wall = new THREE.Mesh( geometry, materials ); 
@@ -900,9 +891,9 @@ function crtW( cdm )
 	wall.userData.wall.arrO = [];
 	wall.userData.wall.last = { pos : new THREE.Vector3(), rot : new THREE.Vector3() }; 
 	wall.userData.wall.area = { top : 0 }; 
-	//wall.userData.wall.active = { click: true, hover: true };
-	
+	//wall.userData.wall.active = { click: true, hover: true };	
 	wall.userData.wall.room = { side : 0, side2 : [null,null,null] };
+	
 	
 	var v = wall.geometry.vertices;
 	wall.userData.wall.v = [];
@@ -910,25 +901,24 @@ function crtW( cdm )
 	for ( var i = 0; i < v.length; i++ ) { wall.userData.wall.v[i] = v[i].clone(); }
 	
 	wall.userData.material = [];
-	wall.userData.material[0] = { color : wall.material[0].color, scale : new THREE.Vector2(1,1), img: '' };	// top
-	wall.userData.material[1] = { color : wall.material[1].color, scale : new THREE.Vector2(1,1), img: '' };	// left
-	wall.userData.material[2] = { color : wall.material[2].color, scale : new THREE.Vector2(1,1), img: '' };	// right
-	wall.userData.material[3] = { color : wall.material[3].color, scale : new THREE.Vector2(1,1), img: '' };
+	wall.userData.material[0] = { index: 0, color: wall.material[0].color, scale: new THREE.Vector2(1,1), img: null };	// top
+	wall.userData.material[1] = { index: 1, color: wall.material[1].color, scale: new THREE.Vector2(1,1), img: null };	// left
+	wall.userData.material[2] = { index: 2, color: wall.material[2].color, scale: new THREE.Vector2(1,1), img: null };	// right
+	wall.userData.material[3] = { index: 3, color: wall.material[3].color, scale: new THREE.Vector2(1,1), img: null };
 	// --------------
 
 	
 	upUvs_1( wall );
 	
-	cdm.texture = [];
-	cdm.texture[0] = { img: infProject.path+"img/load/beton.jpg", index:1 };
-	cdm.texture[1] = { img: infProject.path+"img/load/beton.jpg", index:2 };
-	if(cdm.texture)
-	{ 
-		var m = cdm.texture;
-		
-		for ( var i = 0; i < m.length; i++ )
+	//cdm.texture = [];
+	//cdm.texture[0] = { img: infProject.path+"img/load/beton.jpg", index:1 };
+	//cdm.texture[1] = { img: infProject.path+"img/load/beton.jpg", index:2 };
+	//console.log('cdm.material', cdm);
+	if(cdm.material)
+	{  
+		for ( var i = 0; i < cdm.material.length; i++ )
 		{			
-			setTexture({obj:wall, material:m[i]});
+			setTexture({obj: wall, material: cdm.material[i]});
 		}	
 	}
 	
@@ -979,6 +969,9 @@ function setTexture(cdm)
 	//if(!cdm.img) return;
 	
 	var img = cdm.material.img;
+	
+	if(!img) return;
+	
 	var material = (cdm.obj.userData.tag == "wall") ? cdm.obj.material[cdm.material.index] : cdm.obj.material;
 	
 	new THREE.TextureLoader().load(img, function ( image )  

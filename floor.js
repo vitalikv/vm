@@ -29,49 +29,49 @@ function createFloor(cdm)
 	
 	var material =new THREE.MeshPhongMaterial( { color : color, lightMap : lightMap_1 } );
 	
-	room[n] = new THREE.Mesh( new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, depth: infProject.settings.floor.height } ), material ); 
+	var floor = new THREE.Mesh( new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, depth: infProject.settings.floor.height } ), material ); 
+	room[n] = floor;
 	
-	room[n].position.set( 0, infProject.settings.floor.posY, 0 );
-	room[n].rotation.set( Math.PI / 2, 0, 0 );	
-	room[n].p = arrP;
-	room[n].w = arrW; 
-	room[n].s = arrS;	
+	floor.position.set( 0, infProject.settings.floor.posY, 0 );
+	floor.rotation.set( Math.PI / 2, 0, 0 );	
+	floor.p = arrP;
+	floor.w = arrW; 
+	floor.s = arrS;	
 	
 	
 	if(!id) { id = countId; countId++; }  
 
-	room[n].userData.tag = 'room';
-	room[n].userData.id = id;
-	room[n].userData.room = { areaTxt : 0, p : arrP, w : arrW, s : arrS, outline : null };
-	room[n].userData.room.height = infProject.settings.floor.height;
-	room[n].userData.material = {img: ''};		
+	floor.userData.tag = 'room';
+	floor.userData.id = id;
+	floor.userData.room = { areaTxt : 0, p : arrP, w : arrW, s : arrS, outline : null };
+	floor.userData.room.height = infProject.settings.floor.height;
+	floor.userData.material = { tag: 'room', color: floor.material.color, scale: new THREE.Vector2(1,1), img: null };		
 	
-	ceiling[n] = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1 } ) );			
-	ceiling[n].position.set( 0, arrP[0].position.y + infProject.settings.height, 0 );  console.log('ceiling[n].position', ceiling[n].position);
-	ceiling[n].rotation.set( Math.PI / 2, 0, 0 );		
-	ceiling[n].userData.tag = 'ceiling';
-	ceiling[n].userData.id = id;
-	ceiling[n].userData.material = {img: ''};
-	//ceiling[n].visible = false;
+	var ceil = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1 } ) );
+	ceiling[n] = ceil;
+	
+	ceil.position.set( 0, arrP[0].position.y + infProject.settings.height, 0 );  
+	ceil.rotation.set( Math.PI / 2, 0, 0 );		
+	ceil.userData.tag = 'ceiling';
+	ceil.userData.id = id;
+	ceil.userData.material = { tag: 'ceiling', color: ceil.material.color, scale: new THREE.Vector2(1,1), img: null };
 
 	
-	infProject.settings.floor.material = { img: infProject.path+"img/load/floor_1.jpg" };
+	//infProject.settings.floor.material = { img: infProject.path+"img/load/floor_1.jpg" };
 	if(infProject.settings.floor.material)
 	{	
-		var m = infProject.settings.floor.material;
-		
-		setTexture({obj:room[n], material:m});	
+		setTexture({obj: floor, material: infProject.settings.floor.material});	
 	}
 	
 	if(infProject.settings.floor.o)
 	{ 	
-		room[n].label = createLabelCameraWall({ count : 1, text : 0, size : 65, ratio : {x:256*4, y:256}, geometry : infProject.geometry.labelFloor, opacity : 0.5 })[0];
+		floor.label = createLabelCameraWall({ count : 1, text : 0, size : 65, ratio : {x:256*4, y:256}, geometry : infProject.geometry.labelFloor, opacity : 0.5 })[0];
 		
-		if(!infProject.settings.floor.label) room[n].label.visible = false;
+		if(!infProject.settings.floor.label) floor.label.visible = false;
 			
-		getYardageSpace( [room[n]] ); 
-		scene.add( room[n] ); 
-		scene.add( ceiling[n] );		
+		getYardageSpace([floor]); 
+		scene.add(floor); 
+		scene.add(ceil);		
 	}
 	else
 	{
@@ -82,14 +82,14 @@ function createFloor(cdm)
 	for ( var i = 0; i < arrW.length; i++ ) 
 	{ 
 		var ind = (arrS[i] == 0) ? 2 : 1; 
-		arrW[i].userData.wall.room.side2[ind] = room[n]; 
+		arrW[i].userData.wall.room.side2[ind] = floor; 
 	}	
 	
-	addParamPointOnZone(arrP, room[n]);
+	addParamPointOnZone(arrP, floor);
 	
 	
 	
-	return room[n];
+	return floor;
 }
 
 

@@ -338,7 +338,10 @@ function compileJsonFile()
 				
 		var wd = saveWindows(wall[i]);		
 		walls[i].windows = wd.windows;
-		walls[i].doors = wd.doors;		
+		walls[i].doors = wd.doors;
+
+		
+		walls[i].material = [wall[i].userData.material[1], wall[i].userData.material[2]];						
 	}	
 
 
@@ -349,7 +352,9 @@ function compileJsonFile()
 		rooms[i].id = room[i].userData.id;  
 		
 		rooms[i].contour = [];
-		var s = 0; for ( var i2 = room[i].p.length - 1; i2 >= 1; i2-- ) { rooms[i].contour[s] = room[i].p[i2].userData.id; s++; }  			
+		var s = 0; for ( var i2 = room[i].p.length - 1; i2 >= 1; i2-- ) { rooms[i].contour[s] = room[i].p[i2].userData.id; s++; } 
+		
+		rooms[i].material = [room[i].userData.material, ceiling[i].userData.material];						
 	}
 	
 
@@ -551,8 +556,6 @@ function loadFilePL(arr)
 		
 		
 		wall[i].id = walls[i].id;		
-		//wall[i].width = walls[i].width;
-		//wall[i].height = walls[i].height;
 		//wall[i].offsetV = new THREE.Vector3(walls[i].startShift.z, 0, walls[i].startShift.x);   		
 		
 		wall[i].width = walls[i].size.z;
@@ -568,7 +571,8 @@ function loadFilePL(arr)
 			if(wall[i].points[1].id == point[i2].id) { wall[i].points[1].pos = new THREE.Vector3(point[i2].pos.x, 0, point[i2].pos.z); }
 		}
 		
-
+		wall[i].material = walls[i].material;
+		
 		var arrO = [];
 		
 		if(walls[i].doors) for ( var i2 = 0; i2 < walls[i].doors.length; i2++ ) { arrO[arrO.length] = walls[i].doors[i2]; arrO[arrO.length - 1].type = 'door'; }
@@ -639,6 +643,7 @@ function loadFilePL(arr)
 		//var offsetZ = localTransformPoint(wall[i].offsetV, quaternionDirection(dir)).z;
 		var offsetZ = 0;
 		var inf = { id: wall[i].id, p: [point1, point2], width: wall[i].width, offsetZ: -offsetZ, height: wall[i].height, load: true };
+		inf.material = wall[i].material; 
 		
 		var obj = crtW(inf); 		
 		
