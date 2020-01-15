@@ -901,10 +901,10 @@ function crtW( cdm )
 	for ( var i = 0; i < v.length; i++ ) { wall.userData.wall.v[i] = v[i].clone(); }
 	
 	wall.userData.material = [];
-	wall.userData.material[0] = { index: 0, color: wall.material[0].color, scale: new THREE.Vector2(1,1), img: null };	// top
-	wall.userData.material[1] = { index: 1, color: wall.material[1].color, scale: new THREE.Vector2(1,1), img: null };	// left
-	wall.userData.material[2] = { index: 2, color: wall.material[2].color, scale: new THREE.Vector2(1,1), img: null };	// right
-	wall.userData.material[3] = { index: 3, color: wall.material[3].color, scale: new THREE.Vector2(1,1), img: null };
+	wall.userData.material[0] = { index: 0, color: wall.material[0].color, img: null };	// top
+	wall.userData.material[1] = { index: 1, color: wall.material[1].color, img: null };	// left
+	wall.userData.material[2] = { index: 2, color: wall.material[2].color, img: null };	// right
+	wall.userData.material[3] = { index: 3, color: wall.material[3].color, img: null };
 	// --------------
 
 	

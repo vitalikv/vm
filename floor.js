@@ -40,12 +40,12 @@ function createFloor(cdm)
 	
 	
 	if(!id) { id = countId; countId++; }  
-
+	 
 	floor.userData.tag = 'room';
 	floor.userData.id = id;
 	floor.userData.room = { areaTxt : 0, p : arrP, w : arrW, s : arrS, outline : null };
 	floor.userData.room.height = infProject.settings.floor.height;
-	floor.userData.material = { tag: 'room', color: floor.material.color, scale: new THREE.Vector2(1,1), img: null };		
+	floor.userData.material = { tag: 'room', color: floor.material.color, img: null };		
 	
 	var ceil = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1 } ) );
 	ceiling[n] = ceil;
@@ -54,7 +54,7 @@ function createFloor(cdm)
 	ceil.rotation.set( Math.PI / 2, 0, 0 );		
 	ceil.userData.tag = 'ceiling';
 	ceil.userData.id = id;
-	ceil.userData.material = { tag: 'ceiling', color: ceil.material.color, scale: new THREE.Vector2(1,1), img: null };
+	ceil.userData.material = { tag: 'ceiling', color: ceil.material.color, img: null };
 
 	
 	//infProject.settings.floor.material = { img: infProject.path+"img/load/floor_1.jpg" };

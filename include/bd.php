@@ -57,10 +57,8 @@ $infProject['scene'] = [ 'tool' => [] ];
 $infProject['scene']['load'] = '';
 
 
-
-
-//$infProject['scene']['load'] = 'shape3';	
-$infProject['settings']['project'] = 'warm_floor';
+	
+$infProject['settings']['project'] = 'test';
 $infProject['settings']['floor']['o'] = true;
 $infProject['settings']['floor']['areaPoint'] = 'inside';
 $infProject['settings']['floor']['label'] = false;

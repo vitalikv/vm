@@ -643,7 +643,7 @@ function loadFilePL(arr)
 		//var offsetZ = localTransformPoint(wall[i].offsetV, quaternionDirection(dir)).z;
 		var offsetZ = 0;
 		var inf = { id: wall[i].id, p: [point1, point2], width: wall[i].width, offsetZ: -offsetZ, height: wall[i].height, load: true };
-		inf.material = wall[i].material; 
+		//inf.material = wall[i].material; 
 		
 		var obj = crtW(inf); 		
 		
@@ -683,6 +683,27 @@ function loadFilePL(arr)
 	// устанавливаем окна/двери
 	
 
+	// получаем все текстуры в один массив и отправляем на утсановку
+	{
+		var arrTexture = [];
+		for ( var i = 0; i < walls.length; i++ )
+		{
+			arrTexture[arrTexture.length] = { objId: walls[i].id, img: walls[i].material[0].img, index: walls[i].material[0].index };
+			arrTexture[arrTexture.length] = { objId: walls[i].id, img: walls[i].material[1].img, index: walls[i].material[1].index };
+		}
+		for ( var i = 0; i < rooms.length; i++ )
+		{
+			arrTexture[arrTexture.length] = { objId: rooms[i].id, img: rooms[i].material[0].img, tag: rooms[i].material[0].tag };
+			arrTexture[arrTexture.length] = { objId: rooms[i].id, img: rooms[i].material[1].img, tag: rooms[i].material[1].tag };
+		}
+		
+		//arrTexture = [...new Set(arrTexture)];	// удаляем из массива повторяющиеся элементы ES6
+		
+		
+		loadTextureInBase({arr: arrTexture});
+	}
+	
+	
 	loadObjInBase({furn: furn});
 
 	
@@ -693,6 +714,40 @@ function loadFilePL(arr)
 	renderCamera();
 	
 	//getSkeleton_1(room); 
+}
+
+
+
+function loadTextureInBase(cdm)
+{
+	console.log(cdm.arr);
+	
+	var wall = infProject.scene.array.wall;
+	
+	for ( var i = 0; i < cdm.arr.length; i++ )
+	{
+		for ( var i2 = 0; i2 < wall.length; i2++ )
+		{
+			if(cdm.arr[i].objId == wall[i2].userData.id)
+			{ 
+				setTexture({obj: wall[i2], material: cdm.arr[i]});
+			}			
+		}
+		for ( var i2 = 0; i2 < room.length; i2++ )
+		{
+			if(cdm.arr[i].objId == room[i2].userData.id && cdm.arr[i].tag == 'room')
+			{ 
+				setTexture({obj: room[i2], material: cdm.arr[i]});
+			}			
+		}	
+		for ( var i2 = 0; i2 < ceiling.length; i2++ )
+		{
+			if(cdm.arr[i].objId == ceiling[i2].userData.id && cdm.arr[i].tag == 'ceiling')
+			{ 
+				setTexture({obj: ceiling[i2], material: cdm.arr[i]});
+			}			
+		}			
+	}
 }
 
 
