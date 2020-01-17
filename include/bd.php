@@ -46,7 +46,7 @@ $infProject['settings']['shader'] = [];
 //$infProject['settings']['shader']['saoPass'] = true;
 //$infProject['settings']['shader']['fxaaPass'] = true;
 $infProject['settings']['height'] = 3.2;
-$infProject['settings']['floor'] = [ 'o' => false, 'posY' => 0.01, 'height' => 0.01, 'changeY' => false, 'areaPoint' => 'center', 'material' => null, 'label'=> true ];
+$infProject['settings']['floor'] = [ 'o' => false, 'posY' => 0.0, 'height' => 0.01, 'changeY' => false, 'areaPoint' => 'center', 'material' => null, 'label'=> true ];
 $infProject['settings']['wall'] = [ 'width' => 0.3, 'label' => '', 'dist' => 'center', 'material' => null, 'block' => null ];
 $infProject['settings']['land'] = [ 'o' => false ];
 $infProject['settings']['unit'] = [ 'wall' => 1, 'floor' => 1 ];
@@ -68,7 +68,7 @@ $infProject['settings']['wall']['color']['top'] = 0x444444;
 $infProject['settings']['wall']['color']['front'] = 0xada186;
 $infProject['settings']['grid']['size'] = 1.0;
 $infProject['settings']['grid']['count'] = null;
-$infProject['settings']['grid']['pos'] = [ 'y' => -0.01 ];
+$infProject['settings']['grid']['pos'] = [ 'y' => -0.00 ];
 $infProject['settings']['grid']['color'] = 0xcccccc;
 $infProject['settings']['interface']['button']['showHideWall_1'] = ['active' => 'Спрятать стены'];
 
