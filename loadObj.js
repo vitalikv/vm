@@ -57,6 +57,14 @@ function infoListObj()
 		url : infProject.path+'import/vm_furn_3.fbx', 
 		name : 'шкаф',
 		planeMath : 0.1,
+	}	
+
+	arr[6] =
+	{
+		lotid : 7,
+		url : infProject.path+'import/vm_furn_4.fbx', 
+		name : 'кухня +',
+		planeMath : 0.0,
 	}		
 	
 	for(var i = 0; i < arr.length; i++)
