@@ -65,7 +65,16 @@ function infoListObj()
 		url : infProject.path+'import/vm_furn_4.fbx', 
 		name : 'кухня +',
 		planeMath : 0.0,
-	}		
+	}
+
+	arr[7] =
+	{
+		lotid : 8,
+		url : infProject.path+'import/vm_light_point_1.fbx', 
+		name : 'светильник',
+		type: 'light point',
+		planeMath : infProject.settings.height - 0.05,
+	}	
 	
 	for(var i = 0; i < arr.length; i++)
 	{
@@ -250,10 +259,17 @@ function addObjInBase(cdm)
 				for(var i = 0; i < arrM.length; i++)
 				{
 					arrM[i].lightMap = lightMap_1;
+					arrM[i].precision = 'highp';				
+					arrM[i] = new THREE.MeshPhongMaterial(arrM[i]);
+
+					arrM[i].needsUpdate = true;
 					//arrM[i].transparent = true;
-					//arrM[i].userData.opacity = arrM[i].opacity;  
+					//arrM[i].userData.opacity = arrM[i].opacity; 				
 				}					
-			}				
+			}
+
+			child.castShadow = true;	
+			child.receiveShadow = true;				
 		}
 	});	
 	
@@ -296,12 +312,22 @@ function addObjInScene(inf, cdm)
 	obj.userData.obj3D = {};
 	obj.userData.obj3D.lotid = cdm.lotid;
 	obj.userData.obj3D.nameRus = inf.name;
-
+	obj.userData.obj3D.type = '';
+	obj.userData.obj3D.helper = null;
+	
 	if(!inf.material)
 	{
 		obj.material = new THREE.MeshLambertMaterial( {color: 0xffff00, transparent: true, opacity: 0.5 } );
 		obj.material.visible = false;		
-	}			
+	}
+
+	if(inf.type)
+	{
+		if(inf.type == 'light point')
+		{
+			setLightInobj({obj: obj});
+		}
+	}		
 	
 	infProject.scene.array.obj[infProject.scene.array.obj.length] = obj;
 
@@ -314,6 +340,87 @@ function addObjInScene(inf, cdm)
 	renderCamera();
 
 }
+
+
+
+function setLightInobj(cdm)
+{
+	var obj = cdm.obj;
+	obj.userData.obj3D.type = 'light point';
+	
+	
+	var light = new THREE.PointLight( 0xffffff, 1, 10 );
+	
+	light.castShadow = true;            // default false
+	scene.add( light );
+	
+	light.decay = 2;
+
+	//Set up shadow properties for the light
+	light.shadow.mapSize.width = 1048;  // default
+	light.shadow.mapSize.height = 1048; // default
+	light.shadow.camera.near = 0.01;       // default
+	light.shadow.camera.far = 10;      // default
+	
+	light.position.set(0, -0.01, 0);		
+	
+	obj.add( light );	
+	
+	
+	if(1==2)
+	{
+		var spotLight = new THREE.SpotLight( 0xffffff );	
+
+		spotLight.castShadow = true;
+
+		spotLight.angle = Math.PI / 2 - 0.1;
+		spotLight.penumbra = 0.05;
+		spotLight.decay = 2;
+		spotLight.distance = 10;	
+
+		spotLight.castShadow = true;
+		spotLight.shadow.mapSize.width = 4048;
+		spotLight.shadow.mapSize.height = 4048;
+		spotLight.shadow.camera.near = 0.01;
+		spotLight.shadow.camera.far = 10;
+
+
+		
+		if(1==2)
+		{
+			scene.add( spotLight );
+			scene.add( spotLight.target );
+			
+			spotLight.position.copy(obj.position);
+			spotLight.target.position.set(obj.position.x, -1, obj.position.z);		
+		}
+		else
+		{
+			spotLight.position.set(0, -0.05, 0);
+			spotLight.target.position.set(0, -1, 0);		
+			
+			obj.add( spotLight );
+			obj.add( spotLight.target );	
+		}
+		
+		console.log('spotLight', spotLight);
+		//--------
+
+		if(1==1)
+		{
+			spotLightCameraHelper = new THREE.CameraHelper( spotLight.shadow.camera );
+			scene.add( spotLightCameraHelper );	
+
+			spotLightHelper = new THREE.SpotLightHelper( spotLight );
+			scene.add( spotLightHelper );		
+
+			obj.userData.obj3D.helper = [spotLightCameraHelper];
+		}
+		
+	}
+
+}
+
 
 
 

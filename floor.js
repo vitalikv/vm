@@ -27,7 +27,7 @@ function createFloor(cdm)
 	
 	if(infProject.settings.floor.color){ color = infProject.settings.floor.color; }
 	
-	var material =new THREE.MeshPhongMaterial( { color : color, lightMap : lightMap_1 } );
+	var material =new THREE.MeshPhongMaterial( { color : color, lightMap : lightMap_1, dithering: true } );
 	
 	var floor = new THREE.Mesh( new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, depth: infProject.settings.floor.height } ), material ); 
 	room[n] = floor;
@@ -45,9 +45,9 @@ function createFloor(cdm)
 	floor.userData.id = id;
 	floor.userData.room = { areaTxt : 0, p : arrP, w : arrW, s : arrS, outline : null };
 	floor.userData.room.height = infProject.settings.floor.height;
-	floor.userData.material = { tag: 'room', color: floor.material.color, img: null };		
+	floor.userData.material = { tag: 'room', color: floor.material.color, img: null };	
 	
-	var ceil = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1 } ) );
+	var ceil = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color : 0xffffff, lightMap : lightMap_1, dithering: true } ) );
 	ceiling[n] = ceil;
 	
 	ceil.position.set( 0, arrP[0].position.y + infProject.settings.height, 0 );  
@@ -87,7 +87,10 @@ function createFloor(cdm)
 	
 	addParamPointOnZone(arrP, floor);
 	
-	
+	floor.castShadow = true; 
+	floor.receiveShadow = true;
+	ceil.castShadow = true; 
+	ceil.receiveShadow = true;	
 	
 	return floor;
 }
