@@ -370,6 +370,13 @@ function compileJsonFile()
 		object[m].pos = obj.position;
 		//object[m].rot = new THREE.Vector3( THREE.Math.radToDeg(obj.rotation.x), THREE.Math.radToDeg(obj.rotation.y), THREE.Math.radToDeg(obj.rotation.z) );
 		object[m].q = {x: obj.quaternion.x, y: obj.quaternion.y, z: obj.quaternion.z, w: obj.quaternion.w};
+		
+		object[m].type = obj.userData.obj3D.type;
+		
+		if(obj.userData.obj3D.type == "light point")
+		{
+			object[m].light = { intensity: obj.children[1].intensity };
+		}
 	}	
 	
 	

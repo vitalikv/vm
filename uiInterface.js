@@ -166,7 +166,7 @@ function changeRightMenuUI_1(cdm)
 	}
 	if(name == "button_wrap_object") 
 	{
-		$('[nameId="wrap_object"]').show();
+		$('[nameId="wrap_object"]').show(); 
 	}
 	if(name == "button_wrap_plan") 
 	{
@@ -182,6 +182,7 @@ function activeObjRightPanelUI_1(cdm)
 {
 	$('[nameId="wrap_object_1"]').hide();
 	
+	$('[nameId="rp_bl_light"]').hide();
 	$('[nameId="bl_object_3d"]').hide();
 	$('[nameId="rp_menu_wall"]').hide();
 	$('[nameId="rp_menu_point"]').hide();
@@ -221,6 +222,12 @@ function activeObjRightPanelUI_1(cdm)
 	}	
 	else if(obj.userData.tag == 'obj')
 	{
+		if(obj.userData.obj3D.type == "light point")
+		{
+			$('[nameId="rp_bl_light"]').show();
+			sliderSunIntensity({value: obj.children[1].intensity});			
+		}
+		    
 		$('[nameId="bl_object_3d"]').show();
 	}	
 	else if(obj.userData.tag == 'room')

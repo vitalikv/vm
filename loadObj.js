@@ -325,7 +325,12 @@ function addObjInScene(inf, cdm)
 	{
 		if(inf.type == 'light point')
 		{
-			setLightInobj({obj: obj});
+			var intensity = 1;
+			if(cdm.light)
+			{
+				if(cdm.light.intensity) { intensity = cdm.light.intensity; }
+			}
+			setLightInobj({obj: obj, intensity: intensity}); 
 		}
 	}		
 	
@@ -349,7 +354,7 @@ function setLightInobj(cdm)
 	obj.userData.obj3D.type = 'light point';
 	
 	
-	var light = new THREE.PointLight( 0xffffff, 1, 10 );
+	var light = new THREE.PointLight( 0xffffff, cdm.intensity, 10 );
 	
 	light.castShadow = true;            // default false
 	scene.add( light );

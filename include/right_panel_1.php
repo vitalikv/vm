@@ -349,8 +349,19 @@
 				</div>				
 				
 				
-				
+	
 				<div nameId="bl_object_3d" style="display: none;">  
+				
+					<div class="bl_fd30" nameId="rp_bl_light" style="display: none;">
+						<div class="bl_light_t1">
+							Интенсивность света: <span class="bl_light_t2" nameId="sun_intensity_div">0.0</span>
+						</div>
+					
+						<div class="bl_fd31">
+							<div class="bl_circle_handle" nameId="sun_intensity_handle"></div>
+						</div>	 	
+					</div>
+				
 				
 					<div class="flex_1 w_1">						
 						<div class="button1 button_gradient_1" nameId="select_pivot">

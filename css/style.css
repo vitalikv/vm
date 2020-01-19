@@ -1091,6 +1091,61 @@ canvas
 }
 
 
+.bl_fd30 
+{
+	position: relative;
+	display: block;
+	width: 200px; 
+	height: auto;
+	margin: 20px auto;
+}
+
+.bl_fd31 
+{
+	position: relative;	
+	width: 100%; 
+	height: 10px;
+	background: #83A7C9;
+}
+
+.bl_fd31 .bl_circle_handle
+{		
+	top: -7px;
+	left: -7px;
+}
+
+.bl_light_h1
+{
+	padding: 10px;
+	font-size: 14px;
+	color: #666;
+	border-bottom: 1px solid #b3b3b3;
+}
+
+.bl_light_t1
+{
+	padding: 10px 0;
+	font-size: 14px;
+	color: #666;	
+}
+
+.bl_light_t2
+{
+	font-size: 14px;
+	color: #666;	
+}
+
+.bl_circle_handle
+{		
+	position: absolute;
+	width: 20px; 
+	height: 20px;
+	background: #fff;
+	border-radius: 50%;
+	border: 1px solid #b3b3b3;
+}
+
+ 
 
 .texture_wall .button1
 {

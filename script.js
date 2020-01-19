@@ -333,12 +333,135 @@ addTextureInCatalogUI_2();
 changeRightMenuUI_1({name: 'button_wrap_object'});	// назначаем первоначальную вкладку , которая будет включена
 //changeRightMenuUI_1({name: 'button_wrap_img'});	
 //changeRightMenuUI_1({name: 'button_wrap_plan'});
-startRightPlaneInput({});	
+startRightPlaneInput({});
+
+	
 
 //----------- start
 
+  
+function sliderSunIntensity(cdm)
+{
+	if(!cdm) cdm = {};
+	
+	function Plugin() 
+	{ 	
+		var block = $('[nameId="panel_catalog_1"]')[0];
+		//console.log(99999999, block);
+		this.block = block;
+		//this.circleMax = block.querySelector('.bl_fd24'); 
+		this.circleMin = block.querySelector('.bl_fd31'); 
+		this.handle = block.querySelector('[nameId="sun_intensity_handle"]');
+		this.text = block.querySelector('[nameId="sun_intensity_div"]');   
+		this.value = (cdm.value !== undefined) ? cdm.value : 0.5;
+		
+		this.init();
+	}
 
 
+	Plugin.prototype.init = function () 
+	{	
+		var self = this;
+		
+		$(self.handle).on("mousedown touchstart", function (event) { self.startDrag(event); });
+		
+		self.update();
+	};
+
+
+	Plugin.prototype.startDrag = function (event) 
+	{
+		var self = this;
+		
+		$(self.block).on("mousemove touchmove", function (event) { self.drag(event); });
+		$(self.block).on("mouseup touchend", function (event) { self.stopDrag(event); });
+		
+		$(window).on("mousemove touchmove", function (event) { self.drag(event); });
+		$(window).on("mouseup touchend", function (event) { self.stopDrag(event); });	
+	};
+
+
+	Plugin.prototype.stopDrag = function () 
+	{
+		var self = this;
+		
+		$(window).off("mousemove mouseup");
+		$(self.block).off("mousemove mouseup");	
+		
+		self.update();
+	};
+
+
+	Plugin.prototype.drag = function (event) 
+	{        
+		var self = this;  
+		var circleMin = $(self.circleMin); 
+		
+		var pageX = event.pageX;
+		var pageY = event.pageY;
+		var touches = event.originalEvent.touches;
+		
+		// Touch device
+		if (touches && touches.length === 1) 
+		{
+			pageX = touches[0].pageX;
+			pageY = touches[0].pageY;
+		}
+
+		var deltaX = pageX - circleMin.offset().left;
+
+		var width = 200;	//circleMin.width()
+		
+		if(deltaX < 0) { deltaX = 0; }
+		else if(width < deltaX) { deltaX = circleMin.width(); }
+		
+		  
+		self.value = deltaX / width;
+		
+		this.update();
+	};
+
+
+	Plugin.prototype.update = function () 
+	{
+		var self = this;
+		var circleMin = $(self.circleMin);
+		var $handle = $(self.handle);
+		var $text = $(self.text);
+		
+		var width = 200;	//circleMin.width()
+		
+		var left = (self.value * width) - $handle.width() / 2;
+		var top = circleMin.height() / 2 - $handle.height() / 2;
+		
+		//console.log(777777, self.value, circleMin.width(), left);
+			
+		$handle.css({ left: left, top: top });					
+		
+		var val = Math.round(self.value * 100)/100;
+		$text.text(val);
+		
+		var obj = clickO.last_obj;
+		
+		if(obj)
+		{
+			if(obj.userData.tag == 'obj')
+			{
+				if(obj.userData.tag == 'obj')
+				{
+					if(obj.userData.obj3D.type == 'light point')
+					{
+						obj.children[1].intensity = val;						
+						renderCamera();
+					}
+				}
+			}
+		}
+		
+	};
+
+	new Plugin();
+}
 
 
 function backgroundPlane()
