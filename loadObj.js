@@ -258,9 +258,9 @@ function addObjInBase(cdm)
 				
 				for(var i = 0; i < arrM.length; i++)
 				{
-					arrM[i].lightMap = lightMap_1;
+					//arrM[i].lightMap = lightMap_1;
 					arrM[i].precision = 'highp';				
-					arrM[i] = new THREE.MeshPhongMaterial(arrM[i]);
+					//arrM[i] = new THREE.MeshPhongMaterial(arrM[i]);
 
 					arrM[i].needsUpdate = true;
 					//arrM[i].transparent = true;
@@ -359,6 +359,15 @@ function setLightInobj(cdm)
 	light.castShadow = true;            // default false
 	scene.add( light );
 	
+	obj.traverse(function(child) 
+	{
+		if(child.isMesh) 
+		{ 
+			child.castShadow = false;	
+			child.receiveShadow = false;				
+		}
+	});	
+	
 	light.decay = 2;
 
 	//Set up shadow properties for the light
@@ -368,7 +377,7 @@ function setLightInobj(cdm)
 	light.shadow.camera.far = 10;      // default
 	
 	light.position.set(0, -0.01, 0);		
-	
+	//light.visible = false;
 	obj.add( light );	
 	
 	

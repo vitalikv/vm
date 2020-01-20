@@ -11,8 +11,8 @@ var context = canvas.getContext( 'webgl2' );
 var renderer = new THREE.WebGLRenderer( { canvas: canvas, context: context, preserveDrawingBuffer: true, } );
 
 
-renderer.gammaInput = true;
-renderer.gammaOutput = true;
+//renderer.gammaInput = true;
+//renderer.gammaOutput = true;
 renderer.localClippingEnabled = true;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
@@ -57,72 +57,38 @@ cameraWall.zoom = 2
 
 //----------- Light 
 
-scene.add( new THREE.AmbientLight( 0xffffff, 0.5 ) ); 
+ 
 
-
-
-
-
-var light_2 = new THREE.DirectionalLight( 0xffffff, 0.5 );
-light_2.position.set(0,10,10);
-light_2.target.position.set(0, 0, 0);
-
-light_2.castShadow = true;
-light_2.shadow.mapSize.width = 2048;
-light_2.shadow.mapSize.height = 2048;
-light_2.shadow.radius = 2;
-
-var d = 15;
-light_2.shadow.camera.left = - d;
-light_2.shadow.camera.right = d;
-light_2.shadow.camera.top = d;
-light_2.shadow.camera.bottom = -d;
-light_2.shadow.camera.near = 0;
-light_2.shadow.camera.far = 100;
-
-scene.add( light_2 );
-scene.add( light_2.target );
-
-console.log('console.log(light_2);', light_2);
-
-var dirLightHeper = new THREE.DirectionalLightHelper( light_2, 2, 0xff0000 );
-scene.add( dirLightHeper );
-
-var cameraHelper = new THREE.CameraHelper(light_2.shadow.camera);
-scene.add(cameraHelper);
-
-
-spotLightHelper = null;
-spotLightCameraHelper = null;
-
+if(1==2)
+{
+	scene.add( new THREE.AmbientLight( 0xffffff, 0.93 ) );
+	
+	var lights = [];
+	lights[ 0 ] = new THREE.PointLight( 0x222222, 0.7, 0 );
+	lights[ 1 ] = new THREE.PointLight( 0x222222, 0.5, 0 );
+	lights[ 2 ] = new THREE.PointLight( 0x222222, 0.8, 0 );
+	lights[ 3 ] = new THREE.PointLight( 0x222222, 0.2, 0 );
+	
+	lights[ 0 ].position.set( -1000, 200, 1000 );
+	lights[ 1 ].position.set( -1000, 200, -1000 );
+	lights[ 2 ].position.set( 1000, 200, -1000 );
+	lights[ 3 ].position.set( 1000, 200, 1000 );
+	
+	scene.add( lights[ 0 ] );
+	scene.add( lights[ 1 ] );
+	scene.add( lights[ 2 ] );
+	scene.add( lights[ 3 ] );
+	
+}
+else
+{
+	scene.add( new THREE.AmbientLight( 0xffffff, 0.5 ) );
+}
 //----------- Light
 
 
 
-function rotationXZ(cdm)
-{
-	var cdm = (cdm) ? cdm : {};
-	 
-	var light = light_2;		
-			
-	var dist = new THREE.Vector3(light.position.x, 0, light.position.z).distanceTo(new THREE.Vector3(light.target.position.x, 0, light.target.position.z));
-	
-	var radXZ = Math.atan2(light.position.x, light.position.z);	
-	radXZ += Math.PI/8;
-		
-	
-	
-	var x = Math.sin(radXZ)*dist;
-	var z = Math.cos(radXZ)*dist;		
 
-	light.position.x = x;
-	light.position.z = z;	
-	
-	light.target.updateMatrixWorld();
-	//dirLightHeper.update();
-  
-	renderCamera();
-};
 
 
 
@@ -149,12 +115,6 @@ function animate()
 function renderCamera()
 {
 	camera.updateMatrixWorld();	
-
-	cameraHelper.update();
-	dirLightHeper.update();
-
-	if(spotLightCameraHelper) { spotLightCameraHelper.update(); }
-	if(spotLightHelper) { spotLightHelper.update(); }
 	
 	composer.render();
 }
@@ -1170,7 +1130,7 @@ function setTexture(cdm)
 		texture.needsUpdate = true;
 		
 		material.map = texture; 
-		material.lightMap = lightMap_1;
+		material.lightMap = null;
 		material.needsUpdate = true; 
 
 
@@ -1604,7 +1564,7 @@ document.body.addEventListener("keydown", function (e)
 			renderCamera();			
 		}
 	}  		
-	if(e.keyCode == 86) { rotationXZ(); } 
+	if(e.keyCode == 86) {  } 
 } );
 
 document.body.addEventListener("keydown", function (e) { clickO.keys[e.keyCode] = true; });
