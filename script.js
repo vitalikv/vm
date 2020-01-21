@@ -286,7 +286,9 @@ var offset = new THREE.Vector3();
 	changeRightMenuUI_1({name: 'button_wrap_object'});	// назначаем первоначальную вкладку , которая будет включена
 	//changeRightMenuUI_1({name: 'button_wrap_img'});	
 	//changeRightMenuUI_1({name: 'button_wrap_plan'});
-	startRightPlaneInput({});	
+	startRightPlaneInput({});
+
+	getAutoBuildingJson();	
 }
 
 //----------- start
@@ -1449,7 +1451,7 @@ function findObjFromId( cdm, id )
 	var wall = infProject.scene.array.wall;
 	var window = infProject.scene.array.window;
 	var door = infProject.scene.array.door;	
-	var room = infProject.scene.array.room;
+	var floor = infProject.scene.array.floor;
 	var obj = infProject.scene.array.obj; 
 	
 	
@@ -1476,7 +1478,7 @@ function findObjFromId( cdm, id )
 	}
 	else if(cdm == 'room')
 	{
-		for ( var i = 0; i < room.length; i++ ){ if(room[i].userData.id == id){ return room[i]; } }
+		for ( var i = 0; i < floor.length; i++ ){ if(floor[i].userData.id == id){ return floor[i]; } }
 	}
 	else if(cdm == 'obj')
 	{
@@ -1559,8 +1561,9 @@ document.body.addEventListener("keydown", function (e)
 			renderCamera();			
 		}
 	}  		
-	if(e.keyCode == 66) { switchFxaaPass({switch: true}); } 	// b
-	if(e.keyCode == 86) { switchLight({switch: true}); } 	// v
+	//if(e.keyCode == 66) { switchFxaaPass({switch: true}); } 	// b
+	//if(e.keyCode == 86) { switchLight({switch: true}); } 	// v
+	if(e.keyCode == 89) { saveFile({txt: true}); } 			// y
 } );
 
 document.body.addEventListener("keydown", function (e) { clickO.keys[e.keyCode] = true; });
@@ -1704,7 +1707,7 @@ $(document).ready(function ()
 	docReady = true; 	
 		 
 	 
-	loadFile({json: true});  
+	//loadFile({json: true});  
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(0, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 1), rot: new THREE.Vector3(0, 1, 0)});

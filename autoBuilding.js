@@ -6,7 +6,7 @@ function getAutoBuildingJson()
 {
 	$.ajax
 	({
-		url: infProject.path+'auto_building/room.json',
+		url: infProject.path+'auto_building/room2.json',
 		type: 'POST',
 		dataType: 'json',
 		success: function(json)
@@ -36,8 +36,8 @@ function readAutoBuildingJson(cdm)
 		
 		for( var i2 = 0; i2 < w.length; i2++ )
 		{
-			var x = w[i2].inner_part.point_1.x/100;
-			var z = w[i2].inner_part.point_1.y/100;
+			var x = w[i2].inner_part.point_1.x/100 * 3;
+			var z = w[i2].inner_part.point_1.y/100 * 3;
 			var pos = new THREE.Vector3(x, 0, z);
 			
 			var copy = null;
@@ -67,8 +67,13 @@ function readAutoBuildingJson(cdm)
 		
 		for( var i2 = 1; i2 < p.length; i2++ )
 		{
-			arr[i].w[i2 - 1] = {};
-			arr[i].w[i2 - 1].p = [p[i2 - 1], p[i2]];
+			arr[i].w[i2 - 1] = null;
+			
+			if(p[i2 - 1] != p[i2])
+			{
+				arr[i].w[i2 - 1] = {};
+				arr[i].w[i2 - 1].p = [p[i2 - 1], p[i2]];
+			}						
 		}
 	}
 	
@@ -81,13 +86,15 @@ function readAutoBuildingJson(cdm)
 	{
 		for( var i2 = 0; i2 < arr[i].w.length; i2++ )
 		{
+			if(!arr[i].w[i2]) continue;
+			
 			var point1 = findObjFromId( 'point', arr[i].w[i2].p[0].id );
 			var point2 = findObjFromId( 'point', arr[i].w[i2].p[1].id );	
 			
 			if(point1 == null) { point1 = createPoint( arr[i].w[i2].p[0].pos, arr[i].w[i2].p[0].id ); }
 			if(point2 == null) { point2 = createPoint( arr[i].w[i2].p[1].pos, arr[i].w[i2].p[1].id ); }	
 
-			var obj = crtW({p: [point1, point2], width: 0.2}); 
+			var obj = crtW({p: [point1, point2], width: 0.01}); 
 		}
 	}
 	
@@ -95,6 +102,8 @@ function readAutoBuildingJson(cdm)
 	
 	upLabelPlan_1(infProject.scene.array.wall);	// размеры стен
 	detectRoomZone();	// пол		
+	
+	centerCamera2D();
 	
 	renderCamera();
 }

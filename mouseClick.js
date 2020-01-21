@@ -212,7 +212,7 @@ function clickRayHit(event)
 	
 	if(!rayhit)
 	{
-		var ray = rayIntersect( event, infProject.scene.array.room, 'arr' );
+		var ray = rayIntersect( event, infProject.scene.array.floor, 'arr' );
 		if(ray.length > 0) { rayhit = ray[0]; }			
 	}	
 	

@@ -106,7 +106,7 @@ function createLabelCameraWall(cdm)
 		
 		
 		var label = new THREE.Mesh(cdm.geometry, material);	
-		label.visible = false;
+		label.visible = false; 
 		label.renderOrder = 1.1;
 		arr[i] = label;
 		scene.add( label );			

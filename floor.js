@@ -67,7 +67,7 @@ function createFloor(cdm)
 	{ 	
 		floor.label = createLabelCameraWall({ count : 1, text : 0, size : 65, ratio : {x:256*4, y:256}, geometry : infProject.geometry.labelFloor, opacity : 0.5 })[0];
 		
-		if(!infProject.settings.floor.label) floor.label.visible = false;
+		if(!infProject.settings.floor.label) floor.label.visible = false; 
 			
 		getYardageSpace([floor]); 
 		scene.add(floor); 

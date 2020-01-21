@@ -30,7 +30,7 @@ var resetPop =
 	
 	infProjectSceneArray : function()
 	{
-		var array = { point : obj_point, wall : [], window : [], door : [], room : room, ceiling : ceiling, obj : [] };
+		var array = { point : obj_point, wall : [], window : [], door : [], floor : room, ceiling : ceiling, obj : [] };
 		array.lineGrid = { limit : false };
 		array.base = (infProject.start)? infProject.scene.array.base : [];	// массив клонируемых объектов
 		
@@ -84,6 +84,7 @@ function resetScene()
 	var window = infProject.scene.array.window;
 	var door = infProject.scene.array.door;
 	var obj = infProject.scene.array.obj;
+	var floor = infProject.scene.array.floor;
 	
 	for ( var i = 0; i < wall.length; i++ )
 	{ 
@@ -123,15 +124,15 @@ function resetScene()
 	}	
 	
 	
-	for ( var i = 0; i < room.length; i++ )
+	for ( var i = 0; i < floor.length; i++ )
 	{		
-		disposeNode(room[i]);
-		disposeNode(room[i].label);
+		disposeNode(floor[i]);
+		disposeNode(floor[i].label);
 		disposeNode(ceiling[i]);
 		
-		scene.remove(room[i].label); 
-		if(room[i].userData.room.outline) { scene.remove(room[i].userData.room.outline); }
-		scene.remove(room[i]); 
+		scene.remove(floor[i].label); 
+		if(floor[i].userData.room.outline) { scene.remove(floor[i].userData.room.outline); }
+		scene.remove(floor[i]); 
 		scene.remove(ceiling[i]);	
 	}
 	
@@ -280,11 +281,13 @@ function compileJsonFile()
 {
 	var json = 
 	{
-		points : [],
-		walls : [],	
-		rooms : [],
-		height : infProject.settings.height,			
-	};	
+		version: {},
+		points: [],
+		walls: [],	
+		rooms: [],
+		object: [],
+		height: infProject.settings.height,		
+	};
 	
 	var points = [];
 	var walls = [];
@@ -347,17 +350,18 @@ function compileJsonFile()
 		walls[i].material = [wall[i].userData.material[1], wall[i].userData.material[2]];						
 	}	
 
-
-	for ( var i = 0; i < room.length; i++ )
+	var floor = infProject.scene.array.floor;
+	
+	for ( var i = 0; i < floor.length; i++ )
 	{
 		rooms[i] = { contour : [] };
 		
-		rooms[i].id = room[i].userData.id;  
+		rooms[i].id = floor[i].userData.id;  
 		
 		rooms[i].contour = [];
-		var s = 0; for ( var i2 = room[i].p.length - 1; i2 >= 1; i2-- ) { rooms[i].contour[s] = room[i].p[i2].userData.id; s++; } 
+		var s = 0; for ( var i2 = floor[i].p.length - 1; i2 >= 1; i2-- ) { rooms[i].contour[s] = floor[i].p[i2].userData.id; s++; } 
 		
-		rooms[i].material = [room[i].userData.material, ceiling[i].userData.material];						
+		rooms[i].material = [floor[i].userData.material, ceiling[i].userData.material];						
 	}
 	
 
@@ -387,6 +391,24 @@ function compileJsonFile()
 	json.walls = walls;
 	json.rooms = rooms;
 	json.object = object;
+	
+	
+	// version
+
+	json.version.id = 2;
+	json.version.rooms = { contour: [] };
+	
+	var contour = getYardageSpace( infProject.scene.array.floor );
+	
+	for(var i = 0; i < contour.length; i++)
+	{
+		for(var i2 = 0; i2 < contour[i].length; i2++)
+		{
+			contour[i][i2] = {x: contour[i][i2].x, y: contour[i][i2].z};
+		}
+	}
+	
+	json.version.rooms.contour = contour;
 	
 	return json;
 }
@@ -493,6 +515,18 @@ function saveFile(cdm)
 			error: function(json){ console.log(json); }
 		});			
 	}
+	
+	if(cdm.txt)
+	{	
+		var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(json);	
+		
+		var link = document.createElement('a');
+		document.body.appendChild(link);
+		link.href = csvData;
+		link.target = '_blank';
+		link.download = 'file.json';
+		link.click();			
+	}	
 }
 
 

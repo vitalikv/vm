@@ -182,13 +182,17 @@ function getYardageSpace( room )
 {	 
 	if(!infProject.settings.floor.o) { return; }	
 	
+	var contour = [];	// положение точек переметра комнаты
+	
 	for (var u = 0; u < room.length; u++)
 	{  
-		var arrW = room[u].w; 
-		var arrP = room[u].p;  
-		var arrS = room[u].s;
-		var n = arrW.length;
+		var arrW = room[u].userData.room.w; 
+		var arrP = room[u].userData.room.p;  
+		var arrS = room[u].userData.room.s;
+		var n = room[u].userData.room.w.length;
 		var res = 0;
+		
+		contour[u] = [];
 		
 		if(infProject.settings.floor.areaPoint == 'inside')
 		{
@@ -227,7 +231,9 @@ function getYardageSpace( room )
 				
 				var sum = p1.x*(p2.z - p3.z); 
 				sum = Math.round(sum * 100) * 10;
-				res += sum;				
+				res += sum;	
+
+				contour[u][contour[u].length] = p1;
 			}			
 		}
 		else
@@ -277,7 +283,9 @@ function getYardageSpace( room )
 		upLabelArea2(room[u].label, res, '80', 'rgba(255,255,255,1)', true);
 		
 		if(infProject.settings.floor.label) room[u].label.visible = true;
-	}	
+	}
+
+	return contour;
 }
 
 
