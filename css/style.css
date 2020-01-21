@@ -425,11 +425,11 @@ canvas
 
 .top_panel_2
 {
+	position: relative;
 	width: 100%;
 
 	margin-top: 15px;
 }
-
 
 .top_panel_2 .tp_left_1
 {
@@ -757,6 +757,7 @@ canvas
 /*  modal_wind_3 --->  */
 
 
+
 .background_main_menu 
 {
 	display: none;
@@ -1029,6 +1030,48 @@ canvas
 	font-family: arial,sans-serif;
 	font-size: 25px;
 	color: #666;	
+}
+
+
+
+.window_main_sett 
+{
+	position: relative;
+	margin: auto;
+	width: 300px;
+	height: 100px;	
+	
+	background: white;
+	border-radius: 8px;
+	box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.5);
+	display: -webkit-box;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	flex-direction: column;
+	
+	
+}
+
+.window_main_sett .modal_header 
+{
+	height: 10px;
+	min-height: 10px;
+	padding-right: 0px;
+}
+
+
+.window_main_sett .modal_window_close
+{
+	position: absolute;
+	width: 20px;	
+	height: 20px;
+	top: 10px;
+	right: 10px;		
+
+	font-size: 30px;
+	line-height: 0.6em;	
+	z-index: 100;
 }
 
 

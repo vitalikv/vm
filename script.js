@@ -3,7 +3,7 @@
 
 var w_w = window.innerWidth;
 var w_h = window.innerHeight;
-var aspect = w_w/w_h;
+var aspect = window.innerWidth/window.innerHeight;
 var d = 5;
 
 var canvas = document.createElement( 'canvas' );
@@ -18,7 +18,7 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
 //renderer.autoClear = false;
 renderer.setPixelRatio( window.devicePixelRatio );
-renderer.setSize( w_w, w_h );
+renderer.setSize( window.innerWidth, window.innerHeight );
 //renderer.setClearColor (0xffffff, 1);
 //renderer.setClearColor (0x9c9c9c, 1);
 document.body.appendChild( renderer.domElement );
@@ -37,7 +37,7 @@ cameraTop.updateProjectionMatrix();
 
 
 //----------- camera3D
-var camera3D = new THREE.PerspectiveCamera( 65, w_w / w_h, 0.01, 1000 );  
+var camera3D = new THREE.PerspectiveCamera( 65, window.innerWidth / window.innerHeight, 0.01, 1000 );  
 camera3D.rotation.order = 'YZX';		//'ZYX'
 camera3D.position.set(5, 7, 5);
 camera3D.lookAt(scene.position);
@@ -53,39 +53,6 @@ camera3D.userData.camera.click = { pos : new THREE.Vector3() };
 var cameraWall = new THREE.OrthographicCamera( - d * aspect, d * aspect, d, - d, 1, 1000 );
 cameraWall.zoom = 2
 //----------- cameraWall
-
-
-//----------- Light 
-
- 
-
-if(1==2)
-{
-	scene.add( new THREE.AmbientLight( 0xffffff, 0.93 ) );
-	
-	var lights = [];
-	lights[ 0 ] = new THREE.PointLight( 0x222222, 0.7, 0 );
-	lights[ 1 ] = new THREE.PointLight( 0x222222, 0.5, 0 );
-	lights[ 2 ] = new THREE.PointLight( 0x222222, 0.8, 0 );
-	lights[ 3 ] = new THREE.PointLight( 0x222222, 0.2, 0 );
-	
-	lights[ 0 ].position.set( -1000, 200, 1000 );
-	lights[ 1 ].position.set( -1000, 200, -1000 );
-	lights[ 2 ].position.set( 1000, 200, -1000 );
-	lights[ 3 ].position.set( 1000, 200, 1000 );
-	
-	scene.add( lights[ 0 ] );
-	scene.add( lights[ 1 ] );
-	scene.add( lights[ 2 ] );
-	scene.add( lights[ 3 ] );
-	
-}
-else
-{
-	scene.add( new THREE.AmbientLight( 0xffffff, 0.5 ) );
-}
-//----------- Light
-
 
 
 
@@ -110,16 +77,12 @@ function animate()
 }
 
 
-
-
 function renderCamera()
 {
 	camera.updateMatrixWorld();	
 	
 	composer.render();
 }
-
-
 //----------- render
 
 
@@ -178,7 +141,8 @@ infProject.project = null;
 infProject.settings.active = { pg: 'pivot' };
 infProject.settings.door = { width: 1, height: 2.2 };
 infProject.settings.wind = { width: 1, height: 1, h1: 1.0 };
-infProject.camera = { d3: { theta: 0, phi: 75, targetPos: new THREE.Vector3() } }; 
+infProject.camera = { d3: { theta: 0, phi: 75, targetPos: new THREE.Vector3() } };
+infProject.scene.light = {global: {}, lamp: []}; 
 infProject.scene.array = resetPop.infProjectSceneArray();
 infProject.scene.grid = { obj: createGrid(infProject.settings.grid), active: false, link: false, show: true };
 infProject.scene.block = { key : { scroll : false } };		// блокировка действий/клавишь
@@ -218,15 +182,40 @@ var offset = new THREE.Vector3();
   
   
 
+//----------- Light
+{
+	var lights = [];
+	lights[ 0 ] = new THREE.PointLight( 0x222222, 0.7, 0 );
+	lights[ 1 ] = new THREE.PointLight( 0x222222, 0.5, 0 );
+	lights[ 2 ] = new THREE.PointLight( 0x222222, 0.8, 0 );
+	lights[ 3 ] = new THREE.PointLight( 0x222222, 0.2, 0 );
+	
+	lights[ 0 ].position.set( -1000, 200, 1000 );
+	lights[ 1 ].position.set( -1000, 200, -1000 );
+	lights[ 2 ].position.set( 1000, 200, -1000 );
+	lights[ 3 ].position.set( 1000, 200, 1000 );
+	
+	scene.add( lights[ 0 ] );
+	scene.add( lights[ 1 ] );
+	scene.add( lights[ 2 ] );
+	scene.add( lights[ 3 ] );
+	
+
+	var light = new THREE.AmbientLight( 0xffffff, 0.93 )
+	scene.add( light );
+	
+	infProject.scene.light.global = {ambient: light, point: lights};
+}
+
 
 
 // outline render
 {
 	var composer = new THREE.EffectComposer( renderer );
 	var renderPass = new THREE.RenderPass( scene, cameraTop );
-	var outlinePass = new THREE.OutlinePass( new THREE.Vector2( w_w, w_h ), scene, cameraTop );	
+	var outlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, cameraTop );	
 	
-	composer.setSize( w_w, w_h );
+	composer.setSize( window.innerWidth, window.innerHeight );
 	composer.addPass( renderPass );
 	composer.addPass( outlinePass );
 
@@ -249,13 +238,14 @@ var offset = new THREE.Vector3();
 		composer.addPass( saoPass );		
 	}
 	
-	if(infProject.settings.shader.fxaaPass)
+	if(infProject.settings.shader.fxaaPass !== undefined)
 	{
 		var fxaaPass = new THREE.ShaderPass( THREE.FXAAShader );	
-		fxaaPass.material.uniforms[ 'resolution' ].value.x = 1 / ( w_w * window.devicePixelRatio );
-		fxaaPass.material.uniforms[ 'resolution' ].value.y = 1 / ( w_h * window.devicePixelRatio );	
-
-		composer.addPass( fxaaPass ); 		
+		fxaaPass.material.uniforms[ 'resolution' ].value.x = 1 / ( window.innerWidth * window.devicePixelRatio );
+		fxaaPass.material.uniforms[ 'resolution' ].value.y = 1 / ( window.innerHeight * window.devicePixelRatio );	
+		fxaaPass.enabled = false;
+		
+		composer.addPass( fxaaPass ); 	
 	}	
 	
 
@@ -284,20 +274,25 @@ var offset = new THREE.Vector3();
 }
 
 
-backgroundPlane();
-createSubstrate({ pos: {y: 0.01} }); 	// подложка
-startPosCamera3D({radious: 15, theta: 90, phi: 35});		// стартовое положение 3D камеры
-addObjInCatalogUI_1();			// наполняем каталог объектов UI
-addTextureInCatalogUI_1();		// наполняем каталог текстур UI
-addTextureInCatalogUI_2();
-changeRightMenuUI_1({name: 'button_wrap_object'});	// назначаем первоначальную вкладку , которая будет включена
-//changeRightMenuUI_1({name: 'button_wrap_img'});	
-//changeRightMenuUI_1({name: 'button_wrap_plan'});
-startRightPlaneInput({});
 
-	
+// cdm
+{
+	backgroundPlane();
+	createSubstrate({ pos: {y: 0.01} }); 	// подложка
+	startPosCamera3D({radious: 15, theta: 90, phi: 35});		// стартовое положение 3D камеры
+	addObjInCatalogUI_1();			// наполняем каталог объектов UI
+	addTextureInCatalogUI_1();		// наполняем каталог текстур UI
+	addTextureInCatalogUI_2();
+	changeRightMenuUI_1({name: 'button_wrap_object'});	// назначаем первоначальную вкладку , которая будет включена
+	//changeRightMenuUI_1({name: 'button_wrap_img'});	
+	//changeRightMenuUI_1({name: 'button_wrap_plan'});
+	startRightPlaneInput({});	
+}
 
 //----------- start
+
+
+
 
   
 function sliderSunIntensity(cdm)
@@ -1392,18 +1387,18 @@ function saveAsImagePreview()
 { 
 	try 
 	{		
-		var rd = 400/w_w;
+		var rd = 400/window.innerWidth;
 		var flag = infProject.scene.grid.obj.visible;
 		
 		if(flag) { infProject.scene.grid.obj.visible = false; }
-		renderer.setSize( 400, w_h*rd );
+		renderer.setSize( 400, window.innerHeight *rd );
 		renderer.antialias = true;
 		renderer.render( scene, camera );
 		
 		var imgData = renderer.domElement.toDataURL("image/jpeg", 0.7);	
 
 		if(flag) { infProject.scene.grid.obj.visible = true; }
-		renderer.setSize( w_w, w_h );
+		renderer.setSize( window.innerWidth, window.innerHeight );
 		renderer.antialias = false;
 		renderer.render( scene, camera );
 		
@@ -1564,13 +1559,82 @@ document.body.addEventListener("keydown", function (e)
 			renderCamera();			
 		}
 	}  		
-	if(e.keyCode == 86) {  } 
+	if(e.keyCode == 66) { switchFxaaPass({switch: true}); } 	// b
+	if(e.keyCode == 86) { switchLight({switch: true}); } 	// v
 } );
 
 document.body.addEventListener("keydown", function (e) { clickO.keys[e.keyCode] = true; });
 document.body.addEventListener("keyup", function (e) { clickO.keys[e.keyCode] = false; });
 
 
+// вкл/выкл сглаживание 
+function switchFxaaPass(cdm)
+{
+	if(!cdm) return;	
+	if(infProject.settings.shader.fxaaPass == undefined) return;
+	
+	if(cdm.switch)
+	{
+		var visible = (fxaaPass.enabled) ? false : true;
+	}
+
+	if(cdm.visible !== undefined)
+	{
+		var visible = cdm.visible;
+	}		
+	
+	fxaaPass.enabled = visible;		
+
+
+	renderCamera();
+}
+
+
+// переключаем глобальное/ламповое освещение 
+function switchLight(cdm)
+{  
+	if(!cdm) return;
+	
+	if(cdm.switch)
+	{
+		var type = infProject.settings.light.type;
+		type = (type == 'global') ? 'lamp' : 'global';
+		infProject.settings.light.type = type;
+	}
+	
+	if(cdm.visible !== undefined)
+	{
+		var type = (cdm.visible) ? 'global' : 'lamp';
+		infProject.settings.light.type = type;
+	}	
+	
+	if(infProject.settings.light.type == 'global')
+	{
+		var global_intensity = 0.93;
+		var global_visible = true;
+		var lamp_visible = false;
+	}
+	else
+	{
+		var global_intensity = 0.5;
+		var global_visible = false;
+		var lamp_visible = true;			
+	}
+	
+	for ( var i = 0; i < infProject.scene.light.lamp.length; i++ )
+	{
+		infProject.scene.light.lamp[i].visible = lamp_visible;
+	}
+	
+	for ( var i = 0; i < infProject.scene.light.global.point.length; i++ )
+	{
+		infProject.scene.light.global.point[i].visible = global_visible;
+	}		
+	
+	infProject.scene.light.global.ambient.intensity = global_intensity;
+	
+	renderCamera();
+}
 
 
 // загрзука проекта из базы через input

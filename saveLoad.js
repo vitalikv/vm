@@ -180,13 +180,16 @@ function resetScene()
 	for ( var i = 0; i < label.length; i++ ) { label[i].visible = false; }
 	
 	
+	
 	camera3D.userData.camera = { type : 'fly', height : camera3D.position.y, startProject : true };
 	camera3D.userData.camera.click = { pos : new THREE.Vector3() }; 
 	
 	clickO = resetPop.clickO();
 	infProject.project = null;
 	infProject.scene.array = resetPop.infProjectSceneArray();
-
+	infProject.scene.light.lamp = [];
+	
+	
 	getConsoleRendererInfo();
 }
 

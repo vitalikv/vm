@@ -347,7 +347,7 @@ function addObjInScene(inf, cdm)
 }
 
 
-
+// добавлеям к светильнику источник света
 function setLightInobj(cdm)
 {
 	var obj = cdm.obj;
@@ -376,9 +376,17 @@ function setLightInobj(cdm)
 	light.shadow.camera.near = 0.01;       // default
 	light.shadow.camera.far = 10;      // default
 	
-	light.position.set(0, -0.01, 0);		
-	//light.visible = false;
-	obj.add( light );	
+	light.position.set(0, -0.01, 0);
+
+	if(infProject.settings.light.type == 'global')
+	{
+		light.visible = false;
+	}
+	
+	
+	obj.add( light );
+
+	infProject.scene.light.lamp[infProject.scene.light.lamp.length] = light;
 	
 	
 	if(1==2)
