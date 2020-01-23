@@ -58,10 +58,10 @@ function onDocumentMouseDown( event )
 {
 	//event.preventDefault();
 
-	//if (window.location.hostname == 'vm'){} 
-	//else if (window.location.hostname == 'remstok'){} 
-	//else if (window.location.hostname == 'remstok.ru'){} 
-	//else { return; }
+	if (window.location.hostname == 'vm'){} 
+	else if (window.location.hostname == 'remstok'){} 
+	else if (window.location.hostname == 'remstok.ru'){} 
+	else { return; }
  
 	long_click = false;
 	lastClickTime = new Date().getTime();

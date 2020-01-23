@@ -288,7 +288,7 @@ var offset = new THREE.Vector3();
 	//changeRightMenuUI_1({name: 'button_wrap_plan'});
 	startRightPlaneInput({});
 
-	getAutoBuildingJson();	
+	//getAutoBuildingJson();	
 }
 
 //----------- start
@@ -1564,6 +1564,7 @@ document.body.addEventListener("keydown", function (e)
 	//if(e.keyCode == 66) { switchFxaaPass({switch: true}); } 	// b
 	//if(e.keyCode == 86) { switchLight({switch: true}); } 	// v
 	if(e.keyCode == 89) { saveFile({txt: true}); } 			// y
+	if(e.keyCode == 86) { resetScene(); getAutoBuildingJson(); } // v
 } );
 
 document.body.addEventListener("keydown", function (e) { clickO.keys[e.keyCode] = true; });
@@ -1707,7 +1708,7 @@ $(document).ready(function ()
 	docReady = true; 	
 		 
 	 
-	//loadFile({json: true});  
+	loadFile({json: true});  
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(0, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 1), rot: new THREE.Vector3(0, 1, 0)});
