@@ -446,5 +446,93 @@ function setLightInobj(cdm)
 
 
 
+function loadInputFile(cdm)
+{
+	var loader = new THREE.FBXLoader();
+	var obj = loader.parse( cdm.data );
+	
+	setParamObj({obj: obj});
+}
+
+
+function loadUrlFile()
+{	
+	var url = $('[nameId="input_link_obj_1"]').val(); 
+	var url = url.trim();
+	
+	// /import/furn_1.fbx 
+	
+	var loader = new THREE.FBXLoader();
+	loader.load( url, function ( obj ) 						
+	{ 
+		setParamObj({obj: obj});
+	});	
+	
+		
+}
+
+
+
+function setParamObj(cdm)
+{
+	$('[nameId="window_main_load_obj"]').css({"display":"none"});
+	resetScene();
+	
+	var obj = cdm.obj;
+	
+	var obj = obj.children[0];		
+	obj.position.y = 1;	
+
+	planeMath.position.y = 1; 
+	planeMath.rotation.set(-Math.PI/2, 0, 0);
+	planeMath.updateMatrixWorld(); 	
+	
+	obj.userData.tag = 'obj';
+	obj.userData.obj3D = {};
+	obj.userData.obj3D.lotid = 0;
+	obj.userData.obj3D.nameRus = 'неизвестный объект';
+	obj.userData.obj3D.type = '';
+
+
+	// накладываем на материал объекта lightMap
+	obj.traverse(function(child) 
+	{
+		if(child.isMesh) 
+		{ 
+			child.castShadow = true;	
+			child.receiveShadow = true;				
+		}
+	});
+	
+	obj.material.visible = false;	
+	
+	
+	infProject.scene.array.obj[infProject.scene.array.obj.length] = obj;
+
+	scene.add( obj );
+	 
+	updateListTubeUI_1({o: obj, type: 'add'});	// добавляем объект в UI список материалов 
+	
+	//clickO.move = obj;
+
+	cameraTop.position.x = obj.position.x;
+	cameraTop.position.z = obj.position.z;
+	
+	console.log(camera3D);
+	var pos2 = new THREE.Vector3().subVectors( obj.position, infProject.camera.d3.targetPos );
+	camera3D.position.x += pos2.x;
+	camera3D.position.z += pos2.z;
+
+	infProject.camera.d3.targetPos.x = obj.position.x;
+	infProject.camera.d3.targetPos.z = obj.position.z;
+	
+	renderCamera();	
+}
+
+
+
+
+
+
 
 

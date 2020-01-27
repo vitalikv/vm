@@ -506,6 +506,35 @@ function readURL(e)
 //  <--- right_panel
 
 
+
+
+// загрузка obj --->
+
+$('#load_obj_1').change(readURL_2);
+
+function readURL_2(e) 
+{
+	if (this.files[0]) 
+	{		
+		var reader = new FileReader();
+		reader.onload = function (e) 
+		{						
+			loadInputFile({data: e.target.result});
+		}				
+
+		reader.readAsArrayBuffer(this.files[0]);  									
+	}
+}
+
+
+$('[nameId="butt_main_load_obj"]').mousedown(function () { $('[nameId="window_main_load_obj"]').css({"display":"block"}); });
+
+$('[nameId="button_close_main_load_obj"]').mousedown(function () { $('[nameId="window_main_load_obj"]').css({"display":"none"}); });
+
+$('[nameId="butt_load_obj_2"]').mousedown(function () { loadUrlFile(); });
+// <--- загрузка obj
+
+
 });
 
 

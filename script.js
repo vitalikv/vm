@@ -1560,8 +1560,9 @@ document.body.addEventListener("keydown", function (e)
 			console.log(saoPass['params']['output']);
 			renderCamera();			
 		}
-	}  		
-	//if(e.keyCode == 66) { switchFxaaPass({switch: true}); } 	// b
+	}  
+	
+	if(e.keyCode == 66) { loadUrlFile(); } 	// b
 	//if(e.keyCode == 86) { switchLight({switch: true}); } 	// v
 	if(e.keyCode == 89) { saveFile({txt: true}); } 			// y
 	if(e.keyCode == 86) { resetScene(); getAutoBuildingJson(); } // v
@@ -1662,8 +1663,9 @@ function inputLoadProject()
 
 // проверяем правильность ввода числа (вводим число в своих единицах, отдаем в метрах)
 function checkNumberInput(cdm)
-{
-	var value = cdm.value;
+{	
+	var value = cdm.value; 
+	//var value = value.trim();
 	
 	if((/,/i).test( value )) { value = value.replace(",", "."); }
 	
