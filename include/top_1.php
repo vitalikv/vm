@@ -56,7 +56,7 @@
 
 
 
-<div class="window_main_load_obj" nameId="window_main_load_obj" ui_1="" style="display: block;">
+<div class="window_main_load_obj" nameId="window_main_load_obj" ui_1="" style="display: none;">
 	<div class="modal_window_close" nameId="button_close_main_load_obj">
 		+
 	</div>
