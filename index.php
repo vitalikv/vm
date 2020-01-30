@@ -42,6 +42,8 @@
 	<script src="<?=$path?>js/loader/inflate.min.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>js/loader/FBXLoader.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>js/loader/STLExporter.js?<?=$vrs?>"></script>
+	<script src="<?=$path?>js/loader/GLTFLoader.js?<?=$vrs?>"></script>
+	<script src="<?=$path?>js/BufferGeometryUtils.js?<?=$vrs?>"></script>
 	
 	<div class="frame">
 			
