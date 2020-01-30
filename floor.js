@@ -43,7 +43,7 @@ function createFloor(cdm)
 	 
 	floor.userData.tag = 'room';
 	floor.userData.id = id;
-	floor.userData.room = { areaTxt : 0, p : arrP, w : arrW, s : arrS, outline : null };
+	floor.userData.room = { areaTxt : 0, p : floor.p, w : floor.w, s : floor.s, outline : null };
 	floor.userData.room.height = infProject.settings.floor.height;
 	floor.userData.material = { tag: 'room', color: floor.material.color, img: null };	
 	
