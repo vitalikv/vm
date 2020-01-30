@@ -1034,7 +1034,7 @@ canvas
 
 
 
-.window_main_sett 
+.window_main_sett, .window_main_load_obj  
 {
 	position: relative;
 	margin: auto;
@@ -1048,20 +1048,39 @@ canvas
 	display: flex;
 	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
-	flex-direction: column;
-	
-	
+	flex-direction: column;	
 }
 
-.window_main_sett .modal_header 
+
+.window_main_load_obj
 {
-	height: 10px;
-	min-height: 10px;
-	padding-right: 0px;
+	width: 500px;
+	height: 250px;		
 }
 
 
-.window_main_sett .modal_window_close
+.window_main_load_obj input
+{
+	display: block;
+	margin: auto;
+	margin-bottom: 10px;
+	width: 99%;
+		
+	font-size: 14px;
+	text-align: center;
+	color: #666;
+	
+	text-decoration: none;
+	line-height: 2em;
+	padding: 0;
+	
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	background-color:#fff;	
+}
+
+
+.window_main_sett .modal_window_close, .window_main_load_obj .modal_window_close
 {
 	position: absolute;
 	width: 20px;	
