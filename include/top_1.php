@@ -14,7 +14,7 @@
 				<img src="img/settings_1.png">
 			</div>	
 		</div>
-		<div class="button1-wrap-1">
+		<div class="button1-wrap-1" style="display: none;">
 			<div class="button1 button_gradient_1" nameId='butt_main_menu'>Меню</div>
 		</div>				
 	</div> 

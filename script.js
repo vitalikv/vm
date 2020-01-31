@@ -4,7 +4,7 @@
 var w_w = window.innerWidth;
 var w_h = window.innerHeight;
 var aspect = window.innerWidth/window.innerHeight;
-var d = 5;
+var d = 10;
 
 var canvas = document.createElement( 'canvas' );
 var context = canvas.getContext( 'webgl2' );
@@ -91,7 +91,7 @@ window.addEventListener( 'resize', onWindowResize, false );
 function onWindowResize() 
 { 
 	var aspect = window.innerWidth / window.innerHeight;
-	var d = 5;
+	var d = 10;
 	
 	cameraTop.left = -d * aspect;
 	cameraTop.right = d * aspect;
@@ -279,7 +279,7 @@ var offset = new THREE.Vector3();
 {
 	backgroundPlane();
 	createSubstrate({ pos: {y: 0.01} }); 	// подложка
-	startPosCamera3D({radious: 15, theta: 90, phi: 35});		// стартовое положение 3D камеры
+	startPosCamera3D({radious: 25, theta: 90, phi: 35});		// стартовое положение 3D камеры
 	addObjInCatalogUI_1();			// наполняем каталог объектов UI
 	addTextureInCatalogUI_1();		// наполняем каталог текстур UI
 	addTextureInCatalogUI_2();
@@ -1561,15 +1561,31 @@ document.body.addEventListener("keydown", function (e)
 			renderCamera();			
 		}
 	}  		
-	//if(e.keyCode == 66) { switchFxaaPass({switch: true}); } 	// b
+	
+	if(e.keyCode == 66) { loadObjServer({lotid: 2, pos: new THREE.Vector3(3.64, 0, -1.37), rot: { x: 0, y: -1.549, z: 0 } }); } 	// b
 	//if(e.keyCode == 86) { switchLight({switch: true}); } 	// v
 	if(e.keyCode == 89) { saveFile({txt: true}); } 			// y
 	if(e.keyCode == 86) { resetScene(); getAutoBuildingJson(); } // v
 } );
 
-document.body.addEventListener("keydown", function (e) { clickO.keys[e.keyCode] = true; });
-document.body.addEventListener("keyup", function (e) { clickO.keys[e.keyCode] = false; });
+document.body.addEventListener("keydown", function (e) 
+{ 
+	clickO.keys[e.keyCode] = true;
+	if(e.keyCode == 61) { zoomLoop = 'zoomIn'; }
+	if(e.keyCode == 173) { zoomLoop = 'zoomOut'; }
+	if(e.keyCode == 187) { zoomLoop = 'zoomIn'; }
+	if(e.keyCode == 189) { zoomLoop = 'zoomOut'; }	
+});
+document.body.addEventListener("keyup", function (e) 
+{ 
+	clickO.keys[e.keyCode] = false;
+	if(e.keyCode == 173) { zoomLoop = ''; }
+	if(e.keyCode == 61) { zoomLoop = ''; }
+	if(e.keyCode == 187) { zoomLoop = ''; }
+	if(e.keyCode == 189) { zoomLoop = ''; }		
+});
 
+$("#clickDivan").click("on", function() { loadObjServer({lotid: 2, pos: new THREE.Vector3(3.64, 0, -1.37), rot: { x: 0, y: -1.549, z: 0 } }); });
 
 // вкл/выкл сглаживание 
 function switchFxaaPass(cdm)
@@ -1708,7 +1724,7 @@ $(document).ready(function ()
 	docReady = true; 	
 		 
 	 
-	loadFile({json: true});  
+	loadFile({json: true, url: infProject.path+'t/fileJson2.json'});  
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(0, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 1), rot: new THREE.Vector3(0, 1, 0)});

@@ -74,6 +74,22 @@ function infoListObj()
 		name : 'светильник',
 		type: 'light point',
 		planeMath : infProject.settings.height - 0.05,
+	}
+
+	arr[8] =
+	{
+		lotid : 9,
+		url : infProject.path+'import/vm_furn_5.fbx', 
+		name : 'унитаз',
+		planeMath : 0.0,
+	}	
+	
+	arr[9] =
+	{
+		lotid : 10,
+		url : infProject.path+'import/vm_furn_6.fbx', 
+		name : 'комод',
+		planeMath : 0.0,
 	}	
 	
 	for(var i = 0; i < arr.length; i++)
@@ -302,7 +318,7 @@ function addObjInScene(inf, cdm)
 		planeMath.updateMatrixWorld(); 
 	}
 	
-	//if(cdm.rot){ obj.rotation.set(cdm.rot.x, cdm.rot.y, cdm.rot.z); }					
+	if(cdm.rot){ obj.rotation.set(cdm.rot.x, cdm.rot.y, cdm.rot.z); }					
 	if(cdm.q){ obj.quaternion.set(cdm.q.x, cdm.q.y, cdm.q.z, cdm.q.w); }
 	
 	if(cdm.id){ obj.userData.id = cdm.id; }
