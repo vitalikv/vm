@@ -74,7 +74,23 @@ function infoListObj()
 		name : 'светильник',
 		type: 'light point',
 		planeMath : infProject.settings.height - 0.05,
+	}
+
+	arr[8] =
+	{
+		lotid : 9,
+		url : infProject.path+'import/vm_furn_5.fbx', 
+		name : 'унитаз',
+		planeMath : 0.0,
 	}	
+	
+	arr[9] =
+	{
+		lotid : 10,
+		url : infProject.path+'import/vm_furn_6.fbx', 
+		name : 'комод',
+		planeMath : 0.0,
+	}		
 	
 	for(var i = 0; i < arr.length; i++)
 	{

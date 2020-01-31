@@ -1568,8 +1568,22 @@ document.body.addEventListener("keydown", function (e)
 	if(e.keyCode == 86) { resetScene(); getAutoBuildingJson(); } // v
 } );
 
-document.body.addEventListener("keydown", function (e) { clickO.keys[e.keyCode] = true; });
-document.body.addEventListener("keyup", function (e) { clickO.keys[e.keyCode] = false; });
+document.body.addEventListener("keydown", function (e) 
+{ 
+	clickO.keys[e.keyCode] = true;
+	if(e.keyCode == 61) { zoomLoop = 'zoomIn'; }
+	if(e.keyCode == 173) { zoomLoop = 'zoomOut'; }
+	if(e.keyCode == 187) { zoomLoop = 'zoomIn'; }
+	if(e.keyCode == 189) { zoomLoop = 'zoomOut'; }	
+});
+document.body.addEventListener("keyup", function (e) 
+{ 
+	clickO.keys[e.keyCode] = false;
+	if(e.keyCode == 173) { zoomLoop = ''; }
+	if(e.keyCode == 61) { zoomLoop = ''; }
+	if(e.keyCode == 187) { zoomLoop = ''; }
+	if(e.keyCode == 189) { zoomLoop = ''; }		
+});
 
 
 // вкл/выкл сглаживание 

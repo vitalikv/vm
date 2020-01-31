@@ -60,7 +60,9 @@ function onDocumentMouseDown( event )
 
 	if (window.location.hostname == 'vm'){} 
 	else if (window.location.hostname == 'remstok'){} 
-	else if (window.location.hostname == 'remstok.ru'){} 
+	else if (window.location.hostname == 'remstok.ru'){}
+	else if (window.location.hostname == 'vim'){}
+	else if (window.location.hostname == 'vim.myplan.pro'){} 	
 	else { return; }
  
 	long_click = false;
