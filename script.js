@@ -1087,7 +1087,7 @@ function rayIntersect( event, obj, t )
 	
 	var intersects = null;
 	if(t == 'one'){ intersects = raycaster.intersectObject( obj ); } 
-	else if(t == 'arr'){ intersects = raycaster.intersectObjects( obj ); }
+	else if(t == 'arr'){ intersects = raycaster.intersectObjects( obj,true ); }
 	
 	return intersects;
 }

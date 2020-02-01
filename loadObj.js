@@ -272,11 +272,10 @@ function addObjInBase(cdm)
 		{ 
 			child.updateMatrix();
 			child.updateMatrixWorld();
-			child.parent.updateMatrixWorld();
+			child.parent.updateMatrixWorld();							
 			
-            var geometry = child.geometry.clone();							
-			
-			//geometry.applyMatrix4(child.parent.matrixWorld);
+			var geometry = child.geometry.clone();
+			geometry.applyMatrix4(child.parent.matrixWorld);
 			geometries.push(geometry);						
 	
 			child.castShadow = true;	
@@ -284,12 +283,15 @@ function addObjInBase(cdm)
 		}
 	});	
 	
-	console.log(111111, lotid, obj);
-	var mergedGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries(geometries); 
-	var objF = new THREE.Mesh( mergedGeometry, new THREE.MeshLambertMaterial({ color : 0xff0000, transparent: true, opacity: 0.5 }) ); 
+	
+	var mergedGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([obj.geometry]); 
+	var mergedGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([obj.children[0].geometry]);
+	console.log(111111, lotid, geometries, obj);
+	
+	//var objF = new THREE.Mesh( mergedGeometry, new THREE.MeshLambertMaterial({ color : 0xff0000, transparent: true, opacity: 0.5 }) ); 
 
 	//objF.add(obj);
-	scene.add(objF);
+	//scene.add(objF);
 	
 	//obj = objF;
 	
@@ -463,28 +465,24 @@ function setLightInobj(cdm)
 
 function loadInputFile(cdm)
 {
-	//var loader = new THREE.FBXLoader();
-	var loader = new THREE.GLTFLoader();
-	//var obj = loader.parse( cdm.data, '' );
-	
-	
-	//scene.add( obj.scene.children[0] );
 
-	loader.parse( cdm.data, '', function ( obj ) 						
-	{ 
-		var obj = obj.scene.children[0];
-		setParamObj({obj: obj});
-	});
-	
-	if(1==2)
+	if(1==1)	// gltf/glb
 	{
-	loader.load( '/import/vm_furn_3.glb', function ( obj ) 						
-	{ 
-		var obj = obj.scene.children[0];
-		console.log(obj);
-		scene.add( obj );
-	});			
+		var loader = new THREE.GLTFLoader();
+		loader.parse( cdm.data, '', function ( obj ) 						
+		{ 
+			var obj = obj.scene.children[0];
+			setParamObj({obj: obj});
+		});
+		
 	}
+	else	// fbx
+	{
+		var loader = new THREE.FBXLoader();
+		var obj = loader.parse( cdm.data );		
+		setParamObj({obj: obj});			
+	}
+
 
 }
 
@@ -495,14 +493,25 @@ function loadUrlFile()
 	var url = url.trim();
 	
 	// /import/furn_1.fbx 
+	// /import/vm_furn_3.glb
 	
-	var loader = new THREE.FBXLoader();
-	loader.load( url, function ( obj ) 						
-	{ 
-		setParamObj({obj: obj});
-	});	
-	
-		
+	if(1==1)	// gltf/glb
+	{
+		var loader = new THREE.GLTFLoader();
+		loader.load( url, function ( obj ) 						
+		{ 
+			var obj = obj.scene.children[0];
+			setParamObj({obj: obj});
+		});			
+	}
+	else	// fbx
+	{
+		var loader = new THREE.FBXLoader();
+		loader.load( url, function ( obj ) 						
+		{ 			
+			setParamObj({obj: obj});
+		});			
+	}
 }
 
 
@@ -526,41 +535,80 @@ function setParamObj(cdm)
 	obj.userData.obj3D.lotid = 0;
 	obj.userData.obj3D.nameRus = 'неизвестный объект';
 	obj.userData.obj3D.type = '';
-
-
-	var objF = new THREE.Mesh( new THREE.Geometry(), new THREE.MeshLambertMaterial({ color : 0xff0000, transparent: true, opacity: 0.5 }) );
-	var modelGeometry = new THREE.Geometry();
+ 
+	
+	
+	var geometries = [];
 	
 	// накладываем на материал объекта lightMap
 	obj.traverse(function(child) 
 	{
 		if(child.isMesh) 
 		{ 
-			var clone = child.clone();
 			
-			child.parent.updateMatrixWorld();
-			clone.updateMatrixWorld();
-			clone.applyMatrix(child.parent.matrixWorld); 					
-
-			var geometry = new THREE.Geometry().fromBufferGeometry( clone.geometry );
-			geometry.mergeVertices();			
-			modelGeometry.merge(geometry, clone.matrix);	
+			geometries.push(child.geometry);						
 	
 			child.castShadow = true;	
 			child.receiveShadow = true;				
 		}
-	});
+	});		
 	
-	objF.geometry = new THREE.BufferGeometry().fromGeometry(modelGeometry);
-	scene.add(objF); 
-	
+
 	obj.material.visible = false;	
 	
 	
 	infProject.scene.array.obj[infProject.scene.array.obj.length] = obj;
 
 	scene.add( obj );
-	 
+	
+
+	
+	if(1==2)
+	{
+		var options = 
+		{
+			trs: true,
+			onlyVisible: false,
+			truncateDrawRange: true,
+			binary: true,
+			forceIndices: false,
+			forcePowerOfTwoTextures: false,
+			maxTextureSize: Number( 20000 ) 
+		};
+	
+		var exporter = new THREE.GLTFExporter();
+
+		// Parse the input and generate the glTF output
+		exporter.parse( [obj], function ( gltf ) 
+		{
+			
+			var link = document.createElement( 'a' );
+			link.style.display = 'none';
+			document.body.appendChild( link );			
+			
+			if ( gltf instanceof ArrayBuffer ) 
+			{ 
+				console.log( gltf ); 
+				link.href = URL.createObjectURL( new Blob( [ gltf ], { type: 'application/octet-stream' } ) );
+				link.download = 'file.glb';				
+			}
+			else
+			{
+				console.log( gltf );
+				var gltf = JSON.stringify( gltf, null, 2 );
+				
+				link.href = URL.createObjectURL( new Blob( [ gltf ], { type: 'text/plain' } ) );
+				link.download = 'file.gltf';				
+			}
+
+			link.click();			
+			
+		}, options );
+		
+	}
+	
+
+					
 	updateListTubeUI_1({o: obj, type: 'add'});	// добавляем объект в UI список материалов 
 	
 	//clickO.move = obj;

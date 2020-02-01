@@ -44,6 +44,7 @@
 	<script src="<?=$path?>js/loader/STLExporter.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>js/loader/GLTFLoader.js?<?=$vrs?>"></script>
 	<script src="<?=$path?>js/BufferGeometryUtils.js?<?=$vrs?>"></script>
+	<script src="<?=$path?>js/export/GLTFExporter.js?<?=$vrs?>"></script>
 	
 	<div class="frame">
 			
