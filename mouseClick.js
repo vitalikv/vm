@@ -352,6 +352,7 @@ function onDocumentMouseUp( event )
 		else if(tag == 'window' || obj.userData.tag == 'door') { clickWDMouseUp(obj); }	
 		else if(tag == 'controll_wd') { clickMouseUpToggleWD(obj); } 
 		else if(tag == 'obj') { clickMouseUpObject(obj); }
+		else if(tag == 'pivot') { clickMouseUpPivot(); }
 		
 		if(tag == 'free_dw') {  }
 		else if (tag == 'point') 

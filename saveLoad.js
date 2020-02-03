@@ -31,6 +31,7 @@ var resetPop =
 	infProjectSceneArray : function()
 	{
 		var array = { point : obj_point, wall : [], window : [], door : [], floor : room, ceiling : ceiling, obj : [] };
+		array.cubeCam = [];
 		array.lineGrid = { limit : false };
 		array.base = (infProject.start)? infProject.scene.array.base : [];	// массив клонируемых объектов
 		
@@ -138,6 +139,11 @@ function resetScene()
 	
 	for ( var i = 0; i < obj.length; i++ )
 	{ 
+		if(obj[i].userData.obj3D.cubeCam)
+		{
+			disposeNode( obj[i].userData.obj3D.cubeCam );
+			scene.remove( obj[i].userData.obj3D.cubeCam );
+		}
 		disposeNode(obj[i]);
 		scene.remove(obj[i]);
 	}	

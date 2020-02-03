@@ -214,6 +214,11 @@ function movePivot( event )
 	
 	if(intersects.length == 0) return;
 	
+	if(!clickO.actMove)
+	{
+		clickO.actMove = true;
+	}		
+	
 	var pivot = infProject.tools.pivot;
 	var obj = pivot.userData.pivot.obj;
 	var pos = new THREE.Vector3().addVectors( intersects[ 0 ].point, clickO.offset );
@@ -281,4 +286,13 @@ function setScalePivotGizmo()
 }
 
 
+
+
+function clickMouseUpPivot(cdm)
+{	
+	if(clickO.actMove)
+	{		 
+		updateCubeCam({obj: infProject.tools.pivot.userData.pivot.obj});	// CubeCamera (material Reflection)
+	}		
+}
 

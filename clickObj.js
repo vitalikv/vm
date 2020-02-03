@@ -37,10 +37,10 @@ function moveObjectPop( event )
 
 
 function clickMouseUpObject(obj)
-{
+{ 
 	if(clickO.actMove)
-	{		
-		
+	{		 
+		updateCubeCam({obj: obj});	// CubeCamera (material Reflection)
 	}	
 }
 
@@ -143,6 +143,12 @@ function deleteObjectPop(obj)
 	
 	for(var i = 0; i < arr.length; i++)
 	{	
+		if(arr[i].userData.obj3D.cubeCam)
+		{
+			deleteValueFromArrya({arr : infProject.scene.array.cubeCam, o : arr[i].userData.obj3D.cubeCam});
+			disposeNode( arr[i].userData.obj3D.cubeCam );
+			scene.remove( arr[i].userData.obj3D.cubeCam );
+		}
 		deleteValueFromArrya({arr : infProject.scene.array.obj, o : arr[i]});
 		updateListTubeUI_1({uuid: arr[i].uuid, type: 'delete'});
 		disposeNode(arr[i]);

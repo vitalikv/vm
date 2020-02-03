@@ -270,13 +270,16 @@ function addObjInBase(cdm)
 	{
 		if(child.isMesh) 
 		{ 
-			child.updateMatrix();
-			child.updateMatrixWorld();
-			child.parent.updateMatrixWorld();							
-			
-			var geometry = child.geometry.clone();
-			geometry.applyMatrix4(child.parent.matrixWorld);
-			geometries.push(geometry);						
+			if(1==2)
+			{
+				child.updateMatrix();
+				child.updateMatrixWorld();
+				child.parent.updateMatrixWorld();							
+				
+				var geometry = child.geometry.clone();
+				geometry.applyMatrix4(child.parent.matrixWorld);
+				geometries.push(geometry);										
+			}
 	
 			child.castShadow = true;	
 			child.receiveShadow = true;				
@@ -284,16 +287,19 @@ function addObjInBase(cdm)
 	});	
 	
 	
-	var mergedGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([obj.geometry]); 
-	var mergedGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([obj.children[0].geometry]);
-	console.log(111111, lotid, geometries, obj);
-	
-	//var objF = new THREE.Mesh( mergedGeometry, new THREE.MeshLambertMaterial({ color : 0xff0000, transparent: true, opacity: 0.5 }) ); 
+	if(1==2)
+	{
+		var mergedGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([obj.geometry]); 
+		var mergedGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([obj.children[0].geometry]);
+		console.log(111111, lotid, geometries, obj);
+		
+		//var objF = new THREE.Mesh( mergedGeometry, new THREE.MeshLambertMaterial({ color : 0xff0000, transparent: true, opacity: 0.5 }) ); 
 
-	//objF.add(obj);
-	//scene.add(objF);
-	
-	//obj = objF;
+		//objF.add(obj);
+		//scene.add(objF);
+		
+		//obj = objF;		
+	}
 	
 	base[base.length] = {lotid: lotid, obj: obj.clone()};
 
@@ -349,7 +355,29 @@ function addObjInScene(inf, cdm)
 			}
 			setLightInobj({obj: obj, intensity: intensity}); 
 		}
-	}		
+	}
+	
+	obj.material.visible = false;
+
+	// CubeCamera
+	{
+		var arrCubeO = [];
+		
+		obj.traverse(function(child) 
+		{
+			if(child.isMesh && child.material) 
+			{ 
+				if(new RegExp('mirror','i').test( child.material )) 
+				{  								
+					child.material.userData.type = 'mirror';			
+					arrCubeO[arrCubeO.length] = child;		 									
+				}					
+			}
+		});
+
+		if(arrCubeO.length > 0) createCubeCam({obj: obj, arrO: arrCubeO});		
+	}
+	
 	
 	infProject.scene.array.obj[infProject.scene.array.obj.length] = obj;
 
@@ -360,7 +388,6 @@ function addObjInScene(inf, cdm)
 	if(cdm.cursor) { clickO.move = obj; } 
 	
 	renderCamera();
-
 }
 
 
@@ -463,6 +490,64 @@ function setLightInobj(cdm)
 
 
 
+function createCubeCam(cdm)
+{
+	var obj = cdm.obj;
+	var arrO = cdm.arrO;
+	
+	var cubeCam = new THREE.CubeCamera(0.1, 100, 1024);					
+	scene.add(cubeCam); 
+
+	infProject.scene.array.cubeCam[infProject.scene.array.cubeCam.length] = obj;
+	obj.userData.obj3D.cubeCam = cubeCam;
+
+	 
+	obj.traverse(function(child) 
+	{
+		if(child.isMesh) 
+		{ 
+			if(child.material)
+			{
+				if(child.material.userData.type == 'mirror')
+				{
+					child.material.envMap = cubeCam.renderTarget.texture;
+					//child.material.specular = new THREE.Color(0xffffff);
+					//child.material.shininess = 100;
+					//child.material.envMapIntensity = 2;
+					//child.material.color = new THREE.Color(0xffffff);
+					child.material.metalness = 1;
+					child.material.roughness = 0;
+					//child.material.reflectivity = 1;
+				}								
+			}				
+		}
+	});	
+	
+	updateCubeCam({obj: obj});
+}
+
+
+function updateCubeCam(cdm)
+{
+	var obj = cdm.obj;
+	if(!obj) return;
+	if(!obj.userData.obj3D.cubeCam) return;
+	
+	var cubeCam = obj.userData.obj3D.cubeCam;					
+				
+	obj.updateMatrixWorld();
+	obj.geometry.computeBoundingSphere();
+	var pos = obj.localToWorld( obj.geometry.boundingSphere.center.clone() );	
+	cubeCam.position.copy(pos);
+	
+	obj.visible = false;
+	cubeCam.update( renderer, scene );			
+	obj.visible = true;
+}
+
+
+
+
 function loadInputFile(cdm)
 {
 
@@ -471,8 +556,8 @@ function loadInputFile(cdm)
 		var loader = new THREE.GLTFLoader();
 		loader.parse( cdm.data, '', function ( obj ) 						
 		{ 
-			var obj = obj.scene.children[0];
-			setParamObj({obj: obj});
+			//var obj = obj.scene.children[0];
+			setParamObj({obj: obj.scene});
 		});
 		
 	}
@@ -494,14 +579,15 @@ function loadUrlFile()
 	
 	// /import/furn_1.fbx 
 	// /import/vm_furn_3.glb
+	// /import/80105983_krovat_dafna5.glb
 	
 	if(1==1)	// gltf/glb
 	{
 		var loader = new THREE.GLTFLoader();
 		loader.load( url, function ( obj ) 						
 		{ 
-			var obj = obj.scene.children[0];
-			setParamObj({obj: obj});
+			//var obj = obj.scene.children[0];
+			setParamObj({obj: obj.scene});
 		});			
 	}
 	else	// fbx
@@ -519,7 +605,7 @@ function loadUrlFile()
 function setParamObj(cdm)
 {
 	$('[nameId="window_main_load_obj"]').css({"display":"none"});
-	resetScene();
+	//resetScene();
 	
 	var obj = cdm.obj;
 	
@@ -538,29 +624,41 @@ function setParamObj(cdm)
  
 	
 	
-	var geometries = [];
-	
 	// накладываем на материал объекта lightMap
 	obj.traverse(function(child) 
 	{
 		if(child.isMesh) 
 		{ 
-			
-			geometries.push(child.geometry);						
-	
 			child.castShadow = true;	
 			child.receiveShadow = true;				
 		}
-	});		
-	
+	});			
 
-	obj.material.visible = false;	
-	
+	obj.material.visible = false;		
 	
 	infProject.scene.array.obj[infProject.scene.array.obj.length] = obj;
 
 	scene.add( obj );
 	
+	
+	// CubeCamera
+	{
+		var arrCubeO = [];
+		
+		obj.traverse(function(child) 
+		{
+			if(child.isMesh && child.material) 
+			{ 
+				if(new RegExp('mirror','i').test( child.material.name )) 
+				{  								
+					child.material.userData.type = 'mirror';			
+					arrCubeO[arrCubeO.length] = child;		 									
+				}					
+			}
+		});
+
+		if(arrCubeO.length > 0) createCubeCam({obj: obj, arrO: arrCubeO});		
+	}	
 
 	
 	if(1==2)
