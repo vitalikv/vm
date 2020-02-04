@@ -5,7 +5,50 @@ function infoListObj()
 {
 	var arr = [];		
 	
-	arr[0] =
+	if(1==2)
+	{
+		arr[4] =
+		{
+			lotid : 5,
+			url : infProject.path+'import/vm_furn_2.fbx', 
+			name : 'кухня',
+			planeMath : 0.1,
+		}	
+		
+		arr[5] =
+		{
+			lotid : 6,
+			url : infProject.path+'import/vm_furn_3.fbx', 
+			name : 'шкаф',
+			planeMath : 0.1,
+		}	
+
+		arr[6] =
+		{
+			lotid : 7,
+			url : infProject.path+'import/vm_furn_4.fbx', 
+			name : 'кухня +',
+			planeMath : 0.0,
+		}
+
+		arr[8] =
+		{
+			lotid : 9,
+			url : infProject.path+'import/vm_furn_5.fbx', 
+			name : 'унитаз',
+			planeMath : 0.0,
+		}	
+		
+		arr[9] =
+		{
+			lotid : 10,
+			url : infProject.path+'import/vm_furn_6.fbx', 
+			name : 'комод',
+			planeMath : 0.0,
+		}		
+	}
+	
+	arr[arr.length] =
 	{
 		lotid : 1,
 		url : infProject.path+'import/wm_wind_1.fbx', 
@@ -15,7 +58,7 @@ function infoListObj()
 		stopUI: true,
 	}
 	
-	arr[1] =
+	arr[arr.length] =
 	{	
 		lotid : 2,
 		url : infProject.path+'import/furn_1.fbx', 
@@ -23,7 +66,7 @@ function infoListObj()
 		planeMath : 0.1,
 	}	
 	
-	arr[2] =
+	arr[arr.length] =
 	{
 		lotid : 3,
 		url : infProject.path+'import/wm_wind_2.fbx', 
@@ -33,7 +76,7 @@ function infoListObj()
 		stopUI: true,
 	}
 	
-	arr[3] =
+	arr[arr.length] =
 	{
 		lotid : 4,
 		url : infProject.path+'import/vm_door_1.fbx', 
@@ -43,31 +86,7 @@ function infoListObj()
 		stopUI: true,
 	}
 
-	arr[4] =
-	{
-		lotid : 5,
-		url : infProject.path+'import/vm_furn_2.fbx', 
-		name : 'кухня',
-		planeMath : 0.1,
-	}	
-	
-	arr[5] =
-	{
-		lotid : 6,
-		url : infProject.path+'import/vm_furn_3.fbx', 
-		name : 'шкаф',
-		planeMath : 0.1,
-	}	
-
-	arr[6] =
-	{
-		lotid : 7,
-		url : infProject.path+'import/vm_furn_4.fbx', 
-		name : 'кухня +',
-		planeMath : 0.0,
-	}
-
-	arr[7] =
+	arr[arr.length] =
 	{
 		lotid : 8,
 		url : infProject.path+'import/vm_light_point_1.fbx', 
@@ -76,21 +95,219 @@ function infoListObj()
 		planeMath : infProject.settings.height - 0.05,
 	}
 
-	arr[8] =
+	// спальня -->
+	if(1==1)
 	{
-		lotid : 9,
-		url : infProject.path+'import/vm_furn_5.fbx', 
-		name : 'унитаз',
-		planeMath : 0.0,
-	}	
+		arr[arr.length] =
+		{
+			lotid : 11,
+			url : infProject.path+'import/glb/спальня/80105983_krovat_dafna10.glb', 
+			name : 'кровать',
+			planeMath : 0.0,
+			glb : true,
+		}
+
+		arr[arr.length] =
+		{
+			lotid : 12,
+			url : infProject.path+'import/glb/спальня/80274115_Пуф_ПФ-1.glb', 
+			name : 'Пуф_ПФ',
+			planeMath : 0.0,
+			glb : true,
+		}
+
+		arr[arr.length] =
+		{
+			lotid : 13,
+			url : infProject.path+'import/glb/спальня/80286563_Туалетный_стол_Sherlock.glb', 
+			name : 'Туалетный_стол',
+			planeMath : 0.0,
+			glb : true,
+		}
+
+		arr[arr.length] =
+		{
+			lotid : 14,
+			url : infProject.path+'import/glb/спальня/80318441_Кровать_с_подъёмным_механизмом_Paola.glb', 
+			name : 'Кровать_с_подъёмным_механизмом',
+			planeMath : 0.0,
+			glb : true,
+		}
+
+		arr[arr.length] =
+		{
+			lotid : 15,
+			url : infProject.path+'import/glb/спальня/80318442_Тумба_прикроватная_Paola.glb', 
+			name : 'Тумба_прикроватная',
+			planeMath : 0.0,
+			glb : true,
+		}
+
+		arr[arr.length] =
+		{
+			lotid : 16,
+			url : infProject.path+'import/glb/спальня/80318445_Зеркало_навесное_Paola.glb', 
+			name : 'Зеркало_навесное',
+			planeMath : 0.0,
+			glb : true,
+		}
+
+		arr[arr.length] =
+		{
+			lotid : 17,
+			url : infProject.path+'import/glb/спальня/80328489_Шкаф-купе_Home_Стандарт_160_см.glb', 
+			name : 'Шкаф-купе_Стандарт_160_см',
+			planeMath : 0.0,
+			glb : true,
+		}
+		
+	}
+	// <-- спальня
 	
-	arr[9] =
+	
+	// кухня -->
+	if(1==1)
 	{
-		lotid : 10,
-		url : infProject.path+'import/vm_furn_6.fbx', 
-		name : 'комод',
-		planeMath : 0.0,
-	}		
+		arr[arr.length] =
+		{
+			lotid : 18,
+			url : infProject.path+'import/glb/кухня/80310580_Стол_Мюнхен.glb', 
+			name : 'Стол_Мюнхен',
+			planeMath : 0.0,
+			glb : true,
+		}
+		
+		arr[arr.length] =
+		{
+			lotid : 19,
+			url : infProject.path+'import/glb/кухня/80320714_Стул_Новара.glb', 
+			name : 'Стул_Новара',
+			planeMath : 0.0,
+			glb : true,
+		}	
+
+		arr[arr.length] =
+		{
+			lotid : 20,
+			url : infProject.path+'import/glb/кухня/80321220_Кухонный_гарнитур_Софи.glb', 
+			name : 'Кухонный_гарнитур_Софи',
+			planeMath : 0.0,
+			glb : true,
+		}		
+	}
+	// <-- кухня
+	
+	// прихожая -->
+	if(1==1)
+	{
+		arr[arr.length] =
+		{
+			lotid : 21,
+			url : infProject.path+'import/glb/прихожая/80288366_Тумба_для_обуви_Гранада.glb', 
+			name : 'Тумба_для_обуви_Гранада 1',
+			planeMath : 0.0,
+			glb : true,
+		}
+		
+		arr[arr.length] =
+		{
+			lotid : 22,
+			url : infProject.path+'import/glb/прихожая/80288367_Шкаф_для_одежды_Гранада.glb', 
+			name : 'Шкаф_для_одежды_Гранада',
+			planeMath : 0.0,
+			glb : true,
+		}
+
+		arr[arr.length] =
+		{
+			lotid : 23,
+			url : infProject.path+'import/glb/прихожая/80288368_Тумба_для_обуви_Гранада.glb', 
+			name : 'Тумба_для_обуви_Гранада 2',
+			planeMath : 0.0,
+			glb : true,
+		}
+
+		arr[arr.length] =
+		{
+			lotid : 24,
+			url : infProject.path+'import/glb/прихожая/80311598_Шкаф-купе_2-дверный_Slide_120х220_см.glb', 
+			name : 'Шкаф-купе_2-дверный',
+			planeMath : 0.0,
+			glb : true,
+		}		
+	}
+	// <-- прихожая	
+	
+	
+	// зал -->
+	if(1==1)
+	{
+		arr[arr.length] =
+		{
+			lotid : 25,
+			url : infProject.path+'import/glb/зал/80088931_Комод_НК-3.glb', 
+			name : 'Комод_НК-3',
+			planeMath : 0.0,
+			glb : true,
+		}
+		
+		arr[arr.length] =
+		{
+			lotid : 26,
+			url : infProject.path+'import/glb/зал/80295027_Стеллаж_Стенли.glb', 
+			name : 'Стеллаж_Стенли',
+			planeMath : 0.0,
+			glb : true,
+		}
+
+		arr[arr.length] =
+		{
+			lotid : 27,
+			url : infProject.path+'import/glb/зал/80310320_Шкаф-купе_3-дверный_Slide_210х220_см.glb', 
+			name : 'Шкаф-купе_3-дверный_Slide_210х220_см',
+			planeMath : 0.0,
+			glb : true,
+		}
+
+		arr[arr.length] =
+		{
+			lotid : 28,
+			url : infProject.path+'import/glb/зал/80311525_Кресло_рабочее_Boss_II.glb', 
+			name : 'Кресло_рабочее_Boss_II',
+			planeMath : 0.0,
+			glb : true,
+		}
+
+		arr[arr.length] =
+		{
+			lotid : 29,
+			url : infProject.path+'import/glb/зал/80322444_Журнальный_стол_Лофт.glb', 
+			name : 'Журнальный_стол_Лофт',
+			planeMath : 0.0,
+			glb : true,
+		}
+
+		arr[arr.length] =
+		{
+			lotid : 30,
+			url : infProject.path+'import/glb/зал/80327766_Угловой_диван-кровать_Вольберг.glb', 
+			name : 'Угловой_диван-кровать_Вольберг',
+			planeMath : 0.0,
+			glb : true,
+		}
+
+		arr[arr.length] =
+		{
+			lotid : 31,
+			url : infProject.path+'import/glb/зал/80328867_Письменный_стол_Рокс.glb', 
+			name : 'Письменный_стол_Рокс',
+			planeMath : 0.0,
+			glb : true,
+		}		
+				
+	}
+	// <-- зал	
+	
 	
 	for(var i = 0; i < arr.length; i++)
 	{
@@ -197,27 +414,50 @@ function loadObjServer(cdm)
 	else
 	{
 	
-		var loader = new THREE.FBXLoader();
-		loader.load( inf.url, function ( object ) 						
+		if(inf.glb)
 		{ 
-			//object.scale.set(0.1, 0.1, 0.1);
-			
-			var obj = object.children[0];
-			
-			var obj = addObjInBase({lotid: lotid, obj: obj});
-			
-			if(cdm.loadFromFile)	// загрузка из сохраненного файла json 
-			{
-				loadObjFromBase({lotid: lotid, furn: cdm.furn});
-			}
-			else					// добавляем объект в сцену 
-			{
-				inf.obj = obj;
+			var loader = new THREE.GLTFLoader();
+			loader.load( inf.url, function ( object ) 						
+			{ 
+				var obj = object.scene.children[0];
 				
-				addObjInScene(inf, cdm);							
-			}
-		});
-	
+				var obj = addObjInBase({lotid: lotid, obj: obj});
+				
+				if(cdm.loadFromFile)	// загрузка из сохраненного файла json 
+				{
+					loadObjFromBase({lotid: lotid, furn: cdm.furn});
+				}
+				else					// добавляем объект в сцену 
+				{
+					inf.obj = obj;
+					
+					addObjInScene(inf, cdm);							
+				}
+			});				
+		}
+		else
+		{
+			var loader = new THREE.FBXLoader();
+			loader.load( inf.url, function ( object ) 						
+			{ 
+				//object.scale.set(0.1, 0.1, 0.1);
+				
+				var obj = object.children[0];
+				
+				var obj = addObjInBase({lotid: lotid, obj: obj});
+				
+				if(cdm.loadFromFile)	// загрузка из сохраненного файла json 
+				{
+					loadObjFromBase({lotid: lotid, furn: cdm.furn});
+				}
+				else					// добавляем объект в сцену 
+				{
+					inf.obj = obj;
+					
+					addObjInScene(inf, cdm);							
+				}
+			});			
+		}	
 	}
 	
 	
@@ -359,6 +599,7 @@ function addObjInScene(inf, cdm)
 	
 	obj.material.visible = false;
 
+	
 	// CubeCamera
 	{
 		var arrCubeO = [];
@@ -367,7 +608,7 @@ function addObjInScene(inf, cdm)
 		{
 			if(child.isMesh && child.material) 
 			{ 
-				if(new RegExp('mirror','i').test( child.material )) 
+				if(new RegExp('mirror','i').test( child.material.name )) 
 				{  								
 					child.material.userData.type = 'mirror';			
 					arrCubeO[arrCubeO.length] = child;		 									
@@ -376,7 +617,7 @@ function addObjInScene(inf, cdm)
 		});
 
 		if(arrCubeO.length > 0) createCubeCam({obj: obj, arrO: arrCubeO});		
-	}
+	}		
 	
 	
 	infProject.scene.array.obj[infProject.scene.array.obj.length] = obj;
