@@ -86,6 +86,7 @@ function resetScene()
 	var door = infProject.scene.array.door;
 	var obj = infProject.scene.array.obj;
 	var floor = infProject.scene.array.floor;
+	var cubeCam = infProject.scene.array.cubeCam;
 	
 	for ( var i = 0; i < wall.length; i++ )
 	{ 
@@ -139,14 +140,15 @@ function resetScene()
 	
 	for ( var i = 0; i < obj.length; i++ )
 	{ 
-		if(obj[i].userData.obj3D.cubeCam)
-		{
-			disposeNode( obj[i].userData.obj3D.cubeCam );
-			scene.remove( obj[i].userData.obj3D.cubeCam );
-		}
 		disposeNode(obj[i]);
 		scene.remove(obj[i]);
-	}	
+	}
+
+	for ( var i = 0; i < cubeCam.length; i++ )
+	{
+		disposeNode( cubeCam[i] );
+		scene.remove( cubeCam[i] );		
+	}
 	
 	
 	// удаляем список материалов UI

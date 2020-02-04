@@ -48,33 +48,6 @@ function infoListObj()
 		}		
 	}
 	
-	arr[arr.length] =
-	{
-		lotid : 1,
-		url : infProject.path+'import/wm_wind_1.fbx', 
-		name : 'окно',
-		planeMath : 1.5,
-		material : true,
-		stopUI: true,
-	}
-	
-	arr[arr.length] =
-	{	
-		lotid : 2,
-		url : infProject.path+'import/furn_1.fbx', 
-		name : 'диван',
-		planeMath : 0.1,
-	}	
-	
-	arr[arr.length] =
-	{
-		lotid : 3,
-		url : infProject.path+'import/wm_wind_2.fbx', 
-		name : 'окно',
-		planeMath : 1.5,
-		material : true,
-		stopUI: true,
-	}
 	
 	arr[arr.length] =
 	{
@@ -307,6 +280,31 @@ function infoListObj()
 				
 	}
 	// <-- зал	
+	
+
+	// wd -->
+	if(1==1)
+	{
+		arr[arr.length] =
+		{
+			lotid : 32,
+			url : infProject.path+'import/glb/wd/okno1x1.glb', 
+			name : 'окно 1',
+			planeMath : 1.5,
+			glb : true,
+			stopUI: true,
+		}
+
+		arr[arr.length] =
+		{
+			lotid : 33,
+			url : infProject.path+'import/glb/wd/dver2x1.glb', 
+			name : 'дверь',
+			planeMath : 0.1,
+			glb : true,
+		}		
+	}
+	// <-- wd	
 	
 	
 	for(var i = 0; i < arr.length; i++)
@@ -601,24 +599,7 @@ function addObjInScene(inf, cdm)
 
 	
 	// CubeCamera
-	{
-		var arrCubeO = [];
-		
-		obj.traverse(function(child) 
-		{
-			if(child.isMesh && child.material) 
-			{ 
-				if(new RegExp('mirror','i').test( child.material.name )) 
-				{  								
-					child.material.userData.type = 'mirror';			
-					arrCubeO[arrCubeO.length] = child;		 									
-				}					
-			}
-		});
-
-		if(arrCubeO.length > 0) createCubeCam({obj: obj, arrO: arrCubeO});		
-	}		
-	
+	checkReflectionMaterial({obj: obj});			
 	
 	infProject.scene.array.obj[infProject.scene.array.obj.length] = obj;
 
@@ -729,6 +710,34 @@ function setLightInobj(cdm)
 }
 
 
+// определяем нужно ли для объекта устанавливать отражение, если да, то ставим CubeCamera
+function checkReflectionMaterial(cdm)
+{
+	var obj = cdm.obj;
+	var arrCubeO = [];
+	
+	obj.traverse(function(child) 
+	{
+		if(child.isMesh && child.material) 
+		{ 
+			if(new RegExp('mirror','i').test( child.material.name )) 
+			{  								
+				child.material.userData.type = 'mirror';			
+				arrCubeO[arrCubeO.length] = child;		 									
+			}
+			else if(new RegExp('glass','i').test( child.material.name )) 
+			{  								
+				child.material.userData.type = 'glass';			
+				child.material.opacity = 0.1;	
+				child.material.transparent = true;
+				child.material.side = THREE.DoubleSide;	
+			}			
+		}
+	});
+
+	if(arrCubeO.length > 0) createCubeCam({obj: obj, arrO: arrCubeO});		
+	
+}
 
 
 function createCubeCam(cdm)
@@ -740,7 +749,7 @@ function createCubeCam(cdm)
 	scene.add(cubeCam); 
 
 	infProject.scene.array.cubeCam[infProject.scene.array.cubeCam.length] = obj;
-	obj.userData.obj3D.cubeCam = cubeCam;
+	obj.userData.cubeCam = cubeCam;
 
 	 
 	obj.traverse(function(child) 
@@ -772,9 +781,9 @@ function updateCubeCam(cdm)
 {
 	var obj = cdm.obj;
 	if(!obj) return;
-	if(!obj.userData.obj3D.cubeCam) return;
+	if(!obj.userData.cubeCam) return;
 	
-	var cubeCam = obj.userData.obj3D.cubeCam;					
+	var cubeCam = obj.userData.cubeCam;					
 				
 	obj.updateMatrixWorld();
 	obj.geometry.computeBoundingSphere();
@@ -843,6 +852,8 @@ function loadUrlFile()
 
 
 
+
+
 function setParamObj(cdm)
 {
 	$('[nameId="window_main_load_obj"]').css({"display":"none"});
@@ -865,7 +876,7 @@ function setParamObj(cdm)
  
 	
 	
-	// накладываем на материал объекта lightMap
+	// накладываем тени
 	obj.traverse(function(child) 
 	{
 		if(child.isMesh) 
@@ -883,23 +894,7 @@ function setParamObj(cdm)
 	
 	
 	// CubeCamera
-	{
-		var arrCubeO = [];
-		
-		obj.traverse(function(child) 
-		{
-			if(child.isMesh && child.material) 
-			{ 
-				if(new RegExp('mirror','i').test( child.material.name )) 
-				{  								
-					child.material.userData.type = 'mirror';			
-					arrCubeO[arrCubeO.length] = child;		 									
-				}					
-			}
-		});
-
-		if(arrCubeO.length > 0) createCubeCam({obj: obj, arrO: arrCubeO});		
-	}	
+	checkReflectionMaterial({obj: obj});
 
 	
 	if(1==2)

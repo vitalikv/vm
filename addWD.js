@@ -302,8 +302,9 @@ function addWD( cdm )
 	obj.geometry.computeBoundingBox();
 	obj.geometry.computeBoundingSphere();
 	
-	if(obj.userData.tag == 'window') { obj.userData.door.lotid = 1; }
-		
+	if(obj.userData.tag == 'window') { obj.userData.door.lotid = 32; }
+	else { obj.userData.door.lotid = 33; }
+	
 	if(obj.userData.door.lotid)
 	{
 		loadObjServer({type: 'wd', wd: obj, lotid: obj.userData.door.lotid});
@@ -325,7 +326,12 @@ function setObjInWD(inf, cdm)
 	var wd = cdm.wd;
 	var objPop = inf.obj;
 	
+	objPop.material.visible = false;
+	
 	wd.add( objPop );
+	
+	// CubeCamera
+	checkReflectionMaterial({obj: wd});	
 	
 	wd.userData.door.objPop = objPop;
 	

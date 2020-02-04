@@ -296,9 +296,18 @@ function deleteWinDoor( obj )
 	}
 	
 	
+	if(obj.userData.cubeCam)
+	{
+		deleteValueFromArrya({arr : infProject.scene.array.cubeCam, o : obj.userData.cubeCam});
+		disposeNode( obj.userData.cubeCam );
+		scene.remove( obj.userData.cubeCam );			
+	}
+	
+	
 	if(obj.userData.tag == 'window') { deleteValueFromArrya({arr : infProject.scene.array.window, o : obj}); }
 	if(obj.userData.tag == 'door') { deleteValueFromArrya({arr : infProject.scene.array.door, o : obj}); }
 	
+	disposeNode( obj );
 	scene.remove( obj );	
 }
 
