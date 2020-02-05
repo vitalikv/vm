@@ -5,46 +5,51 @@ function infoListObj()
 {
 	var arr = [];		
 	
-	if(1==2)
+	if(1==1)
 	{
-		arr[4] =
+		arr[arr.length] =
 		{
 			lotid : 5,
 			url : infProject.path+'import/vm_furn_2.fbx', 
 			name : 'кухня',
 			planeMath : 0.1,
+			stopUI: true,
 		}	
 		
-		arr[5] =
+		arr[arr.length] =
 		{
 			lotid : 6,
 			url : infProject.path+'import/vm_furn_3.fbx', 
 			name : 'шкаф',
 			planeMath : 0.1,
+			stopUI: true,
 		}	
 
-		arr[6] =
+		arr[arr.length] =
 		{
 			lotid : 7,
 			url : infProject.path+'import/vm_furn_4.fbx', 
 			name : 'кухня +',
 			planeMath : 0.0,
+			stopUI: true,
 		}
 
-		arr[8] =
+		arr[arr.length] =
 		{
 			lotid : 9,
 			url : infProject.path+'import/vm_furn_5.fbx', 
 			name : 'унитаз',
 			planeMath : 0.0,
+			stopUI: true,
 		}	
 		
-		arr[9] =
+		arr[arr.length] =
 		{
 			lotid : 10,
 			url : infProject.path+'import/vm_furn_6.fbx', 
 			name : 'комод',
 			planeMath : 0.0,
+			stopUI: true,
 		}		
 	}
 	

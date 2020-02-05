@@ -4,7 +4,7 @@
 var w_w = window.innerWidth;
 var w_h = window.innerHeight;
 var aspect = window.innerWidth/window.innerHeight;
-var d = 5;
+var d = infProject.settings.cam2D;
 
 var canvas = document.createElement( 'canvas' );
 var context = canvas.getContext( 'webgl2' );
@@ -91,7 +91,7 @@ window.addEventListener( 'resize', onWindowResize, false );
 function onWindowResize() 
 { 
 	var aspect = window.innerWidth / window.innerHeight;
-	var d = 5;
+	var d = infProject.settings.cam2D;
 	
 	cameraTop.left = -d * aspect;
 	cameraTop.right = d * aspect;
@@ -279,7 +279,7 @@ var offset = new THREE.Vector3();
 {
 	backgroundPlane();
 	createSubstrate({ pos: {y: 0.01} }); 	// подложка
-	startPosCamera3D({radious: 15, theta: 90, phi: 35});		// стартовое положение 3D камеры
+	startPosCamera3D({radious: infProject.settings.cam3D, theta: 90, phi: 35});		// стартовое положение 3D камеры
 	addObjInCatalogUI_1();			// наполняем каталог объектов UI
 	addTextureInCatalogUI_1();		// наполняем каталог текстур UI
 	addTextureInCatalogUI_2();
@@ -1724,7 +1724,12 @@ $(document).ready(function ()
 	docReady = true; 	
 		 
 	 //getAutoBuildingJson();
-	loadFile({json: true});  
+	 
+	if(infProject.settings.load.file)
+	{
+		loadFile({json: infProject.settings.load.file});
+	}		
+	  
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(0, 1, 0)});
 	//loadObjServer({lotid: 6, pos: new THREE.Vector3(1, 1, 1), rot: new THREE.Vector3(0, 1, 0)});

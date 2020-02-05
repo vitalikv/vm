@@ -493,7 +493,7 @@ function saveFile(cdm)
 		({
 			url: infProject.path+'saveJson.php',
 			type: 'POST',
-			data: {myarray: json},
+			data: {myarray: json, name: infProject.settings.save.file},
 			dataType: 'json',
 			success: function(json)
 			{ 			
@@ -550,12 +550,12 @@ function loadFile(cdm)
 	{
 		$.ajax
 		({
-			url: infProject.path+'t/fileJson.json',
+			url: infProject.path + cdm.json,
 			type: 'POST',
 			dataType: 'json',
 			success: function(json)
 			{ 
-				resetScene();
+				//resetScene();
 				loadFilePL(json); 	// загрузка json
 			},
 		});			
@@ -570,7 +570,7 @@ function loadFile(cdm)
 			dataType: 'json',
 			success: function(json)
 			{ 
-				resetScene();
+				//resetScene();
 				loadFilePL(json); 	// загрузка json
 			},
 		});		
@@ -585,7 +585,8 @@ function loadFile(cdm)
 
 
 function loadFilePL(arr) 
-{                 		
+{     
+	resetScene();					
 	if(!arr) return;
 	
 	//console.log(arr);

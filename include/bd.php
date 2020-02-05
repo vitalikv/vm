@@ -60,6 +60,10 @@ $infProject['scene']['load'] = '';
 
 	
 $infProject['settings']['project'] = 'test';
+$infProject['settings']['load']['file'] = 't/fileJson.json';
+$infProject['settings']['save']['file'] = 't/fileJson.json';
+$infProject['settings']['cam2D'] = 5;
+$infProject['settings']['cam3D'] = 15;
 $infProject['settings']['floor']['o'] = true;
 $infProject['settings']['floor']['areaPoint'] = 'inside';
 $infProject['settings']['floor']['label'] = false;
