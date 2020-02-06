@@ -523,7 +523,11 @@ function addObjInBase(cdm)
 				geometry.applyMatrix4(child.parent.matrixWorld);
 				geometries.push(geometry);										
 			}
-	
+			if(child.material.map) 
+			{
+				//console.log(222222, child.material, THREE.sRGBEncoding, child.material.map.encoding);
+				//child.material.map.encoding = THREE.sRGBEncoding;
+			}
 			child.castShadow = true;	
 			child.receiveShadow = true;				
 		}

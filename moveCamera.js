@@ -334,7 +334,7 @@ function moveCameraWall2D( event )
 
 
 // cameraZoom
-function mousewheel( e )
+function onDocumentMouseWheel( e )
 {
 	
 	var delta = e.wheelDelta ? e.wheelDelta / 120 : e.detail ? e.detail / 3 : 0;

@@ -13,6 +13,7 @@ var renderer = new THREE.WebGLRenderer( { canvas: canvas, context: context, pres
 
 //renderer.gammaInput = true;
 //renderer.gammaOutput = true;
+renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.localClippingEnabled = true;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
@@ -1505,8 +1506,8 @@ document.body.addEventListener( 'touchstart', onDocumentMouseDown, false );
 document.body.addEventListener( 'touchmove', onDocumentMouseMove, false );
 document.body.addEventListener( 'touchend', onDocumentMouseUp, false );
 
-document.addEventListener('DOMMouseScroll', mousewheel, false);
-document.addEventListener('mousewheel', mousewheel, false);	
+document.addEventListener('DOMMouseScroll', onDocumentMouseWheel, false);
+document.addEventListener('mousewheel', onDocumentMouseWheel, false);	
 
 
 document.body.addEventListener("keydown", function (e) 

@@ -102,7 +102,13 @@ for ($i = 0; $i < count($arrF); $i++)
 		echo "Вхождение найдено <br>". $arrF[$i]."<br><br>";
 		
 		$file2 = preg_replace('#\b'.$arrF[$i].'\b#Us','fname_s_load_f',$file2);
-	} 
+	}
+	else if (preg_match('#\b'.$arrF[$i].'\b#Us', 'getJsonProject')) 
+	{
+		echo "Вхождение найдено <br>". $arrF[$i]."<br><br>";
+		
+		$file2 = preg_replace('#\b'.$arrF[$i].'\b#Us','fname_s_get_json',$file2);
+	} 	
 	else 
 	{
 		$file2 = preg_replace('#\b'.$arrF[$i].'\b#Us','fname_s_0'.($i+1),$file2);	// 	\b - границы слова	

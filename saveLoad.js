@@ -412,7 +412,7 @@ function compileJsonFile()
 	{
 		for(var i2 = 0; i2 < contour[i].length; i2++)
 		{
-			contour[i][i2] = {x: contour[i][i2].x, y: contour[i][i2].z};
+			contour[i][i2] = {x: contour[i][i2].x, z: contour[i][i2].z};
 		}
 	}
 	
@@ -480,6 +480,12 @@ function saveWindows(wall)
 	return { windows : windows, doors : doors };
 }
 
+
+
+function getJsonProject()
+{
+	return JSON.stringify( compileJsonFile() );
+}
 
 function saveFile(cdm) 
 { 
